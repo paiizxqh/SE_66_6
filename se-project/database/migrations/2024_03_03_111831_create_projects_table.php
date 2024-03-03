@@ -25,7 +25,8 @@ return new class extends Migration
             $table->foreign('status_id')
                     ->references('status_id')
                     ->on('project_status')
-                    ->onDelete('cascade');
+                    ->onUpdate('cascade')
+                    ->onDelete('NO ACTION'); 
 
             $table->string('customers_id',10);
             $table->foreign('customers_id')

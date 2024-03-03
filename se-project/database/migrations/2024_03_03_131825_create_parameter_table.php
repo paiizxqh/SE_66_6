@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreign('set_id')
                     ->references('set_id')
                     ->on('product_set')
-                    ->onUpdate('NO ACTION')
+                    ->onUpdate('cascade')
                     ->onDelete('NO ACTION');
 
         });

@@ -16,14 +16,14 @@ return new class extends Migration
             $table->foreign('set_id')
                     ->references('set_id')
                     ->on('product_set')
-                    ->onUpdate('NO ACTION')
+                    ->onUpdate('cascade')
                     ->onDelete('NO ACTION');
 
             $table->unsignedInteger('product_id');
             $table->foreign('product_id')
                     ->references('product_id')
                     ->on('inventory')
-                    ->onUpdate('NO ACTION')
+                    ->onUpdate('cascade')
                     ->onDelete('NO ACTION');
         });
     }

@@ -18,10 +18,10 @@ return new class extends Migration
             $table->foreign('product_type')
                     ->references('type_id')
                     ->on('product_type')
-                    ->onUpdate('NO ACTION')
+                    ->onUpdate('cascade')
                     ->onDelete('NO ACTION');
 
-            $table->string('product_remark',100);
+            $table->integer('product_remain');
             $table->integer('product_minimum');
         });
     }

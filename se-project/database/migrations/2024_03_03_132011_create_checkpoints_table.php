@@ -15,11 +15,11 @@ return new class extends Migration
             $table->increments('checkpoint_id');
             $table->integer('checkpoint_number');
 
-            $table->unsignedInteger('projects_id');
+            $table->string('projects_id',10);
             $table->foreign('projects_id')
                     ->references('projects_id')
                     ->on('projects')
-                    ->onUpdate('NO ACTION')
+                    ->onUpdate('cascade')
                     ->onDelete('NO ACTION');
         });
     }
