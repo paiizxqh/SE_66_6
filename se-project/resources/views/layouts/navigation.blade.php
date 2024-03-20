@@ -6,11 +6,18 @@
                 <!-- Navigation Links || sm:ms-10 -->
                 <div class="hidden space-x-8  sm:-my-px sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">หน้าแรก</x-nav-link>
+                    {{-- Page for Developer | Project ; TeamProject(ไม่มี) ; Inventory(ไม่มี) ; Customer(ไม่มี) --}}
+                    @can('DeveloperRole')
+                        <x-nav-link :href="route('users.index')" :active="request()->routeIs('users')">ข้อมูลพนักงาน</x-nav-link>
+                        <x-nav-link :href="route('roles.index')" :active="request()->routeIs('users')">บทบาทพนักงาน</x-nav-link>
+                        <x-nav-link :href="route('projects.index')" :active="request()->routeIs('users')">รายการโครงการ</x-nav-link>
+                        <x-nav-link :href="route('products.index')" :active="request()->routeIs('users')">รายการอุปกรณ์</x-nav-link>
+                        <x-nav-link :href="route('projects.index')" :active="request()->routeIs('users')">ข้อมูลลูกค้า</x-nav-link>
+                        <x-nav-link :href="route('projects.index')" :active="request()->routeIs('users')">ข้อมูลทีม</x-nav-link>
+                    @endcan
                     <!--Page for Admin-->
                     @can('AdminRole')
                         <x-nav-link :href="route('users.index')" :active="request()->routeIs('users')">ข้อมูลพนักงาน</x-nav-link>
-                    @endcan
-                    @can('AdminRole')
                         <x-nav-link :href="route('roles.index')" :active="request()->routeIs('users')">บทบาทพนักงาน</x-nav-link>
                     @endcan
                     <!--Page for Manager | Project : RU ; TeamProject : CRUD -->

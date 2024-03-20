@@ -42,9 +42,7 @@
 
                             @csrf
                             @method('DELETE')
-                            @can('AdminRole')
-                                <button class="btn btn-danger">Delete</button>
-                            @endcan
+                            <button class="btn btn-danger">Delete</button>
                         </form>
                     </td>
                 </tr>
