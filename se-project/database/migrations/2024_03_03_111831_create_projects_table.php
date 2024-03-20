@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->string('projects_id')->unique();
+            $table->string('project_id')->unique();
             $table->date('start_date');
             $table->date('area_date');
             $table->string('map');
@@ -25,21 +25,21 @@ return new class extends Migration
                     ->references('id')
                     ->on('project_status')
                     ->onUpdate('cascade')
-                    ->onDelete('NO ACTION'); 
+                    ->onDelete('NO ACTION');
 
             $table->unsignedBigInteger('customer_id');
             $table->foreign('customer_id')
                         ->references('id')
                         ->on('customers')
                         ->onUpdate('cascade')
-                        ->onDelete('NO ACTION');   
+                        ->onDelete('NO ACTION');
 
             $table->unsignedBigInteger('assistant_id');
             $table->foreign('assistant_id')
                     ->references('id')
                     ->on('users')
                     ->onUpdate('cascade')
-                    ->onDelete('NO ACTION');    
+                    ->onDelete('NO ACTION');
         });
     }
 

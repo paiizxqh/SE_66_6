@@ -1,3 +1,4 @@
+@section('title', 'บทบาทพนักงาน')
 <x-app-layout>
     <x-slot name="head">
         <script src="{{ asset('js/app.js') }}" defer></script>
@@ -8,13 +9,12 @@
         <div class="row">
             <div class="col-lg-12 margin-tb mb-4">
                 <div class="pull-left">
-                    <h2>Manage Role
-                        <div class="float-end">
-                            @can('role-create')
-                                <a class="btn btn-success" href="{{ route('roles.create') }}"> Create New Role</a>
-                            @endcan
-                        </div>
-                    </h2>
+                    <h2>Manage Role</h2>
+                </div>
+                <div class="pull-right">
+                    @can('role-create')
+                        <a class="btn btn-success" href="{{ route('roles.create') }}"> Create New Role</a>
+                    @endcan
                 </div>
             </div>
         </div>
@@ -50,7 +50,6 @@
                 </tr>
             @endforeach
         </table>
-
         {!! $roles->render() !!}
     </div>
 </x-app-layout>

@@ -9,7 +9,11 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $table = 'inventory';
+
     protected $fillable = [
-        'name', 'detail'
+        'product_type_id',
+        'product_remain',
+        'product_minimum'
     ];
 }

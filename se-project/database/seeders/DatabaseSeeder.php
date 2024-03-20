@@ -29,7 +29,12 @@ class DatabaseSeeder extends Seeder
         'project-list',
         'project-create',
         'project-edit',
-        'project-delete',  
+        'project-delete',
+
+        'product-list',
+        'product-create',
+        'product-edit',
+        'product-delete',
     ];
 
 
@@ -38,7 +43,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        foreach ($this->permissions as $permission) {
+        //$this->call([ProjectSeeder::class]);
+        /* foreach ($this->permissions as $permission) {
             Permission::create(['name' => $permission]);
         }
 
@@ -56,6 +62,6 @@ class DatabaseSeeder extends Seeder
 
         $role->syncPermissions($permissions);
 
-        $user->assignRole([$role->id]);
+        $user->assignRole([$role->id]); */
     }
 }

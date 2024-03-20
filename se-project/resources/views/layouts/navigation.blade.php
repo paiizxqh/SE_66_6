@@ -3,44 +3,39 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
-                {{--}}
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
-                    </a>
-                </div>
-                {{--}}
-
-                <!-- Navigation Links -->
-                <div class="shrink-0 flex items-center"> {{--}}<div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">{{--}}
-
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Home') }}
-                    </x-nav-link>
-
+                <!-- Navigation Links || sm:ms-10 -->
+                <div class="hidden space-x-8  sm:-my-px sm:flex">
+                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">หน้าแรก</x-nav-link>
                     <!--Page for Admin-->
                     @can('AdminRole')
-                        <x-nav-link :href="route('users.index')" :active="request()->routeIs('users')">
-                            {{ __('Manage User') }}
-                        </x-nav-link>
+                        <x-nav-link :href="route('users.index')" :active="request()->routeIs('users')">ข้อมูลพนักงาน</x-nav-link>
                     @endcan
                     @can('AdminRole')
-                        <x-nav-link :href="route('roles.index')" :active="request()->routeIs('users')">
-                            {{ __('Manage Role') }}
-                        </x-nav-link>
+                        <x-nav-link :href="route('roles.index')" :active="request()->routeIs('users')">บทบาทพนักงาน</x-nav-link>
                     @endcan
-
-                    <!--Page for Manager-->
-
-                    <!--Page for Sales-->
-
-                    <!--Page for Assistant-->
-
-                    <!--Page for Academician-->
-
-                    <!--Page for Surveyor-->
-
+                    <!--Page for Manager | Project : RU ; TeamProject : CRUD -->
+                    @can('ManagerRole')
+                        <x-nav-link :href="route('projects.index')" :active="request()->routeIs('users')">รายการโครงการ</x-nav-link>
+                    @endcan
+                    <!--Page for Sales | Project : CRUD ; Customer : CRUD -->
+                    @can('SalesRole')
+                        <x-nav-link :href="route('projects.index')" :active="request()->routeIs('users')">รายการโครงการ</x-nav-link>
+                    @endcan
+                    <!--Page for Assistant | Proejct : R ; Inventory : CRUD -->
+                    @can('AssistantRole')
+                        <x-nav-link :href="route('projects.index')" :active="request()->routeIs('users')">รายการโครงการ</x-nav-link>
+                    @endcan
+                    @can('AssistantRole')
+                        <x-nav-link :href="route('products.index')" :active="request()->routeIs('users')">รายการอุปกรณ์</x-nav-link>
+                    @endcan
+                    <!--Page for Academician | Project : RU -->
+                    @can('AcademicianRole')
+                        <x-nav-link :href="route('projects.index')" :active="request()->routeIs('users')">รายการโครงการ</x-nav-link>
+                    @endcan
+                    <!--Page for Surveyor | Project : RU -->
+                    @can('SurveyorRole')
+                        <x-nav-link :href="route('projects.index')" :active="request()->routeIs('users')">รายการโครงการ</x-nav-link>
+                    @endcan
                 </div>
             </div>
 
@@ -69,14 +64,12 @@
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
-
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-
                             <x-dropdown-link :href="route('logout')"
                                 onclick="event.preventDefault();
-                                                this.closest('form').submit();">
+                                this.closest('form').submit();">
                                 {{ __('Log Out') }}
                             </x-dropdown-link>
                         </form>
