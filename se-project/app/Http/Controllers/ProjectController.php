@@ -18,7 +18,7 @@ class ProjectController extends Controller
         $this->middleware(['permission:project-delete'], ['only' => ['destroy']]);
     }
 
-    function index(){
+    function index(Request $request){
         $totalProjects = Project::count();
         $completeStatus = Project::where('status_id','3')->count();
         $pendingStatus = Project::where('status_id','2')->count();
@@ -28,21 +28,42 @@ class ProjectController extends Controller
         ->join('customers', 'customer_id', '=', 'customers.id')
         ->join('users', 'assistant_id', '=', 'users.id')
         ->select('projects.*','project_status.status','customers.cus_id','customers.name'/*,'users.name' */)
-        ->orderByRaw('id , start_date ASC')
-        ->get();
+        ->orderByRaw('start_date, project_status.status')
+        ->paginate(10);
+        /* ->get(); -- ถ้าจะใช้ paginate(0) ต้องเอาบรรทัดนี้ออกด้วย */
         return view('projects.index', compact('data','totalProjects','completeStatus','pendingStatus','processStatus'));
     }
 
-    public function create()
-    {
-        $permission = Permission::get();
-        return view('project.create', compact('permission'));
+    function search(Request $request){
+        $search = $request->input('search');
+
+        $data = Project::join('project_status', 'projects.status_id', '=', 'project_status.id')
+                        ->join('customers', 'projects.customer_id', '=', 'customers.id')
+                        ->select('projects.*', 'project_status.status', 'customers.cus_id', 'customers.name')
+                        ->where('customers.cus_id', 'LIKE', '%' . $search . '%')
+                        ->orWhere('customers.name', 'LIKE', '%' . $search . '%')
+                        ->orWhere('projects.start_date', 'LIKE', '%' . $search . '%')
+                        ->orWhere('project_status.status', 'LIKE', '%' . $search . '%')
+                        ->paginate(10);
+
+        // ตรวจสอบว่ามีข้อมูลที่ตรงกับการค้นหาหรือไม่
+        $search_matched = $data->count() > 0;
+
+        // ส่งข้อมูลไปยังหน้า index พร้อมกับค่า search_matched
+        return view('projects.index', compact('data', 'search_matched'));
     }
 
-    public function edit($id)
-    {
-        $project = Project::find($id);
-
-        return view('projects.edit', compact('project'));
+    function show($id){
+        $project = Project::findOrFail($id);
+        $data = Project::join('project_status', 'projects.status_id', '=', 'project_status.id')
+                        ->join('customers', 'projects.customer_id', '=', 'customers.id')
+                        ->select('projects.*', 'project_status.status', 'customers.cus_id', 'customers.name')
+                        ->where('customers.cus_id', 'LIKE', '%' . $search . '%')
+                        ->orWhere('customers.name', 'LIKE', '%' . $search . '%')
+                        ->orWhere('projects.start_date', 'LIKE', '%' . $search . '%')
+                        ->orWhere('project_status.status', 'LIKE', '%' . $search . '%')
+                        ->paginate(10);
+        return view('projects.show', compact('data', 'project'));
     }
+
 }
