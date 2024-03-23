@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Inventory;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -14,7 +15,7 @@ class ProductController extends Controller
      */
     function __construct()
     {
-        $this->middleware(['permission:product-list|product-create|product-edit|product-delete'], ['only' => ['index', 'show']]);
+        $this->middleware(['permission:product-list|product-create|product-edit|product-delete'], ['only' => ['index', 'show', 'create', 'store', 'edit', 'update', 'destroy']]);
         $this->middleware(['permission:product-create'], ['only' => ['create', 'store']]);
         $this->middleware(['permission:product-edit'], ['only' => ['edit', 'update']]);
         $this->middleware(['permission:product-delete'], ['only' => ['destroy']]);
@@ -26,7 +27,10 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Inventory::latest()->paginate(50);
+        $products = Inventory::latest()->paginate(7);
+        $title = 'Delete Product!';
+        $text = "Are you sure you want to delete?";
+        confirmDelete($title, $text);
         return view('products.index', compact('products'));
     }
 

@@ -1,3 +1,4 @@
+<?php $__env->startSection('title', 'ข้อมูลพนักงาน'); ?>
 <?php if (isset($component)) { $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54 = $attributes; } ?>
 <?php $component = App\View\Components\AppLayout::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
@@ -17,10 +18,10 @@
         <div class="row">
             <div class="col-lg-12 margin-tb mb-4">
                 <div class="pull-left">
-                    <h2>Edit User</h2>
+                    <h2>แก้ไขข้อมูลพนักงาน</h2>
                 </div>
                 <div class="float-end">
-                    <a class="btn btn-primary" href="<?php echo e(route('users.index')); ?>"> Back</a>
+                    <a class="btn btn-primary" href="<?php echo e(route('users.index')); ?>"> Back </a>
                 </div>
             </div>
         </div>
