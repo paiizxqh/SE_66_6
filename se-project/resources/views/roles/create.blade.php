@@ -31,69 +31,34 @@
         <form action="{{ route('roles.store') }}" method="POST">
             @csrf
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="col-xs-12 mb-3">
                     <div class="form-group">
                         <strong>Name:</strong>
                         <input type="text" name="name" class="form-control" placeholder="Name">
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-12">
+                <div class="col-xs-12 mb-3">
                     <div class="form-group">
                         <strong>Permission:</strong>
                         <br />
                         <div class="row">
-                            <div class="col-md-2">
-                                @foreach ($permission as $value)
-                                    @if (strpos($value->name, 'user') !== false)
+                            @foreach ($permission as $value)
+                                @if ($value->name !== false)
+                                    <div class="col-md-3">
                                         <label>
                                             <input type="checkbox" name="permission[]" value="{{ $value->name }}"
                                                 class="name">
                                             {{ $value->name }}
-                                        </label><br />
-                                    @endif
-                                @endforeach
-                            </div>
-                            <div class="col-md-2">
-                                @foreach ($permission as $value)
-                                    @if (strpos($value->name, 'role') !== false)
-                                        <label>
-                                            <input type="checkbox" name="permission[]" value="{{ $value->name }}"
-                                                class="name">
-                                            {{ $value->name }}
-                                        </label><br />
-                                    @endif
-                                @endforeach
-                            </div>
-
-                            <div class="col-md-2">
-                                @foreach ($permission as $value)
-                                    @if (strpos($value->name, 'project') !== false)
-                                        <label>
-                                            <input type="checkbox" name="permission[]" value="{{ $value->name }}"
-                                                class="name">
-                                            {{ $value->name }}
-                                        </label><br />
-                                    @endif
-                                @endforeach
-                            </div>
-                            <div class="col-md-2">
-                                @foreach ($permission as $value)
-                                    @if (strpos($value->name, 'product') !== false)
-                                        <label>
-                                            <input type="checkbox" name="permission[]" value="{{ $value->name }}"
-                                                class="name">
-                                            {{ $value->name }}
-                                        </label><br />
-                                    @endif
-                                @endforeach
-                                <br />
-                            </div>
+                                        </label>
+                                    </div>
+                                @endif
+                            @endforeach
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                    <button class="btn btn-primary">Submit</button>
-                </div>
+            </div>
+            <div class="col-xs-12 mb-3 text-center">
+                <button class="btn btn-primary">Submit</button>
             </div>
         </form>
     </div>

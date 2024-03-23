@@ -13,7 +13,7 @@
                 </div>
                 <div class="pull-right">
                     @can('role-create')
-                        <a class="btn btn-success" href="{{ route('roles.create') }}"> Create New Role</a>
+                        <a class="btn btn-success" href="{{ route('roles.create') }}">เพิ่มบทบาท</a>
                     @endcan
                 </div>
             </div>
@@ -35,14 +35,14 @@
                     <td>{{ $role->name }}</td>
                     <td>
                         <form action="{{ route('roles.destroy', $role->id) }}" method="POST">
-                            <a class="btn btn-info" href="{{ route('roles.show', $role->id) }}">Show</a>
+                            <a class="btn btn-info" href="{{ route('roles.show', $role->id) }}">แสดง</a>
                             @can('role-edit')
-                                <a class="btn btn-primary" href="{{ route('roles.edit', $role->id) }}">Edit</a>
+                                <a class="btn btn-primary" href="{{ route('roles.edit', $role->id) }}">แก้ไข</a>
                             @endcan
 
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-danger">Delete</button>
+                            <button class="btn btn-danger">ลบ</button>
                         </form>
                     </td>
                 </tr>
