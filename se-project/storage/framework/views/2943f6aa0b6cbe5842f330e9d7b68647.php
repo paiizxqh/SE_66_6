@@ -17,10 +17,11 @@
         <div class="row">
             <div class="col-lg-12 margin-tb mb-4">
                 <div class="pull-left">
-                    <h2> Show Role</h2>
-                </div>
-                <div class="float-end">
-                    <a class="btn btn-primary" href="<?php echo e(route('roles.index')); ?>"> Back</a>
+                    <h2> Show Role
+                        <div class="float-end">
+                            <a class="btn btn-primary" href="<?php echo e(route('roles.index')); ?>"> Back</a>
+                        </div>
+                    </h2>
                 </div>
             </div>
         </div>

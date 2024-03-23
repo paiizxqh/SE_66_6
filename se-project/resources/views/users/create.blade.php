@@ -33,7 +33,7 @@
             <div class="mb-3">
                 <label for="employee_id" class="form-label">Employee ID:</label>
                 <input type="text" id="employee_id" name="employee_id" class="form-control"
-                placeholder="Employee ID" value="{{ $newEmployeeId }}">         
+                    placeholder="Employee ID">
             </div>
 
             <div class="mb-3">
@@ -72,5 +72,4 @@
             </div>
         </form>
     </div>
-    @include('sweetalert::alert')
 </x-app-layout>

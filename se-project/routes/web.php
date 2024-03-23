@@ -8,8 +8,6 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\CustomerController;
 
-
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,7 +20,6 @@ use App\Http\Controllers\CustomerController;
 */
 
 Route::get('/', function () {
-
     return view('welcome');
 });
 

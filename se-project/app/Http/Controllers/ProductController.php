@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Inventory;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -26,7 +26,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Inventory::latest()->paginate(50);
+        $products = Product::latest()->paginate(50);
         return view('products.index', compact('products'));
     }
 
@@ -53,7 +53,7 @@ class ProductController extends Controller
             'detail' => 'required',
         ]);
 
-        Inventory::create($request->all());
+        Product::create($request->all());
 
         return redirect()->route('products.index')
             ->with('success', 'Product created successfully.');
@@ -65,7 +65,7 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Inventory $product)
+    public function show(Product $product)
     {
         return view('products.show', compact('product'));
     }
@@ -76,7 +76,7 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Inventory $product)
+    public function edit(Product $product)
     {
         return view('products.edit', compact('product'));
     }
@@ -88,7 +88,7 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Inventory $product)
+    public function update(Request $request, Product $product)
     {
         request()->validate([
             'name' => 'required',
@@ -107,7 +107,7 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Inventory $product)
+    public function destroy(Product $product)
     {
         $product->delete();
 
