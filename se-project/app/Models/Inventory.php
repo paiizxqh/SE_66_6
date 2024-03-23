@@ -12,18 +12,15 @@ class Inventory extends Model
     protected $table = 'inventory';
 
     protected $fillable = [
-        'product_id',
         'name',
-        'product_type_id',
         'image',
         'description',
         'remain',
         'minimum',
-        'unit',
     ];
 
-    public function category(){
+    public function category()
+    {
         return $this->belongsTo(Category::class);
     }
-
 }

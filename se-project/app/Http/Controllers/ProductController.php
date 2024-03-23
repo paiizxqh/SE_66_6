@@ -57,7 +57,7 @@ class ProductController extends Controller
             'detail' => 'required',
         ]);
 
-        Product::create($request->all());
+        Inventory::create($request->all());
 
         return redirect()->route('products.index')
             ->with('success', 'Product created successfully.');
@@ -69,7 +69,7 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Product $product)
+    public function show(Inventory $product)
     {
         return view('products.show', compact('product'));
     }
@@ -80,7 +80,7 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(Inventory $product)
     {
         return view('products.edit', compact('product'));
     }
@@ -92,7 +92,7 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Inventory $product)
     {
         request()->validate([
             'name' => 'required',
@@ -111,7 +111,7 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(Inventory $product)
     {
         $product->delete();
 
