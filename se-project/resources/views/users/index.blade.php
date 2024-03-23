@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-lg-12 margin-tb mb-4">
                 <div class="pull-left">
-                    <h2>Manage User</h2>
+                    <h2>ข้อมูลพนักงาน</h2>
                 </div>
                 <div class="float-end">
                     <a class="btn btn-success" href="{{ route('users.create') }}"> Create New User</a>
@@ -49,11 +49,12 @@
                             <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}">Edit</a>
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-danger">Delete</button>
+                            <a href="{{ route('users.destroy', $user->id) }}" class="btn btn-danger" data-confirm-delete="true">Delete</a>
                         </form>
                     </td>
                 </tr>
             @endforeach
         </table>
     </div>
+    @include('sweetalert::alert')
 </x-app-layout>

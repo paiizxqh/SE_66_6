@@ -11,7 +11,7 @@
                         <x-nav-link :href="route('users.index')" :active="request()->routeIs('users')">ข้อมูลพนักงาน</x-nav-link>
                         <x-nav-link :href="route('roles.index')" :active="request()->routeIs('users')">บทบาทพนักงาน</x-nav-link>
                         <x-nav-link :href="route('projects.index')" :active="request()->routeIs('users')">รายการโครงการ</x-nav-link>
-                        <x-nav-link :href="route('products.index')" :active="request()->routeIs('users')">รายการอุปกรณ์</x-nav-link>
+                        <x-nav-link :href="route('products.index')" :active="request()->routeIs('users')">คลังอุปกรณ์</x-nav-link>
                         <x-nav-link :href="route('projects.index')" :active="request()->routeIs('users')">ข้อมูลลูกค้า</x-nav-link>
                         <x-nav-link :href="route('projects.index')" :active="request()->routeIs('users')">ข้อมูลทีม</x-nav-link>
                     @endcan

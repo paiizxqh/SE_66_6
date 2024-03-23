@@ -23,7 +23,10 @@ class RoleController extends Controller
 
     public function index(Request $request)
     {
-        $roles = Role::orderBy('id', 'DESC')->paginate(6);
+        $roles = Role::orderBy('name', 'ASC')->paginate(7);
+        $title = 'Delete Role!';
+        $text = "Are you sure you want to delete?";
+        confirmDelete($title, $text);
         return view('roles.index', compact('roles'));
     }
 
@@ -37,8 +40,10 @@ class RoleController extends Controller
     {
 
         $this->validate($request, [
-            'name' => 'required|unique:roles,name',
+            'name' => 'required|unique:roles,name|regex:/^[^\d]+$/',
             'permission' => 'required',
+        ], [
+            'name.regex' => 'The name field must not contain any numbers.'
         ]);
 
         $role = Role::create(['name' => $request->input('name')]);
@@ -73,8 +78,10 @@ class RoleController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required',
+            'name' => 'required|regex:/^[^\d]+$/',
             'permission' => 'required|array',
+        ], [
+            'name.regex' => 'The name field must not contain any numbers.'
         ]);
 
         $role = Role::find($id);

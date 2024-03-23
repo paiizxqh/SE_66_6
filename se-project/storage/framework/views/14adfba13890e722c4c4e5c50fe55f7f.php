@@ -17,11 +17,10 @@
         <div class="row">
             <div class="col-lg-12 margin-tb mb-4">
                 <div class="pull-left">
-                    <h2>Edit User
-                        <div class="float-end">
-                            <a class="btn btn-primary" href="<?php echo e(route('users.index')); ?>"> Back</a>
-                        </div>
-                    </h2>
+                    <h2>Edit User</h2>
+                </div>
+                <div class="float-end">
+                    <a class="btn btn-primary" href="<?php echo e(route('users.index')); ?>"> Back</a>
                 </div>
             </div>
         </div>
@@ -74,8 +73,8 @@
                 <div class="col-xs-12 mb-3">
                     <div class="form-group">
                         <strong>Confirm Password:</strong>
-                        <input type="password" name="confirm-password" value="<?php echo e($user->password); ?>" class="form-control"
-                            placeholder="Confirm Password">
+                        <input type="password" name="confirm-password" value="<?php echo e($user->password); ?>"
+                            class="form-control" placeholder="Confirm Password">
                     </div>
                 </div>
                 <div class="col-xs-12 mb-3">
@@ -86,7 +85,7 @@
                                 <option value="<?php echo e($role); ?>"><?php echo e($role); ?></option>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
-                        
+
                     </div>
                 </div>
                 <div class="col-xs-12 mb-3 text-center">
@@ -95,6 +94,7 @@
             </div>
         </form>
     </div>
+    <?php echo $__env->make('sweetalert::alert', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>

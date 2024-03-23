@@ -6,6 +6,8 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProjectController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,6 +20,7 @@ use App\Http\Controllers\ProjectController;
 */
 
 Route::get('/', function () {
+
     return view('welcome');
 });
 

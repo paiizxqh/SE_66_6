@@ -41,7 +41,8 @@
 
             <div class="mb-3">
                 <label for="employee_id" class="form-label">Employee ID:</label>
-                <input type="text" id="employee_id" name="employee_id" class="form-control" placeholder="Employee ID">
+                <input type="text" id="employee_id" name="employee_id" class="form-control"
+                placeholder="Employee ID" value="<?php echo e($newEmployeeId); ?>">         
             </div>
 
             <div class="mb-3">
@@ -80,6 +81,7 @@
             </div>
         </form>
     </div>
+    <?php echo $__env->make('sweetalert::alert', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>
