@@ -1,3 +1,4 @@
+@section('title', 'ข้อมูลพนักงาน')
 <x-app-layout>
     <x-slot name="head">
         <script src="{{ asset('js/app.js') }}" defer></script>

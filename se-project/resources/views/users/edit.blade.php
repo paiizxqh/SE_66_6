@@ -1,3 +1,4 @@
+@section('title', 'ข้อมูลพนักงาน')
 <x-app-layout>
     <x-slot name="head">
         <script src="{{ asset('js/app.js') }}" defer></script>
@@ -8,10 +9,10 @@
         <div class="row">
             <div class="col-lg-12 margin-tb mb-4">
                 <div class="pull-left">
-                    <h2>Edit User</h2>
+                    <h2>แก้ไขข้อมูลพนักงาน</h2>
                 </div>
                 <div class="float-end">
-                    <a class="btn btn-primary" href="{{ route('users.index') }}"> Back</a>
+                    <a class="btn btn-primary" href="{{ route('users.index') }}"> Back </a>
                 </div>
             </div>
         </div>

@@ -1,3 +1,4 @@
+<?php $__env->startSection('title', 'ข้อมูลพนักงาน'); ?>
 <?php if (isset($component)) { $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54 = $attributes; } ?>
 <?php $component = App\View\Components\AppLayout::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
@@ -8,7 +9,7 @@
 <?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
 <?php endif; ?>
 <?php $component->withAttributes([]); ?>
-     <?php $__env->slot('head', null, []); ?> 
+     <?php $__env->slot('head', null, []); ?>
         <script src="<?php echo e(asset('js/app.js')); ?>" defer></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="<?php echo e(asset('css/app.css')); ?>" rel="stylesheet">
@@ -17,11 +18,10 @@
         <div class="row">
             <div class="col-lg-12 margin-tb mb-4">
                 <div class="pull-left">
-                    <h2>Edit User
-                        <div class="float-end">
-                            <a class="btn btn-primary" href="<?php echo e(route('users.index')); ?>"> Back</a>
-                        </div>
-                    </h2>
+                    <h2>แก้ไขข้อมูลพนักงาน</h2>
+                </div>
+                <div class="float-end">
+                    <a class="btn btn-primary" href="<?php echo e(route('users.index')); ?>"> Back </a>
                 </div>
             </div>
         </div>
@@ -86,7 +86,7 @@
                                 <option value="<?php echo e($role); ?>"><?php echo e($role); ?></option>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
-                        
+
                     </div>
                 </div>
                 <div class="col-xs-12 mb-3 text-center">
