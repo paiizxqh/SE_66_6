@@ -9,8 +9,7 @@ use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
-    function __construct()
-    {
+    function __construct(){
         $this->middleware(['permission:project-list|project-create|project-edit|project-delete'], ['only' => ['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']]);
         $this->middleware(['permission:project-list'], ['only' => ['index', 'show']]);
         $this->middleware(['permission:project-create'], ['only' => ['create', 'store']]);
@@ -19,6 +18,14 @@ class ProjectController extends Controller
     }
 
     function index(Request $request){
+        $sort = $request->input('sort', 'start_date');
+
+    // ตรวจสอบว่าค่า sort ที่ถูกส่งมาถูกต้องหรือไม่
+    $validSortOptions = ['start_date', 'status'];
+    if (!in_array($sort, $validSortOptions)) {
+        // ในกรณีที่ค่า sort ไม่ถูกต้อง กำหนดให้เรียงตามวันที่เป็นค่าเริ่มต้น
+        $sort = 'start_date';
+    }
         $totalProjects = Project::count();
         $completeStatus = Project::where('status_id','3')->count();
         $pendingStatus = Project::where('status_id','2')->count();
@@ -28,7 +35,7 @@ class ProjectController extends Controller
         ->join('customers', 'customer_id', '=', 'customers.id')
         ->join('users', 'assistant_id', '=', 'users.id')
         ->select('projects.*','project_status.status','customers.cus_id','customers.name'/*,'users.name' */)
-        ->orderByRaw('start_date, project_status.status')
+        //->orderByRaw('start_date, project_status.status')
         ->paginate(10);
         /* ->get(); -- ถ้าจะใช้ paginate(0) ต้องเอาบรรทัดนี้ออกด้วย */
         return view('projects.index', compact('data','totalProjects','completeStatus','pendingStatus','processStatus'));

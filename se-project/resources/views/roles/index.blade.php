@@ -48,6 +48,6 @@
                 </tr>
             @endforeach
         </table>
-        {!! $roles->render() !!}
+        {{-- {!! $roles->render() !!} --}}
     </div>
 </x-app-layout>
