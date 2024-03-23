@@ -5,10 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Laravel\Pulse\Facades\Pulse;
 use Illuminate\Support\Facades\DB;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
 
 class CustomerController extends Controller{
+
     function __construct(){
         $this->middleware(['permission:customer-list|customer-create|customer-edit|customer-delete'], ['only' => ['index', 'create', 'store', 'show', 'edit', 'update', 'destroy']]);
         $this->middleware(['permission:customer-list'], ['only' => ['index','show']]);

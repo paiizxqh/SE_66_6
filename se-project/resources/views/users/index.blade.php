@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-lg-12 margin-tb mb-4">
                 <div class="pull-left">
-                    <h2>Manage User</h2>
+                    <h2>จัดการข้อมูลพนักงาน</h2>
                 </div>
                 <div class="float-end">
                     <a class="btn btn-success" href="{{ route('users.create') }}"> Create New User</a>
@@ -56,4 +56,5 @@
             @endforeach
         </table>
     </div>
+    @include('sweetalert::alert')
 </x-app-layout>
