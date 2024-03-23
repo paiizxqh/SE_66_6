@@ -4,6 +4,7 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">หน้าแรก</h2>
         <link rel="stylesheet" href="{{ asset('assets/css/dashboard.css') }}">
     </x-slot>
+
     <div class="container">
         <div class="py-12">
             <div class="page-content container note-has-grid">
@@ -108,4 +109,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
 </x-app-layout>
