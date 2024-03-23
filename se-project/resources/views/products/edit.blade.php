@@ -47,8 +47,8 @@
                 <div class="col-xs-12 mb-3">
                     <div class="form-group">
                         <strong>Description:</strong>
-                        <input type="text" value="{{ $product->description }}" name="description" class="form-control"
-                            placeholder="Description">
+                        <input type="text" value="{{ $product->description }}" name="description"
+                            class="form-control" placeholder="Description">
                     </div>
                 </div>
                 <div class="col-xs-12 mb-3">
