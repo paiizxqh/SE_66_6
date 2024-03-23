@@ -3,11 +3,8 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
-                
-
-                <!-- Navigation Links -->
-                <div class="shrink-0 flex items-center"> 
-
+                <!-- Navigation Links || sm:ms-10 -->
+                <div class="hidden space-x-8  sm:-my-px sm:flex">
                     <?php if (isset($component)) { $__componentOriginalc295f12dca9d42f28a259237a5724830 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc295f12dca9d42f28a259237a5724830 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.nav-link','data' => ['href' => route('dashboard'),'active' => request()->routeIs('dashboard')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
@@ -17,10 +14,7 @@
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
 <?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('dashboard')),'active' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('dashboard'))]); ?>
-                        <?php echo e(__('Home')); ?>
-
-                     <?php echo $__env->renderComponent(); ?>
+<?php $component->withAttributes(['href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('dashboard')),'active' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('dashboard'))]); ?>หน้าแรก <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalc295f12dca9d42f28a259237a5724830)): ?>
 <?php $attributes = $__attributesOriginalc295f12dca9d42f28a259237a5724830; ?>
@@ -30,7 +24,123 @@
 <?php $component = $__componentOriginalc295f12dca9d42f28a259237a5724830; ?>
 <?php unset($__componentOriginalc295f12dca9d42f28a259237a5724830); ?>
 <?php endif; ?>
-
+                    
+                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('DeveloperRole')): ?>
+                        <?php if (isset($component)) { $__componentOriginalc295f12dca9d42f28a259237a5724830 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalc295f12dca9d42f28a259237a5724830 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.nav-link','data' => ['href' => route('users.index'),'active' => request()->routeIs('users')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('nav-link'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('users.index')),'active' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('users'))]); ?>ข้อมูลพนักงาน <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalc295f12dca9d42f28a259237a5724830)): ?>
+<?php $attributes = $__attributesOriginalc295f12dca9d42f28a259237a5724830; ?>
+<?php unset($__attributesOriginalc295f12dca9d42f28a259237a5724830); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc295f12dca9d42f28a259237a5724830)): ?>
+<?php $component = $__componentOriginalc295f12dca9d42f28a259237a5724830; ?>
+<?php unset($__componentOriginalc295f12dca9d42f28a259237a5724830); ?>
+<?php endif; ?>
+                        <?php if (isset($component)) { $__componentOriginalc295f12dca9d42f28a259237a5724830 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalc295f12dca9d42f28a259237a5724830 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.nav-link','data' => ['href' => route('roles.index'),'active' => request()->routeIs('users')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('nav-link'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('roles.index')),'active' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('users'))]); ?>บทบาทพนักงาน <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalc295f12dca9d42f28a259237a5724830)): ?>
+<?php $attributes = $__attributesOriginalc295f12dca9d42f28a259237a5724830; ?>
+<?php unset($__attributesOriginalc295f12dca9d42f28a259237a5724830); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc295f12dca9d42f28a259237a5724830)): ?>
+<?php $component = $__componentOriginalc295f12dca9d42f28a259237a5724830; ?>
+<?php unset($__componentOriginalc295f12dca9d42f28a259237a5724830); ?>
+<?php endif; ?>
+                        <?php if (isset($component)) { $__componentOriginalc295f12dca9d42f28a259237a5724830 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalc295f12dca9d42f28a259237a5724830 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.nav-link','data' => ['href' => route('projects.index'),'active' => request()->routeIs('users')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('nav-link'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('projects.index')),'active' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('users'))]); ?>รายการโครงการ <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalc295f12dca9d42f28a259237a5724830)): ?>
+<?php $attributes = $__attributesOriginalc295f12dca9d42f28a259237a5724830; ?>
+<?php unset($__attributesOriginalc295f12dca9d42f28a259237a5724830); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc295f12dca9d42f28a259237a5724830)): ?>
+<?php $component = $__componentOriginalc295f12dca9d42f28a259237a5724830; ?>
+<?php unset($__componentOriginalc295f12dca9d42f28a259237a5724830); ?>
+<?php endif; ?>
+                        <?php if (isset($component)) { $__componentOriginalc295f12dca9d42f28a259237a5724830 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalc295f12dca9d42f28a259237a5724830 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.nav-link','data' => ['href' => route('products.index'),'active' => request()->routeIs('users')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('nav-link'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('products.index')),'active' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('users'))]); ?>คลังอุปกรณ์ <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalc295f12dca9d42f28a259237a5724830)): ?>
+<?php $attributes = $__attributesOriginalc295f12dca9d42f28a259237a5724830; ?>
+<?php unset($__attributesOriginalc295f12dca9d42f28a259237a5724830); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc295f12dca9d42f28a259237a5724830)): ?>
+<?php $component = $__componentOriginalc295f12dca9d42f28a259237a5724830; ?>
+<?php unset($__componentOriginalc295f12dca9d42f28a259237a5724830); ?>
+<?php endif; ?>
+                        <?php if (isset($component)) { $__componentOriginalc295f12dca9d42f28a259237a5724830 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalc295f12dca9d42f28a259237a5724830 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.nav-link','data' => ['href' => route('projects.index'),'active' => request()->routeIs('users')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('nav-link'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('projects.index')),'active' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('users'))]); ?>ข้อมูลลูกค้า <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalc295f12dca9d42f28a259237a5724830)): ?>
+<?php $attributes = $__attributesOriginalc295f12dca9d42f28a259237a5724830; ?>
+<?php unset($__attributesOriginalc295f12dca9d42f28a259237a5724830); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc295f12dca9d42f28a259237a5724830)): ?>
+<?php $component = $__componentOriginalc295f12dca9d42f28a259237a5724830; ?>
+<?php unset($__componentOriginalc295f12dca9d42f28a259237a5724830); ?>
+<?php endif; ?>
+                        <?php if (isset($component)) { $__componentOriginalc295f12dca9d42f28a259237a5724830 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalc295f12dca9d42f28a259237a5724830 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.nav-link','data' => ['href' => route('projects.index'),'active' => request()->routeIs('users')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('nav-link'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('projects.index')),'active' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('users'))]); ?>ข้อมูลทีม <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalc295f12dca9d42f28a259237a5724830)): ?>
+<?php $attributes = $__attributesOriginalc295f12dca9d42f28a259237a5724830; ?>
+<?php unset($__attributesOriginalc295f12dca9d42f28a259237a5724830); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc295f12dca9d42f28a259237a5724830)): ?>
+<?php $component = $__componentOriginalc295f12dca9d42f28a259237a5724830; ?>
+<?php unset($__componentOriginalc295f12dca9d42f28a259237a5724830); ?>
+<?php endif; ?>
+                    <?php endif; ?>
                     <!--Page for Admin-->
                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('AdminRole')): ?>
                         <?php if (isset($component)) { $__componentOriginalc295f12dca9d42f28a259237a5724830 = $component; } ?>
@@ -42,10 +152,7 @@
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
 <?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('users.index')),'active' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('users'))]); ?>
-                            <?php echo e(__('Manage User')); ?>
-
-                         <?php echo $__env->renderComponent(); ?>
+<?php $component->withAttributes(['href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('users.index')),'active' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('users'))]); ?>ข้อมูลพนักงาน <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalc295f12dca9d42f28a259237a5724830)): ?>
 <?php $attributes = $__attributesOriginalc295f12dca9d42f28a259237a5724830; ?>
@@ -55,8 +162,6 @@
 <?php $component = $__componentOriginalc295f12dca9d42f28a259237a5724830; ?>
 <?php unset($__componentOriginalc295f12dca9d42f28a259237a5724830); ?>
 <?php endif; ?>
-                    <?php endif; ?>
-                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('AdminRole')): ?>
                         <?php if (isset($component)) { $__componentOriginalc295f12dca9d42f28a259237a5724830 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc295f12dca9d42f28a259237a5724830 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.nav-link','data' => ['href' => route('roles.index'),'active' => request()->routeIs('users')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
@@ -66,10 +171,7 @@
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
 <?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('roles.index')),'active' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('users'))]); ?>
-                            <?php echo e(__('Manage Role')); ?>
-
-                         <?php echo $__env->renderComponent(); ?>
+<?php $component->withAttributes(['href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('roles.index')),'active' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('users'))]); ?>บทบาทพนักงาน <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginalc295f12dca9d42f28a259237a5724830)): ?>
 <?php $attributes = $__attributesOriginalc295f12dca9d42f28a259237a5724830; ?>
@@ -80,17 +182,137 @@
 <?php unset($__componentOriginalc295f12dca9d42f28a259237a5724830); ?>
 <?php endif; ?>
                     <?php endif; ?>
-
-                    <!--Page for Manager-->
-
-                    <!--Page for Sales-->
-
-                    <!--Page for Assistant-->
-
-                    <!--Page for Academician-->
-
-                    <!--Page for Surveyor-->
-
+                    <!--Page for Manager | Project : RU ; TeamProject : CRUD -->
+                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('ManagerRole')): ?>
+                        <?php if (isset($component)) { $__componentOriginalc295f12dca9d42f28a259237a5724830 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalc295f12dca9d42f28a259237a5724830 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.nav-link','data' => ['href' => route('projects.index'),'active' => request()->routeIs('users')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('nav-link'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('projects.index')),'active' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('users'))]); ?>รายการโครงการ <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalc295f12dca9d42f28a259237a5724830)): ?>
+<?php $attributes = $__attributesOriginalc295f12dca9d42f28a259237a5724830; ?>
+<?php unset($__attributesOriginalc295f12dca9d42f28a259237a5724830); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc295f12dca9d42f28a259237a5724830)): ?>
+<?php $component = $__componentOriginalc295f12dca9d42f28a259237a5724830; ?>
+<?php unset($__componentOriginalc295f12dca9d42f28a259237a5724830); ?>
+<?php endif; ?>
+                    <?php endif; ?>
+                    <!--Page for Sales | Project : CRUD ; Customer : CRUD -->
+                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('SalesRole')): ?>
+                        <?php if (isset($component)) { $__componentOriginalc295f12dca9d42f28a259237a5724830 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalc295f12dca9d42f28a259237a5724830 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.nav-link','data' => ['href' => route('projects.index'),'active' => request()->routeIs('users')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('nav-link'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('projects.index')),'active' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('users'))]); ?>รายการโครงการ <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalc295f12dca9d42f28a259237a5724830)): ?>
+<?php $attributes = $__attributesOriginalc295f12dca9d42f28a259237a5724830; ?>
+<?php unset($__attributesOriginalc295f12dca9d42f28a259237a5724830); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc295f12dca9d42f28a259237a5724830)): ?>
+<?php $component = $__componentOriginalc295f12dca9d42f28a259237a5724830; ?>
+<?php unset($__componentOriginalc295f12dca9d42f28a259237a5724830); ?>
+<?php endif; ?>
+                    <?php endif; ?>
+                    <!--Page for Assistant | Proejct : R ; Inventory : CRUD -->
+                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('AssistantRole')): ?>
+                        <?php if (isset($component)) { $__componentOriginalc295f12dca9d42f28a259237a5724830 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalc295f12dca9d42f28a259237a5724830 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.nav-link','data' => ['href' => route('projects.index'),'active' => request()->routeIs('users')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('nav-link'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('projects.index')),'active' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('users'))]); ?>รายการโครงการ <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalc295f12dca9d42f28a259237a5724830)): ?>
+<?php $attributes = $__attributesOriginalc295f12dca9d42f28a259237a5724830; ?>
+<?php unset($__attributesOriginalc295f12dca9d42f28a259237a5724830); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc295f12dca9d42f28a259237a5724830)): ?>
+<?php $component = $__componentOriginalc295f12dca9d42f28a259237a5724830; ?>
+<?php unset($__componentOriginalc295f12dca9d42f28a259237a5724830); ?>
+<?php endif; ?>
+                    <?php endif; ?>
+                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('AssistantRole')): ?>
+                        <?php if (isset($component)) { $__componentOriginalc295f12dca9d42f28a259237a5724830 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalc295f12dca9d42f28a259237a5724830 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.nav-link','data' => ['href' => route('products.index'),'active' => request()->routeIs('users')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('nav-link'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('products.index')),'active' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('users'))]); ?>รายการอุปกรณ์ <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalc295f12dca9d42f28a259237a5724830)): ?>
+<?php $attributes = $__attributesOriginalc295f12dca9d42f28a259237a5724830; ?>
+<?php unset($__attributesOriginalc295f12dca9d42f28a259237a5724830); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc295f12dca9d42f28a259237a5724830)): ?>
+<?php $component = $__componentOriginalc295f12dca9d42f28a259237a5724830; ?>
+<?php unset($__componentOriginalc295f12dca9d42f28a259237a5724830); ?>
+<?php endif; ?>
+                    <?php endif; ?>
+                    <!--Page for Academician | Project : RU -->
+                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('AcademicianRole')): ?>
+                        <?php if (isset($component)) { $__componentOriginalc295f12dca9d42f28a259237a5724830 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalc295f12dca9d42f28a259237a5724830 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.nav-link','data' => ['href' => route('projects.index'),'active' => request()->routeIs('users')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('nav-link'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('projects.index')),'active' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('users'))]); ?>รายการโครงการ <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalc295f12dca9d42f28a259237a5724830)): ?>
+<?php $attributes = $__attributesOriginalc295f12dca9d42f28a259237a5724830; ?>
+<?php unset($__attributesOriginalc295f12dca9d42f28a259237a5724830); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc295f12dca9d42f28a259237a5724830)): ?>
+<?php $component = $__componentOriginalc295f12dca9d42f28a259237a5724830; ?>
+<?php unset($__componentOriginalc295f12dca9d42f28a259237a5724830); ?>
+<?php endif; ?>
+                    <?php endif; ?>
+                    <!--Page for Surveyor | Project : RU -->
+                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('SurveyorRole')): ?>
+                        <?php if (isset($component)) { $__componentOriginalc295f12dca9d42f28a259237a5724830 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalc295f12dca9d42f28a259237a5724830 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.nav-link','data' => ['href' => route('projects.index'),'active' => request()->routeIs('users')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+<?php $component->withName('nav-link'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag && $constructor = (new ReflectionClass(Illuminate\View\AnonymousComponent::class))->getConstructor()): ?>
+<?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('projects.index')),'active' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('users'))]); ?>รายการโครงการ <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalc295f12dca9d42f28a259237a5724830)): ?>
+<?php $attributes = $__attributesOriginalc295f12dca9d42f28a259237a5724830; ?>
+<?php unset($__attributesOriginalc295f12dca9d42f28a259237a5724830); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalc295f12dca9d42f28a259237a5724830)): ?>
+<?php $component = $__componentOriginalc295f12dca9d42f28a259237a5724830; ?>
+<?php unset($__componentOriginalc295f12dca9d42f28a259237a5724830); ?>
+<?php endif; ?>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -147,15 +369,13 @@
 <?php unset($__componentOriginal68cb1971a2b92c9735f83359058f7108); ?>
 <?php endif; ?>
 
-
                         <!-- Authentication -->
                         <form method="POST" action="<?php echo e(route('logout')); ?>">
                             <?php echo csrf_field(); ?>
-
                             <?php if (isset($component)) { $__componentOriginal68cb1971a2b92c9735f83359058f7108 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal68cb1971a2b92c9735f83359058f7108 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.dropdown-link','data' => ['href' => route('logout'),'onclick' => 'event.preventDefault();
-                                                this.closest(\'form\').submit();']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
+                                this.closest(\'form\').submit();']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
 <?php $component->withName('dropdown-link'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
@@ -163,7 +383,7 @@
 <?php $attributes = $attributes->except(collect($constructor->getParameters())->map->getName()->all()); ?>
 <?php endif; ?>
 <?php $component->withAttributes(['href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('logout')),'onclick' => 'event.preventDefault();
-                                                this.closest(\'form\').submit();']); ?>
+                                this.closest(\'form\').submit();']); ?>
                                 <?php echo e(__('Log Out')); ?>
 
                              <?php echo $__env->renderComponent(); ?>

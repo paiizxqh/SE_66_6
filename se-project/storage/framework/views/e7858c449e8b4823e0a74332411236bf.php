@@ -1,3 +1,4 @@
+<?php $__env->startSection('title', 'บทบาทพนักงาน'); ?>
 <?php if (isset($component)) { $__componentOriginal9ac128a9029c0e4701924bd2d73d7f54 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54 = $attributes; } ?>
 <?php $component = App\View\Components\AppLayout::resolve([] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? (array) $attributes->getIterator() : [])); ?>
@@ -17,13 +18,12 @@
         <div class="row">
             <div class="col-lg-12 margin-tb mb-4">
                 <div class="pull-left">
-                    <h2>Manage Role
-                        <div class="float-end">
-                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('role-create')): ?>
-                                <a class="btn btn-success" href="<?php echo e(route('roles.create')); ?>"> Create New Role</a>
-                            <?php endif; ?>
-                        </div>
-                    </h2>
+                    <h2>บทบาทพนักงาน</h2>
+                </div>
+                <div class="pull-right">
+                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('role-create')): ?>
+                        <a class="btn btn-success" href="<?php echo e(route('roles.create')); ?>"> Create New Role</a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -51,18 +51,17 @@
 
                             <?php echo csrf_field(); ?>
                             <?php echo method_field('DELETE'); ?>
-                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('AdminRole')): ?>
-                                <button class="btn btn-danger">Delete</button>
-                            <?php endif; ?>
+                            <a href="<?php echo e(route('roles.destroy', $role->id)); ?>" class="btn btn-danger" data-confirm-delete="true">Delete</a>
                         </form>
                     </td>
                 </tr>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </table>
-
         <?php echo $roles->render(); ?>
 
     </div>
+    <?php echo $__env->make('sweetalert::alert', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>

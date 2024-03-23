@@ -1,4 +1,4 @@
-@section('title', 'รายการอุปกรณ์')
+@section('title', 'คลังอุปกรณ์')
 <x-app-layout>
     <x-slot name="head">
         <script src="{{ asset('js/app.js') }}" defer></script>
@@ -11,13 +11,13 @@
             <div class="row">
                 <div class="col-lg-12 margin-tb mb-4">
                     <div class="pull-left">
-                        <h2>Products</h2>
+                        <h2>คลังอุปกรณ์</h2>
                     </div>
+                    {{--}}
                     <div class="float-end">
-                        @can('product-create')
-                            <a class="btn btn-success" href="{{ route('products.create') }}"> Create New Product</a>
-                        @endcan
+                        <a class="btn btn-success" href="{{ route('users.create') }}"> Create New User</a>
                     </div>
+                    {{--}}
                 </div>
 
                 @if ($message = Session::get('success'))
@@ -28,14 +28,20 @@
 
                 <table class="table table-striped table-hover">
                     <tr>
+                        <th>Image</th>
+                        <th>Product ID</th>
                         <th>Name</th>
-                        <th>Details</th>
-                        <th width="280px">Action</th>
+                        <th>Remain</th>
+                        <th>Category</th>
                     </tr>
                     @foreach ($products as $product)
                         <tr>
+                            <td>{{ $product->image }}</td>
+                            <td>{{ $product->product_id }}</td>
                             <td>{{ $product->name }}</td>
-                            <td>{{ $product->detail }}</td>
+                            <td>{{ $product->remain }}</td>
+                            <td>{{ $product->unit }}</td>
+                            {{--}}
                             <td>
                                 <form action="{{ route('products.destroy', $product->id) }}" method="POST">
                                     <a class="btn btn-info" href="{{ route('products.show', $product->id) }}">Show</a>
@@ -51,6 +57,7 @@
                                     @endcan
                                 </form>
                             </td>
+                            {{--}}
                         </tr>
                     @endforeach
                 </table>

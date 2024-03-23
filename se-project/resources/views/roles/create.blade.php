@@ -40,12 +40,54 @@
                     <div class="form-group">
                         <strong>Permission:</strong>
                         <br />
-                        @foreach ($permission as $value)
-                            <label>
-                                <input type="checkbox" name="permission[]" value="{{ $value->name }}" class="name">
-                                {{ $value->name }}</label>
-                            <br />
-                        @endforeach
+                        <div class="row">
+                            <div class="col-md-2">
+                                @foreach ($permission as $value)
+                                    @if (strpos($value->name, 'user') !== false)
+                                        <label>
+                                            <input type="checkbox" name="permission[]" value="{{ $value->name }}"
+                                                class="name">
+                                            {{ $value->name }}
+                                        </label><br />
+                                    @endif
+                                @endforeach
+                            </div>
+                            <div class="col-md-2">
+                                @foreach ($permission as $value)
+                                    @if (strpos($value->name, 'role') !== false)
+                                        <label>
+                                            <input type="checkbox" name="permission[]" value="{{ $value->name }}"
+                                                class="name">
+                                            {{ $value->name }}
+                                        </label><br />
+                                    @endif
+                                @endforeach
+                            </div>
+
+                            <div class="col-md-2">
+                                @foreach ($permission as $value)
+                                    @if (strpos($value->name, 'project') !== false)
+                                        <label>
+                                            <input type="checkbox" name="permission[]" value="{{ $value->name }}"
+                                                class="name">
+                                            {{ $value->name }}
+                                        </label><br />
+                                    @endif
+                                @endforeach
+                            </div>
+                            <div class="col-md-2">
+                                @foreach ($permission as $value)
+                                    @if (strpos($value->name, 'product') !== false)
+                                        <label>
+                                            <input type="checkbox" name="permission[]" value="{{ $value->name }}"
+                                                class="name">
+                                            {{ $value->name }}
+                                        </label><br />
+                                    @endif
+                                @endforeach
+                                <br />
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 text-center">
@@ -54,4 +96,5 @@
             </div>
         </form>
     </div>
+    @include('sweetalert::alert')
 </x-app-layout>

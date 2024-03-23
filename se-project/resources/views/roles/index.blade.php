@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-lg-12 margin-tb mb-4">
                 <div class="pull-left">
-                    <h2>Manage Role</h2>
+                    <h2>บทบาทพนักงาน</h2>
                 </div>
                 <div class="pull-right">
                     @can('role-create')
@@ -42,7 +42,7 @@
 
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-danger">Delete</button>
+                            <a href="{{ route('roles.destroy', $role->id) }}" class="btn btn-danger" data-confirm-delete="true">Delete</a>
                         </form>
                     </td>
                 </tr>
@@ -50,4 +50,6 @@
         </table>
         {{-- {!! $roles->render() !!} --}}
     </div>
+    @include('sweetalert::alert')
+
 </x-app-layout>
