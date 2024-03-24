@@ -18,10 +18,10 @@
         <div class="row">
             <div class="col-lg-12 margin-tb mb-4">
                 <div class="pull-left">
-                    <h2>Create New User</h2>
+                    <h2>เพิ่มข้อมูลพนักงาน</h2>
                 </div>
                 <div class="float-end">
-                    <a class="btn btn-primary" href="<?php echo e(route('users.index')); ?>"> Back</a>
+                    <a class="btn btn-primary" href="<?php echo e(route('users.index')); ?>">ย้อนกลับ</a>
                 </div>
             </div>
         </div>
@@ -41,13 +41,19 @@
             <?php echo csrf_field(); ?>
 
             <div class="mb-3">
+<<<<<<< HEAD
                 <label for="employee_id" class="form-label">Employee ID:</label>
                 <input type="text" id="employee_id" name="employee_id" class="form-control" placeholder="Employee ID">
+=======
+                <label for="employee_id" class="form-label">รหัสพนักงาน:</label>
+                <input type="text" id="employee_id" name="employee_id" class="form-control"
+                placeholder="รหัสพนักงาน" value="<?php echo e($newEmployeeId); ?>">         
+>>>>>>> 0a5b828cbad0cb94a81e2a8bec078159a3d9a7be
             </div>
 
             <div class="mb-3">
-                <label for="name" class="form-label">Name:</label>
-                <input type="text" id="name" name="name" class="form-control" placeholder="Name">
+                <label for="name" class="form-label">ชื่อ-สกุล:</label>
+                <input type="text" id="name" name="name" class="form-control" placeholder="ชื่อ-สกุล">
             </div>
 
             <div class="mb-3">
@@ -56,18 +62,18 @@
             </div>
 
             <div class="mb-3">
-                <label for="password" class="form-label">Password:</label>
-                <input type="password" id="password" name="password" class="form-control" placeholder="Password">
+                <label for="password" class="form-label">รหัสผ่าน:</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="รหัสผ่าน">
             </div>
 
             <div class="mb-3">
-                <label for="confirm-password" class="form-label">Confirm Password:</label>
+                <label for="confirm-password" class="form-label">ยืนยันรหัสผ่าน:</label>
                 <input type="password" id="confirm-password" name="confirm-password" class="form-control"
-                    placeholder="Confirm Password">
+                    placeholder="ยืนยันรหัสผ่าน">
             </div>
 
             <div class="mb-3">
-                <label for="roles" class="form-label">Role:</label>
+                <label for="roles" class="form-label">บทบาทพนักงาน:</label>
                 <select id="roles" class="form-control multiple" multiple name="roles[]">
                     <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <option value="<?php echo e($role); ?>"><?php echo e($role); ?></option>
@@ -77,7 +83,7 @@
             </div>
 
             <div class="text-center">
-                <button class="btn btn-primary">Submit</button>
+                <button class="btn btn-primary">ยืนยัน</button>
             </div>
         </form>
     </div>

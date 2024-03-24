@@ -50,7 +50,8 @@
                             <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}">แก้ไข</a>
                             @csrf
                             @method('DELETE')
-                            <a href="{{ route('users.destroy', $user->id) }}" class="btn btn-danger" data-confirm-delete="true">ลบ</a>
+                            <a href="{{ route('users.destroy', $user->id) }}" class="btn btn-danger"
+                                data-confirm-delete="true">ลบ</a>
                         </form>
                     </td>
                 </tr>

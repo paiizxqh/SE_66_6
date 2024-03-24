@@ -17,6 +17,7 @@
         <div class="row">
             <div class="col-lg-12 margin-tb mb-4">
                 <div class="pull-left">
+<<<<<<< HEAD
                     <h2>Manage Role
                         <div class="float-end">
                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('role-create')): ?>
@@ -24,6 +25,14 @@
                             <?php endif; ?>
                         </div>
                     </h2>
+=======
+                    <h2>บทบาทพนักงาน</h2>
+                </div>
+                <div class="pull-right">
+                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('role-create')): ?>
+                        <a class="btn btn-success" href="<?php echo e(route('roles.create')); ?>">เพิ่มข้อมูลบทบาท</a>
+                    <?php endif; ?>
+>>>>>>> 0a5b828cbad0cb94a81e2a8bec078159a3d9a7be
                 </div>
             </div>
         </div>
@@ -36,24 +45,28 @@
 
         <table class="table table-striped table-hover">
             <tr>
-                <th>Name</th>
-                <th width="280px">Action</th>
+                <th>บทบาทพนักงาน</th>
+                <th width="280px"> </th>
             </tr>
             <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <tr>
                     <td><?php echo e($role->name); ?></td>
                     <td>
                         <form action="<?php echo e(route('roles.destroy', $role->id)); ?>" method="POST">
-                            <a class="btn btn-info" href="<?php echo e(route('roles.show', $role->id)); ?>">Show</a>
+                            <a class="btn btn-info" href="<?php echo e(route('roles.show', $role->id)); ?>">รายละเอียด</a>
                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('role-edit')): ?>
-                                <a class="btn btn-primary" href="<?php echo e(route('roles.edit', $role->id)); ?>">Edit</a>
+                                <a class="btn btn-primary" href="<?php echo e(route('roles.edit', $role->id)); ?>">แก้ไข</a>
                             <?php endif; ?>
 
                             <?php echo csrf_field(); ?>
                             <?php echo method_field('DELETE'); ?>
+<<<<<<< HEAD
                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('AdminRole')): ?>
                                 <button class="btn btn-danger">Delete</button>
                             <?php endif; ?>
+=======
+                            <a href="<?php echo e(route('roles.destroy', $role->id)); ?>" class="btn btn-danger" data-confirm-delete="true">ลบ</a>
+>>>>>>> 0a5b828cbad0cb94a81e2a8bec078159a3d9a7be
                         </form>
                     </td>
                 </tr>

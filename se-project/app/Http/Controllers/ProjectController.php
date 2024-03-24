@@ -20,12 +20,12 @@ class ProjectController extends Controller
     function index(Request $request){
         $sort = $request->input('sort', 'start_date');
 
-    // ตรวจสอบว่าค่า sort ที่ถูกส่งมาถูกต้องหรือไม่
-    $validSortOptions = ['start_date', 'status'];
-    if (!in_array($sort, $validSortOptions)) {
-        // ในกรณีที่ค่า sort ไม่ถูกต้อง กำหนดให้เรียงตามวันที่เป็นค่าเริ่มต้น
-        $sort = 'start_date';
-    }
+        // ตรวจสอบว่าค่า sort ที่ถูกส่งมาถูกต้องหรือไม่
+        $validSortOptions = ['start_date', 'status'];
+        if (!in_array($sort, $validSortOptions)) {
+            // ในกรณีที่ค่า sort ไม่ถูกต้อง กำหนดให้เรียงตามวันที่เป็นค่าเริ่มต้น
+            $sort = 'start_date';
+        }
         $totalProjects = Project::count();
         $completeStatus = Project::where('status_id','3')->count();
         $pendingStatus = Project::where('status_id','2')->count();
@@ -73,4 +73,16 @@ class ProjectController extends Controller
         return view('projects.show', compact('data', 'project'));
     }
 
+    public function create(){
+        /* $project = DB::table('projects')
+            ->join('checkpoints as c', 'projects_id','=','projects.id')
+            ->join('parameter_in_checkpoints as pic', 'checkpoint_id', '=', 'checkpoints.id')
+            ->join('parameters as pt', 'parameter_id', '=', 'parameter_in_checkpoints.parameter_id')
+            ->join('users as academician', 'academician_id', '=', 'academician.id')
+            ->join('users as surveyor', 'surveyor_id', '=', 'surveyor.id')
+            ->join('customers as c', 'customer_id', '=', 'projects.customer_id')
+            ->select('projects.*','c.checkpoint_number','customers.cus_id','customers.name');
+            dd($project); */
+        return view('projects.detail', compact('project'));
+    }
 }

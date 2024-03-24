@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="head">
+    <x-slot name="header">
         <script src="{{ asset('js/app.js') }}" defer></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">

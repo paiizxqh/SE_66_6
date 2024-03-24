@@ -18,11 +18,18 @@
         <div class="row">
             <div class="col-lg-12 margin-tb">
                 <div class="pull-left">
+<<<<<<< HEAD
                     <h2>Edit Role
                         <div class="float-end">
                             <a class="btn btn-primary" href="<?php echo e(route('roles.index')); ?>"> Back</a>
                         </div>
                     </h2>
+=======
+                    <h2>แก้ไขข้อมูลบทบาท</h2>
+                </div>
+                <div class="float-end">
+                    <a class="btn btn-primary" href="<?php echo e(route('roles.index')); ?>">ย้อนกลับ</a>
+>>>>>>> 0a5b828cbad0cb94a81e2a8bec078159a3d9a7be
                 </div>
             </div>
         </div>
@@ -45,15 +52,16 @@
             <div class="row">
                 <div class="col-xs-12 mb-3">
                     <div class="form-group">
-                        <strong>Name:</strong>
+                        <strong>บทบาทพนักงาน:</strong>
                         <input type="text" value="<?php echo e($role->name); ?>" name="name" class="form-control"
-                            placeholder="Name">
+                            placeholder="บทบาทพนักงาน">
                     </div>
                 </div>
                 <div class="col-xs-12 mb-3">
                     <div class="form-group">
-                        <strong>Permission:</strong>
+                        <strong>รายการอนุญาต:</strong>
                         <br />
+<<<<<<< HEAD
                         <?php $__currentLoopData = $permission; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <label>
                                 <input type="checkbox" <?php if(in_array($value->id, $rolePermissions)): ?> checked <?php endif; ?> name="permission[]"
@@ -61,10 +69,69 @@
                                 <?php echo e($value->name); ?></label>
                             <br />
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+=======
+                        <div class="row">
+                            <div class="col-md-2">
+                                <?php $__currentLoopData = $permission; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <?php if(strpos($value->name, 'user') !== false): ?>
+                                        <label>
+                                            <input type="checkbox" <?php if(in_array($value->id, $rolePermissions)): ?> checked <?php endif; ?>
+                                                name="permission[]" value="<?php echo e($value->name); ?>" class="name">
+                                            <?php echo e($value->name); ?></label>
+                                        </label><br />
+                                    <?php endif; ?>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </div>
+                            <div class="col-md-2">
+                                <?php $__currentLoopData = $permission; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <?php if(strpos($value->name, 'role') !== false): ?>
+                                        <label>
+                                            <input type="checkbox" <?php if(in_array($value->id, $rolePermissions)): ?> checked <?php endif; ?>
+                                                name="permission[]" value="<?php echo e($value->name); ?>" class="name">
+                                            <?php echo e($value->name); ?></label>
+                                        </label><br />
+                                    <?php endif; ?>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </div>
+                            <div class="col-md-2">
+                                <?php $__currentLoopData = $permission; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <?php if(strpos($value->name, 'project') !== false): ?>
+                                        <label>
+                                            <input type="checkbox" <?php if(in_array($value->id, $rolePermissions)): ?> checked <?php endif; ?>
+                                                name="permission[]" value="<?php echo e($value->name); ?>" class="name">
+                                            <?php echo e($value->name); ?></label>
+                                        </label><br />
+                                    <?php endif; ?>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </div>
+                            <div class="col-md-2">
+                                <?php $__currentLoopData = $permission; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <?php if(strpos($value->name, 'product') !== false): ?>
+                                        <label>
+                                            <input type="checkbox" <?php if(in_array($value->id, $rolePermissions)): ?> checked <?php endif; ?>
+                                                name="permission[]" value="<?php echo e($value->name); ?>" class="name">
+                                            <?php echo e($value->name); ?></label>
+                                        </label><br />
+                                    <?php endif; ?>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </div>
+                            <div class="col-md-2">
+                                <?php $__currentLoopData = $permission; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <?php if(strpos($value->name, 'customer') !== false): ?>
+                                        <label>
+                                            <input type="checkbox" <?php if(in_array($value->id, $rolePermissions)): ?> checked <?php endif; ?>
+                                                name="permission[]" value="<?php echo e($value->name); ?>" class="name">
+                                            <?php echo e($value->name); ?></label>
+                                        </label><br />
+                                    <?php endif; ?>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </div>
+                        </div>
+>>>>>>> 0a5b828cbad0cb94a81e2a8bec078159a3d9a7be
                     </div>
                 </div>
                 <div class="col-xs-12 mb-3 text-center">
-                    <button class="btn btn-primary">Submit</button>
+                    <button class="btn btn-primary">ยืนยัน</button>
                 </div>
             </div>
         </form>
