@@ -48,12 +48,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        //$this->call([ProjectSeeder::class]);
-        /* foreach ($this->permissions as $permission) {
+        $this->call([ProjectSeeder::class]);
+        foreach ($this->permissions as $permission) {
             Permission::create(['name' => $permission]);
         }
 
-        // Create admin User and assign the role to him.
+        //Create admin User and assign the role to him.
         $user = User::create([
             'employee_id' => 'EMP001',
             'name' => 'AdminTest',
@@ -67,6 +67,6 @@ class DatabaseSeeder extends Seeder
 
         $role->syncPermissions($permissions);
 
-        $user->assignRole([$role->id]); */
+        $user->assignRole([$role->id]);
     }
 }

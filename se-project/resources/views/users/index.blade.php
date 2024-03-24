@@ -27,10 +27,10 @@
         <table class="table table-bordered table-hover table-striped">
             <tr>
                 <th>รหัสพนักงาน</th>
-                <th>ชื่อ</th>
-                <th>อีเมล์</th>
-                <th>ตำแหน่ง</th>
-                <th width="280px">ตัวเลือก</th>
+                <th>ชื่อ-สกุล</th>
+                <th>Email</th>
+                <th>บทบาทพนักงาน</th>
+                <th width="280px"> </th>
             </tr>
             @foreach ($data as $key => $user)
                 <tr>
@@ -46,11 +46,11 @@
                     </td>
                     <td>
                         <form action="{{ route('users.destroy', $user->id) }}" method="POST">
-                            <a class="btn btn-info" href="{{ route('users.show', $user->id) }}">แสดง</a>
+                            <a class="btn btn-info" href="{{ route('users.show', $user->id) }}">รายละเอียด</a>
                             <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}">แก้ไข</a>
                             @csrf
                             @method('DELETE')
-                            <button class="btn btn-danger">ลบ</button>
+                            <a href="{{ route('users.destroy', $user->id) }}" class="btn btn-danger" data-confirm-delete="true">ลบ</a>
                         </form>
                     </td>
                 </tr>

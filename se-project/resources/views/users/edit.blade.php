@@ -12,7 +12,7 @@
                     <h2>แก้ไขข้อมูลพนักงาน</h2>
                 </div>
                 <div class="float-end">
-                    <a class="btn btn-primary" href="{{ route('users.index') }}"> Back </a>
+                    <a class="btn btn-primary" href="{{ route('users.index') }}">ย้อนกลับ</a>
                 </div>
             </div>
         </div>
@@ -36,16 +36,16 @@
             <div class="row">
                 <div class="col-xs-12 mb-3">
                     <div class="form-group">
-                        <strong>Employee ID:</strong>
+                        <strong>รหัสพนักงาน:</strong>
                         <input type="text" value="{{ $user->employee_id }}" name="employee_id" class="form-control"
-                            placeholder="Employee ID" readonly>
+                            placeholder="รหัสพนักงาน" readonly>
                     </div>
                 </div>
                 <div class="col-xs-12 mb-3">
                     <div class="form-group">
-                        <strong>Name:</strong>
+                        <strong>ชื่อ-สกุล:</strong>
                         <input type="text" value="{{ $user->name }}" name="name" class="form-control"
-                            placeholder="Name">
+                            placeholder="ชื่อ-สกุล">
                     </div>
                 </div>
                 <div class="col-xs-12 mb-3">
@@ -57,16 +57,16 @@
                 </div>
                 <div class="col-xs-12 mb-3">
                     <div class="form-group">
-                        <strong>Password:</strong>
+                        <strong>รหัสผ่าน:</strong>
                         <input type="password" name="password" value="{{ $user->password }}" class="form-control"
-                            placeholder="Password">
+                            placeholder="รหัสผ่าน">
                     </div>
                 </div>
                 <div class="col-xs-12 mb-3">
                     <div class="form-group">
-                        <strong>Confirm Password:</strong>
+                        <strong>ยืนยันรหัสผ่าน:</strong>
                         <input type="password" name="confirm-password" value="{{ $user->password }}"
-                            class="form-control" placeholder="Confirm Password">
+                            class="form-control" placeholder="ยืนยันรหัสผ่าน">
                     </div>
                 </div>
                 <div class="col-xs-12 mb-3">
@@ -81,7 +81,7 @@
                     </div>
                 </div>
                 <div class="col-xs-12 mb-3 text-center">
-                    <button class="btn btn-primary">Submit</button>
+                    <button class="btn btn-primary">ยืนยัน</button>
                 </div>
             </div>
         </form>

@@ -9,10 +9,10 @@
         <div class="row">
             <div class="col-lg-12 margin-tb mb-4">
                 <div class="pull-left">
-                    <h2>Create New Role</h2>
+                    <h2>เพิ่มข้อมูลบทบาท</h2>
                 </div>
                 <div class="float-end">
-                    <a class="btn btn-primary" href="{{ route('roles.index') }}"> Back</a>
+                    <a class="btn btn-primary" href="{{ route('roles.index') }}">ย้อนกลับ</a>
                 </div>
             </div>
         </div>
@@ -33,13 +33,13 @@
             <div class="row">
                 <div class="col-xs-12 mb-3">
                     <div class="form-group">
-                        <strong>Name:</strong>
-                        <input type="text" name="name" class="form-control" placeholder="Name">
+                        <strong>บทบาทพนักงาน</strong>
+                        <input type="text" name="name" class="form-control" placeholder="บทบาทพนักงาน">
                     </div>
                 </div>
                 <div class="col-xs-12 mb-3">
                     <div class="form-group">
-                        <strong>Permission:</strong>
+                        <strong>รายการอนุญาต:</strong>
                         <br />
                         <div class="row">
                             @foreach ($permission as $value)
@@ -58,7 +58,7 @@
                 </div>
             </div>
             <div class="col-xs-12 mb-3 text-center">
-                <button class="btn btn-primary">Submit</button>
+                <button class="btn btn-primary">ยืนยัน</button>
             </div>
         </form>
     </div>
