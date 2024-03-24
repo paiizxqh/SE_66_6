@@ -12,7 +12,7 @@
                     <h2>ข้อมูลพนักงาน</h2>
                 </div>
                 <div class="float-end">
-                    <a class="btn btn-success" href="{{ route('users.create') }}"> Create New User</a>
+                    <a class="btn btn-success" href="{{ route('users.create') }}">เพิ่มข้อมูลพนักงาน</a>
                 </div>
             </div>
         </div>
@@ -25,11 +25,11 @@
 
         <table class="table table-bordered table-hover table-striped">
             <tr>
-                <th>Employee ID</th>
-                <th>Name</th>
+                <th>รหัสพนักงาน</th>
+                <th>ชื่อ-สกุล</th>
                 <th>Email</th>
-                <th>Roles</th>
-                <th width="280px">Action</th>
+                <th>บทบาทพนักงาน</th>
+                <th width="280px"> </th>
             </tr>
             @foreach ($data as $key => $user)
                 <tr>
@@ -45,11 +45,11 @@
                     </td>
                     <td>
                         <form action="{{ route('users.destroy', $user->id) }}" method="POST">
-                            <a class="btn btn-info" href="{{ route('users.show', $user->id) }}">Show</a>
-                            <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}">Edit</a>
+                            <a class="btn btn-info" href="{{ route('users.show', $user->id) }}">รายละเอียด</a>
+                            <a class="btn btn-primary" href="{{ route('users.edit', $user->id) }}">แก้ไข</a>
                             @csrf
                             @method('DELETE')
-                            <a href="{{ route('users.destroy', $user->id) }}" class="btn btn-danger" data-confirm-delete="true">Delete</a>
+                            <a href="{{ route('users.destroy', $user->id) }}" class="btn btn-danger" data-confirm-delete="true">ลบ</a>
                         </form>
                     </td>
                 </tr>

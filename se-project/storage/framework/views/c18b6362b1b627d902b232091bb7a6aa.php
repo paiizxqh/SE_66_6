@@ -18,10 +18,10 @@
         <div class="row">
             <div class="col-lg-12 margin-tb mb-4">
                 <div class="pull-left">
-                    <h2>Create New Role</h2>
+                    <h2>เพิ่มข้อมูลบทบาท</h2>
                 </div>
                 <div class="float-end">
-                    <a class="btn btn-primary" href="<?php echo e(route('roles.index')); ?>"> Back</a>
+                    <a class="btn btn-primary" href="<?php echo e(route('roles.index')); ?>">ย้อนกลับ</a>
                 </div>
             </div>
         </div>
@@ -42,13 +42,13 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Name:</strong>
-                        <input type="text" name="name" class="form-control" placeholder="Name">
+                        <strong>บทบาทพนักงาน</strong>
+                        <input type="text" name="name" class="form-control" placeholder="บทบาทพนักงาน">
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12">
                     <div class="form-group">
-                        <strong>Permission:</strong>
+                        <strong>รายการอนุญาต:</strong>
                         <br />
                         <div class="row">
                             <div class="col-md-2">
@@ -101,11 +101,24 @@
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 <br />
                             </div>
+                            <div class="col-md-2">
+                                <?php $__currentLoopData = $permission; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <?php if(strpos($value->name, 'customer') !== false): ?>
+                                        <label>
+                                            <input type="checkbox" name="permission[]" value="<?php echo e($value->name); ?>"
+                                                class="name">
+                                            <?php echo e($value->name); ?>
+
+                                        </label><br />
+                                    <?php endif; ?>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <br />
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                    <button class="btn btn-primary">Submit</button>
+                    <button class="btn btn-primary">ยืนยัน</button>
                 </div>
             </div>
         </form>

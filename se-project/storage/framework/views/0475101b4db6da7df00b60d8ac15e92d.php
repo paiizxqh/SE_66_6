@@ -21,7 +21,7 @@
                     <h2>ข้อมูลพนักงาน</h2>
                 </div>
                 <div class="float-end">
-                    <a class="btn btn-success" href="<?php echo e(route('users.create')); ?>"> Create New User</a>
+                    <a class="btn btn-success" href="<?php echo e(route('users.create')); ?>">เพิ่มข้อมูลพนักงาน</a>
                 </div>
             </div>
         </div>
@@ -34,11 +34,11 @@
 
         <table class="table table-bordered table-hover table-striped">
             <tr>
-                <th>Employee ID</th>
-                <th>Name</th>
+                <th>รหัสพนักงาน</th>
+                <th>ชื่อ-สกุล</th>
                 <th>Email</th>
-                <th>Roles</th>
-                <th width="280px">Action</th>
+                <th>บทบาทพนักงาน</th>
+                <th width="280px"> </th>
             </tr>
             <?php $__currentLoopData = $data; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <tr>
@@ -54,11 +54,11 @@
                     </td>
                     <td>
                         <form action="<?php echo e(route('users.destroy', $user->id)); ?>" method="POST">
-                            <a class="btn btn-info" href="<?php echo e(route('users.show', $user->id)); ?>">Show</a>
-                            <a class="btn btn-primary" href="<?php echo e(route('users.edit', $user->id)); ?>">Edit</a>
+                            <a class="btn btn-info" href="<?php echo e(route('users.show', $user->id)); ?>">รายละเอียด</a>
+                            <a class="btn btn-primary" href="<?php echo e(route('users.edit', $user->id)); ?>">แก้ไข</a>
                             <?php echo csrf_field(); ?>
                             <?php echo method_field('DELETE'); ?>
-                            <a href="<?php echo e(route('users.destroy', $user->id)); ?>" class="btn btn-danger" data-confirm-delete="true">Delete</a>
+                            <a href="<?php echo e(route('users.destroy', $user->id)); ?>" class="btn btn-danger" data-confirm-delete="true">ลบ</a>
                         </form>
                     </td>
                 </tr>

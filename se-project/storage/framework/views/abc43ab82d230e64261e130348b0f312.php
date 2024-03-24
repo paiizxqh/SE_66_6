@@ -18,10 +18,10 @@
         <div class="row">
             <div class="col-lg-12 margin-tb mb-4">
                 <div class="pull-left">
-                    <h2>Show User</h2>
+                    <h2>ข้อมูลพนักงาน</h2>
                 </div>
                 <div class="float-end">
-                    <a class="btn btn-primary" href="<?php echo e(route('users.index')); ?>"> Back</a>
+                    <a class="btn btn-primary" href="<?php echo e(route('users.index')); ?>">ย้อนกลับ</a>
                 </div>
             </div>
         </div>
@@ -29,14 +29,14 @@
         <div class="row">
             <div class="col-xs-12 mb-3">
                 <div class="form-group">
-                    <strong>Employee ID:</strong>
+                    <strong>รหัสพนักงาน:</strong>
                     <?php echo e($user->employee_id); ?>
 
                 </div>
             </div>
             <div class="col-xs-12 mb-3">
                 <div class="form-group">
-                    <strong>Name:</strong>
+                    <strong>ชื่อ-สกุล:</strong>
                     <?php echo e($user->name); ?>
 
                 </div>
@@ -50,7 +50,7 @@
             </div>
             <div class="col-xs-12 mb-3">
                 <div class="form-group">
-                    <strong>Roles:</strong>
+                    <strong>บทบาทพนักงาน:</strong>
                     <?php if(!empty($user->getRoleNames())): ?>
                         <?php $__currentLoopData = $user->getRoleNames(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $v): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <label class="badge badge-secondary text-dark"><?php echo e($v); ?></label>

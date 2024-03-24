@@ -9,10 +9,10 @@
         <div class="row">
             <div class="col-lg-12 margin-tb mb-4">
                 <div class="pull-left">
-                    <h2> Show Role</h2>
+                    <h2>ข้อมูลบทบาท</h2>
                 </div>
                 <div class="float-end">
-                    <a class="btn btn-primary" href="{{ route('roles.index') }}"> Back</a>
+                    <a class="btn btn-primary" href="{{ route('roles.index') }}">ย้อนกลับ</a>
                 </div>
             </div>
         </div>
@@ -21,13 +21,13 @@
         <div class="row">
             <div class="col-xs-12 mb-3">
                 <div class="form-group">
-                    <strong>Name:</strong>
+                    <strong>บทบาทพนักงาน:</strong>
                     {{ $role->name }}
                 </div>
             </div>
             <div class="col-xs-12 mb-3">
                 <div class="form-group">
-                    <strong>Permissions:</strong>
+                    <strong>รายการอนุญาต:</strong>
                     @if (!empty($rolePermissions))
                         @foreach ($rolePermissions as $v)
                             <label class="label label-secondary text-dark">{{ $v->name }},</label>

@@ -26,7 +26,7 @@
             </div>
         </div>
 
-        <?php if($errors->any()): ?>
+        <?php if(count($errors) > 0): ?>
             <div class="alert alert-danger">
                 <strong>Whoops!</strong> There were some problems with your input.<br><br>
                 <ul>
@@ -39,24 +39,40 @@
 
         <form action="<?php echo e(route('products.update', $product->id)); ?>" method="POST">
             <?php echo csrf_field(); ?>
-            <?php echo method_field('PUT'); ?>
-
+            <?php echo method_field('PATCH'); ?>
             <div class="row">
                 <div class="col-xs-12 mb-3">
                     <div class="form-group">
+                        <strong>ภาพ</strong>
+                    </div>
+                </div>
+                <div class="col-xs-12 mb-3">
+                    <div class="form-group">
                         <strong>Name:</strong>
-                        <input type="text" name="name" value="<?php echo e($product->name); ?>" class="form-control"
+                        <input type="text" value="<?php echo e($product->name); ?>" name="name" class="form-control"
                             placeholder="Name">
                     </div>
                 </div>
                 <div class="col-xs-12 mb-3">
                     <div class="form-group">
-                        <strong>Detail:</strong>
-                        <textarea class="form-control" style="height:150px" name="detail" placeholder="Detail"><?php echo e($product->detail); ?></textarea>
+                        <strong>Description:</strong>
+                        <input type="text" value="<?php echo e($product->description); ?>" name="description" class="form-control"
+                            placeholder="Description">
+                    </div>
+                </div>
+                <div class="col-xs-12 mb-3">
+                    <div class="form-group">
+                        <strong>Role:</strong>
+                        <select class="form-control multiple" multiple name="roles[]">
+                            <?php $__currentLoopData = $roles; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $role): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($role); ?>"><?php echo e($role); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                        </select>
+
                     </div>
                 </div>
                 <div class="col-xs-12 mb-3 text-center">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button class="btn btn-primary">Submit</button>
                 </div>
             </div>
         </form>
