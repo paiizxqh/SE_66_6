@@ -15,8 +15,25 @@ class Project extends Model
     protected $table = 'projects';
 
     protected $fillable = [
+        'project_id',
+        'start_date',
+        'area_date' ,
+        'map',
         'customers_contact_name',
         'customers_contact_phone',
-        'status_id'
+        'status_id',
+        'customer_id',
+        'assistant_id'
+    ];
+
+    protected $casts = [
+        'start_date' => 'date',
+        'area_date' => 'date',
+        /* 'area_date' => 'datetime:Y-m-d', */
+        'status_id' => 'bigint',
+    ];
+
+    protected $appends = [
+
     ];
 }

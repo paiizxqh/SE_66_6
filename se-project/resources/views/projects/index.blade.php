@@ -68,7 +68,7 @@
                                             placeholder="ค้นหาที่นี่ ...">
                                     </div>
                                     <div class="col-md-2">
-                                        <button type="submit" class="btn btn-primary btn--s btn--inline">ค้นหา</button>
+                                        <button class="btn btn-primary btn--s btn--inline">ค้นหา</button>
                                     </div>
                                     <div class="col-md-2">
                                         <a href="{{ route('projects.create') }}"

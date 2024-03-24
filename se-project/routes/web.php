@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('projects', ProjectController::class);
     Route::get('/projects/search', [ProjectController::class, 'search'])->name('projects.search');
     Route::get('/projects/{id}', [ProjectController::class, 'show'])->name('projects.show');
+    Route::post('projects/create', [ProjectController::class, 'store']);
 });
 
 require __DIR__.'/auth.php';
