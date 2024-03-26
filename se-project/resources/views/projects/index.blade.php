@@ -3,7 +3,7 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">รายการโครงการ</h2>
         <link rel="stylesheet" href="{{ asset('assets/css/project.css') }}">
-        <script src="{{ asset('assets/js/project.js') }}"></script>
+        <script src="{{ mix('js/app.js') }}"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </x-slot>
 
@@ -61,7 +61,7 @@
                     <div class="card mb-3">
                         <div class="card-body">
                             <!-- แบบฟอร์มค้นหา -->
-                            <form action="{{ route('projects.search') }}" method="GET">
+                            <form {{-- action="{{ route('projects.search') }}" method="GET" --}}>
                                 <div class="row mb-4">
                                     <div class="col">
                                         <input type="text" class="form-control" name="search"

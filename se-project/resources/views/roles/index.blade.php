@@ -39,15 +39,22 @@
                             @can('role-edit')
                                 <a class="btn btn-primary" href="{{ route('roles.edit', $role->id) }}">แก้ไข</a>
                             @endcan
-
-                            @csrf
-                            @method('DELETE')
-                            <a href="{{ route('roles.destroy', $role->id) }}" class="btn btn-danger" data-confirm-delete="true">ลบ</a>
+                            @can('role-delete')
+                                @csrf
+                                @method('DELETE')
+                                <a href="{{ route('roles.destroy', $role->id) }}" class="btn btn-danger"
+                                    data-confirm-delete="true">ลบ</a>
+                            @endcan
                         </form>
                     </td>
                 </tr>
             @endforeach
         </table>
+        <div class="pt-3">
+            <ul class="pagination justify-content-end mb-0">
+                {{ $roles->links('pagination::bootstrap-5') }}
+            </ul>
+        </div>
     </div>
     @include('sweetalert::alert')
 </x-app-layout>
