@@ -24,7 +24,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         //$data = User::latest()->paginate(5);
-        $data = User::orderBy('employee_id', 'ASC')->paginate(10);
+        $data = User::orderBy('employee_id', 'ASC')->get();
         $title = 'Delete User!';
         $text = "Are you sure you want to delete?";
         confirmDelete($title, $text);

@@ -42,17 +42,76 @@
                         <strong>รายการอนุญาต:</strong>
                         <br />
                         <div class="row">
-                            @foreach ($permission as $value)
-                                @if ($value->name !== false)
-                                    <div class="col-md-3">
+                            <div class="col-md-2">
+                                @foreach ($permission as $value)
+                                    @if (strpos($value->name, 'user') !== false)
                                         <label>
                                             <input type="checkbox" name="permission[]" value="{{ $value->name }}"
                                                 class="name">
                                             {{ $value->name }}
-                                        </label>
-                                    </div>
-                                @endif
-                            @endforeach
+                                        </label><br />
+                                    @endif
+                                @endforeach
+                            </div>
+                            <div class="col-md-2">
+                                @foreach ($permission as $value)
+                                    @if (strpos($value->name, 'role') !== false)
+                                        <label>
+                                            <input type="checkbox" name="permission[]" value="{{ $value->name }}"
+                                                class="name">
+                                            {{ $value->name }}
+                                        </label><br />
+                                    @endif
+                                @endforeach
+                            </div>
+
+                            <div class="col-md-2">
+                                @foreach ($permission as $value)
+                                    @if (strpos($value->name, 'project') !== false)
+                                        <label>
+                                            <input type="checkbox" name="permission[]" value="{{ $value->name }}"
+                                                class="name">
+                                            {{ $value->name }}
+                                        </label><br />
+                                    @endif
+                                @endforeach
+                            </div>
+                            <div class="col-md-2">
+                                @foreach ($permission as $value)
+                                    @if (strpos($value->name, 'product') !== false)
+                                        <label>
+                                            <input type="checkbox" name="permission[]" value="{{ $value->name }}"
+                                                class="name">
+                                            {{ $value->name }}
+                                        </label><br />
+                                    @endif
+                                @endforeach
+                                <br />
+                            </div>
+                            <div class="col-md-2">
+                                @foreach ($permission as $value)
+                                    @if (strpos($value->name, 'customer') !== false)
+                                        <label>
+                                            <input type="checkbox" name="permission[]" value="{{ $value->name }}"
+                                                class="name">
+                                            {{ $value->name }}
+                                        </label><br />
+                                    @endif
+                                @endforeach
+                                <br />
+                            </div>
+                            <div class="col-md-2">
+                                @foreach ($permission as $value)
+                                    @if (strpos($value->name, 'team') !== false)
+                                        <label>
+                                            <input type="checkbox" name="permission[]" value="{{ $value->name }}"
+                                                class="name">
+                                            {{ $value->name }}
+                                        </label><br />
+                                    @endif
+                                @endforeach
+                                <br />
+                            </div>
                         </div>
                     </div>
                 </div>

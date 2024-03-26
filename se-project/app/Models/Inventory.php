@@ -9,6 +9,8 @@ class Inventory extends Model
 {
     use HasFactory;
 
+    public $timestamps = false;
+
     protected $table = 'inventory';
 
     protected $fillable = [

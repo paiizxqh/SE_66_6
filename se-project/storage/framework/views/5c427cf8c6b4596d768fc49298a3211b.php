@@ -18,33 +18,66 @@
         <div class="row">
             <div class="col-lg-12 margin-tb mb-4">
                 <div class="pull-left">
-                    <h2> เพิ่มสต็อกอุปกรณ์ </h2>
+                    <h2>เพิ่มจำนวนอุปกรณ์</h2>
                 </div>
                 <div class="float-end">
-                    <a class="btn btn-primary" href="<?php echo e(route('products.index')); ?>"> Back</a>
+                    <a class="btn btn-primary" href="<?php echo e(route('products.index')); ?>">ย้อนกลับ</a>
                 </div>
             </div>
         </div>
 
+        <?php if(count($errors) > 0): ?>
+            <div class="alert alert-danger">
+                <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                <ul>
+                    <?php $__currentLoopData = $errors->all(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $error): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <li><?php echo e($error); ?></li>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </ul>
+            </div>
+        <?php endif; ?>
 
-        <div class="row">
-            <div class="col-xs-12 mb-3">
-                <div class="form-group">
-                    <strong>Name:</strong>
-                    <?php echo e($product->name); ?>
-
+        <form action="<?php echo e(route('products.update', $product->id)); ?>" method="POST" enctype="multipart/form-data">
+            <?php echo csrf_field(); ?>
+            <?php echo method_field('PATCH'); ?>
+            <div class="row">
+                <div class="col-xs-12 mb-3 text-center">
+                    <div class="form-group">
+                        <?php if($product->image): ?>
+                            <img src="<?php echo e(asset($product->image)); ?>" alt="Product Image" style="max-width: 100px; display: inline-block;">
+                        <?php else: ?>
+                            <p>No image available</p>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <div class="col-xs-12 mb-3">
+                    <div class="form-group">
+                        <strong>รายการอุปกรณ์:</strong>
+                        <input type="text" value="<?php echo e($product->name); ?> <?php echo e($product->description); ?>" name="name" class="form-control"
+                            placeholder="รายการอุปกรณ์" readonly>
+                    </div>
+                </div>
+                <div class="col-xs-12 mb-3">
+                    <div class="form-group">
+                        <strong>จำนวนอุปกรณ์คงเหลือ:</strong>
+                        <input type="text" value="<?php echo e($product->remain); ?>" name="remain" class="form-control"
+                            placeholder="จำนวนคงเหลือ"readonly>
+                    </div>
+                </div>
+                <div class="col-xs-12 mb-3">
+                    <div class="form-group">
+                        <strong>เพิ่มจำนวนอุปกรณ์:</strong>
+                        <input type="text" name="add" class="form-control"
+                            placeholder="จำนวนเติมสต๊อก">
+                    </div>
+                </div>
+                <div class="col-xs-12 mb-3 text-center">
+                    <button class="btn btn-primary">ยืนยัน</button>
                 </div>
             </div>
-            <div class="col-xs-12 mb-3">
-                <div class="form-group">
-                    <strong>Details:</strong>
-                    <?php echo e($product->detail); ?>
-
-                </div>
-            </div>
-        </div>
+        </form>
+        <?php echo $__env->make('sweetalert::alert', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     </div>
-    <?php echo $__env->make('sweetalert::alert', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>

@@ -17,7 +17,7 @@ class ProductController extends Controller
     {
         $this->middleware(['permission:product-list|product-create|product-edit|product-delete'], ['only' => ['index', 'show', 'create', 'store', 'edit', 'update', 'destroy']]);
         $this->middleware(['permission:product-create'], ['only' => ['create', 'store']]);
-        $this->middleware(['permission:product-edit'], ['only' => ['edit', 'update']]);
+        $this->middleware(['permission:product-edit'], ['only' => ['edit', 'update', 'show']]);
         $this->middleware(['permission:product-delete'], ['only' => ['destroy']]);
     }
     /**
@@ -27,7 +27,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Inventory::latest()->paginate(7);
+        //$products = Inventory::latest()->paginate(7);
+        $products = Inventory::orderBy('id', 'ASC')->get();
         $title = 'Delete Product!';
         $text = "Are you sure you want to delete?";
         confirmDelete($title, $text);
@@ -41,7 +42,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        $categories = Category::pluck('name', 'name')->all();
+        return view('products.create', compact('categories'));
     }
 
     /**
@@ -52,13 +54,35 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate([
+        $this->validate($request, [
             'name' => 'required',
-            'detail' => 'required',
+            'description' => 'nullable',
+            'remain' => 'nullable|numeric|min:0',
+            'minimum' => 'required|numeric|min:0',
+            'categories' => 'required',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
         ]);
 
-        Inventory::create($request->all());
+        $inventory = new Inventory();
+        $inventory->name = $request->name;
+        if ($request->hasAny('description')) {
+            $inventory->description = $request->description;
+        }
+        if ($request->hasAny('remain')) {
+            $inventory->remain = $request->remain;
+        }
+        $inventory->minimum = $request->minimum;
+        $inventory->category_id = Category::where('name', $request->categories)->first()->id;
+        if ($request->has('image')) {
+            $image = $request->file('image');
+            $extension = $image->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $path = 'images/products/';
+            $image->move($path, $filename);
+            $inventory->image =  $path . $filename;
+        }
 
+        $inventory->save();
         return redirect()->route('products.index')
             ->with('success', 'Product created successfully.');
     }
@@ -69,10 +93,29 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Inventory $product)
+    public function show($id)
     {
-        return view('products.show', compact('product'));
+        $product = Inventory::find($id);
+        $categories = Category::pluck('name', 'name')->all();
+        return view('products.show', compact('product', 'categories'));
     }
+
+    /* public function add(Request $request, $id)
+    {
+        $this->validate($request,[
+            'add' => 'nullable',
+        ]);
+
+        $inventory = Inventory::findOrFail($id);
+        if ($request->hasAny('add')) {
+            $inventory->remain += $request->add;
+        }
+
+        $inventory->save();
+        
+        return redirect()->route('products.index')
+        ->with('success', 'Product add successfully');
+    }*/
 
     /**
      * Show the form for editing the specified resource.
@@ -80,9 +123,11 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Inventory $product)
+    public function edit($id)
     {
-        return view('products.edit', compact('product'));
+        $product = Inventory::find($id);
+        $categories = Category::pluck('name', 'name')->all();
+        return view('products.edit', compact('product', 'categories'));
     }
 
     /**
@@ -92,17 +137,60 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Inventory $product)
+    public function update(Request $request, $id)
     {
-        request()->validate([
-            'name' => 'required',
-            'detail' => 'required',
-        ]);
 
-        $product->update($request->all());
+        // Find the inventory item
+        $inventory = Inventory::findOrFail($id);
 
-        return redirect()->route('products.index')
-            ->with('success', 'Product updated successfully');
+        // Check if 'add' parameter is present in the request
+        if ($request->has('add')) {
+            // Validate additional fields
+            $this->validate($request, [
+                'add' => 'required|numeric|min:0',
+            ]);
+
+            // Increase the remaining quantity
+            $inventory->remain += $request->add;
+
+            // Save the changes
+            $inventory->save();
+
+            return redirect()->route('products.index')
+                ->with('success', 'Product quantity added successfully');
+        } else {
+            // Validate common fields
+            $this->validate($request, [
+                'name' => 'required',
+                'description' => 'nullable',
+                'remain' => 'nullable|numeric|min:0',
+                'minimum' => 'required|numeric|min:0',
+                'categories' => 'required',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
+            ]);
+            // Update the inventory item with the provided data
+            $inventory->name = $request->name;
+            $inventory->description = $request->description;
+            $inventory->remain = $request->remain;
+            $inventory->minimum = $request->minimum;
+            $inventory->category_id = Category::where('name', $request->categories)->first()->id;
+
+            // Handle image upload if provided
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $extension = $image->getClientOriginalExtension();
+                $filename = time() . '.' . $extension;
+                $path = 'images/products/';
+                $image->move($path, $filename);
+                $inventory->image =  $path . $filename;
+            }
+
+            // Save the changes
+            $inventory->save();
+
+            return redirect()->route('products.index')
+                ->with('success', 'Product updated successfully');
+        }
     }
 
     /**
@@ -111,10 +199,9 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Inventory $product)
+    public function destroy($id)
     {
-        $product->delete();
-
+        Inventory::find($id)->delete();
         return redirect()->route('products.index')
             ->with('success', 'Product deleted successfully');
     }

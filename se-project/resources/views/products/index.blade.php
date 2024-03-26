@@ -31,11 +31,13 @@
                     <th>รายการอุปกรณ์</th>
                     <th>จำนวนคงเหลือ</th>
                     <th>หมวดหมู่</th>
-                    <th>Action</th>
+                    <th> </th>
                 </tr>
                 @foreach ($products as $product)
                     <tr>
-                        <td>{{ $product->image }}</td>
+                        <td>
+                            <img src="{{ asset($product->image) }}" alt="Product Image" style="max-width: 100px;">
+                        </td>
                         <td>{{ $product->name }} {{ $product->description }}</td>
                         <td>
                             @if ($product->remain <= $product->minimum)

@@ -40,11 +40,13 @@
                     <th>รายการอุปกรณ์</th>
                     <th>จำนวนคงเหลือ</th>
                     <th>หมวดหมู่</th>
-                    <th>Action</th>
+                    <th> </th>
                 </tr>
                 <?php $__currentLoopData = $products; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $product): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr>
-                        <td><?php echo e($product->image); ?></td>
+                        <td>
+                            <img src="<?php echo e(asset($product->image)); ?>" alt="Product Image" style="max-width: 100px;">
+                        </td>
                         <td><?php echo e($product->name); ?> <?php echo e($product->description); ?></td>
                         <td>
                             <?php if($product->remain <= $product->minimum): ?>

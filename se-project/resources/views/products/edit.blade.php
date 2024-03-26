@@ -12,7 +12,7 @@
                     <h2>แก้ไขรายการอุปกรณ์</h2>
                 </div>
                 <div class="float-end">
-                    <a class="btn btn-primary" href="{{ route('products.index') }}"> Back </a>
+                    <a class="btn btn-primary" href="{{ route('products.index') }}">ย้อนกลับ</a>
                 </div>
             </div>
         </div>
@@ -28,45 +28,60 @@
             </div>
         @endif
 
-        <form action="{{ route('products.update', $product->id) }}" method="POST">
+        <form action="{{ route('products.update', $product->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PATCH')
             <div class="row">
                 <div class="col-xs-12 mb-3">
                     <div class="form-group">
-                        <strong>ภาพ</strong>
-                    </div>
-                </div>
-                <div class="col-xs-12 mb-3">
-                    <div class="form-group">
-                        <strong>Name:</strong>
+                        <strong>รายการอุปกรณ์:</strong>
                         <input type="text" value="{{ $product->name }}" name="name" class="form-control"
-                            placeholder="Name">
+                            placeholder="รายการอุปกรณ์">
                     </div>
                 </div>
                 <div class="col-xs-12 mb-3">
                     <div class="form-group">
-                        <strong>Description:</strong>
-                        <input type="text" value="{{ $product->description }}" name="description"
-                            class="form-control" placeholder="Description">
+                        <strong>รายละเอียด:</strong>
+                        <textarea class="form-control" style="height:150px" name="description" placeholder="รายละเอียด เช่น ขนาด ปริมาตร"> {{ $product->description }} </textarea>
                     </div>
                 </div>
                 <div class="col-xs-12 mb-3">
                     <div class="form-group">
-                        <strong>Role:</strong>
-                        <select class="form-control multiple" multiple name="roles[]">
-                            @foreach ($roles as $role)
-                                <option value="{{ $role }}">{{ $role }}</option>
-                            @endforeach
-                        </select>
-
+                        <strong>จำนวนอุปกรณ์:</strong>
+                        <input type="text" value="{{ $product->remain }}" name="remain" class="form-control"
+                            placeholder="จำนวนเติมสต๊อก">
+                    </div>
+                </div>
+                <div class="col-xs-12 mb-3">
+                    <div class="form-group">
+                        <strong>minimum:</strong>
+                        <input type="text" value="{{ $product->minimum }}" name="minimum" class="form-control"
+                            placeholder="จำนวนน้อยที่สุดของสินค้าที่ต้องทำการแจ้งเตือน">
+                    </div>
+                </div>
+                <div class="col-xs-12 mb-3">
+                    <label for="categories">หมวดหมู่:</label>
+                    <select name="categories" id="categories" class="form-control" required>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category }}">{{ $category }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-xs-12 mb-3">
+                    <div class="form-group">
+                        <strong>Upload image:</strong>
+                        <input type="file" name="image" class="form-control" placeholder="Upload image">
+                        @if ($product->image)
+                            <img src="{{ asset($product->image) }}" alt="Product Image" style="max-width: 100px;">
+                            <p>Path: {{ $product->image }}</p>
+                        @endif
                     </div>
                 </div>
                 <div class="col-xs-12 mb-3 text-center">
-                    <button class="btn btn-primary">Submit</button>
+                    <button class="btn btn-primary">ยืนยัน</button>
                 </div>
             </div>
         </form>
+        @include('sweetalert::alert')
     </div>
-    @include('sweetalert::alert')
 </x-app-layout>

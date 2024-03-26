@@ -126,6 +126,17 @@
                                     <?php endif; ?>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </div>
+                            <div class="col-md-2">
+                                <?php $__currentLoopData = $permission; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <?php if(strpos($value->name, 'team') !== false): ?>
+                                        <label>
+                                            <input type="checkbox" <?php if(in_array($value->id, $rolePermissions)): ?> checked <?php endif; ?>
+                                                name="permission[]" value="<?php echo e($value->name); ?>" class="name">
+                                            <?php echo e($value->name); ?></label>
+                                        </label><br />
+                                    <?php endif; ?>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </div>
                         </div>
 >>>>>>> 0a5b828cbad0cb94a81e2a8bec078159a3d9a7be
                     </div>

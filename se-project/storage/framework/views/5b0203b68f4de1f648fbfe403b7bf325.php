@@ -37,23 +37,50 @@
             </div>
         <?php endif; ?>
 
-        <form action="<?php echo e(route('products.store')); ?>" method="POST">
+        <form action="<?php echo e(route('products.store')); ?>" method="POST" enctype="multipart/form-data">
             <?php echo csrf_field(); ?>
             <div class="row">
                 <div class="col-xs-12 mb-3">
                     <div class="form-group">
-                        <strong>Name:</strong>
-                        <input type="text" name="name" class="form-control" placeholder="Name">
+                        <strong>รายการอุปกรณ์:</strong>
+                        <input type="text" name="name" class="form-control" placeholder="รายการอุปกรณ์">
                     </div>
                 </div>
                 <div class="col-xs-12 mb-3">
                     <div class="form-group">
-                        <strong>Detail:</strong>
-                        <textarea class="form-control" style="height:150px" name="detail" placeholder="Detail"></textarea>
+                        <strong>รายละเอียด:</strong>
+                        <textarea class="form-control" style="height:150px" name="description" placeholder="รายละเอียด เช่น ขนาด ปริมาตร"></textarea>
+                    </div>
+                </div>
+                <div class="col-xs-12 mb-3">
+                    <div class="form-group">
+                        <strong>จำนวนอุปกรณ์:</strong>
+                        <input type="text" name="remain" class="form-control" placeholder="จำนวนเติมสต๊อก">
+                    </div>
+                </div>
+                <div class="col-xs-12 mb-3">
+                    <div class="form-group">
+                        <strong>minimum:</strong>
+                        <input type="text" name="minimum" class="form-control" placeholder="จำนวนน้อยที่สุดของสินค้าที่ต้องทำการแจ้งเตือน">
+                    </div>
+                </div>
+                <div class="col-xs-12 mb-3">
+                    <label for="categories">หมวดหมู่:</label>
+                    <select name="categories" id="categories" class="form-control" required>
+                        <option value="">--กรุณาเลือกหมวดหมู่--</option>
+                        <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($category); ?>"><?php echo e($category); ?></option>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </select>
+                </div>
+                <div class="col-xs-12 mb-3">
+                    <div class="form-group">
+                        <strong>Upload image:</strong>
+                        <input type="file" name="image" class="form-control" placeholder="Upload image">
                     </div>
                 </div>
                 <div class="col-xs-12 mb-3 text-center">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button class="btn btn-primary">ยืนยัน</button>
                 </div>
             </div>
         </form>

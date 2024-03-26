@@ -18,11 +18,10 @@
         <div class="row">
             <div class="col-lg-12 margin-tb mb-4">
                 <div class="pull-left">
-                    <h2> Show Role
-                        <div class="float-end">
-                            <a class="btn btn-primary" href="<?php echo e(route('roles.index')); ?>"> Back</a>
-                        </div>
-                    </h2>
+                    <h2> Show Role</h2>
+                </div>
+                <div class="float-end">
+                    <a class="btn btn-primary" href="<?php echo e(route('roles.index')); ?>"> Back</a>
                 </div>
             </div>
         </div>
@@ -31,14 +30,14 @@
         <div class="row">
             <div class="col-xs-12 mb-3">
                 <div class="form-group">
-                    <strong>Name:</strong>
+                    <strong>บทบาทพนักงาน:</strong>
                     <?php echo e($role->name); ?>
 
                 </div>
             </div>
             <div class="col-xs-12 mb-3">
                 <div class="form-group">
-                    <strong>Permissions:</strong>
+                    <strong>รายการอนุญาต:</strong>
                     <?php if(!empty($rolePermissions)): ?>
                         <?php $__currentLoopData = $rolePermissions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $v): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <label class="label label-secondary text-dark"><?php echo e($v->name); ?>,</label>
