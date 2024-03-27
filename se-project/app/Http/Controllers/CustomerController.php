@@ -50,9 +50,9 @@ public function store(Request $request)
     // ตรวจสอบและ validate ข้อมูล
     $validatedData = $request->validate([
         'cus_id' => 'required|unique:customers',
-        'name' => 'required|numeric', 
+        'name' => 'required', 
         'address' => 'required',
-        'phone' => 'required',
+        'phone' => 'required|numeric',
         'regis_date' => 'required|date', // กำหนดให้ 'regis_date' เป็นวันที่
     ]);
 
