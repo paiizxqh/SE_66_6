@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-lg-12 margin-tb mb-4">
                 <div class="pull-left">
-                    <h2>จัดการบทบาท</h2>
+                    <h2>บทบาทพนักงาน</h2>
                 </div>
                 <div class="pull-right">
                     @can('role-create')
@@ -57,4 +57,5 @@
         </div>
     </div>
     @include('sweetalert::alert')
+
 </x-app-layout>

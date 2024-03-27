@@ -45,16 +45,22 @@
                         <strong>รายการอนุญาต:</strong>
                         <br />
                         <div class="row">
-                            @foreach ($permission as $value)
-                                @if ($value->name !== false)
-                                    <div class="col-md-3">
-                                        <label>
-                                            <input type="checkbox" @if (in_array($value->id, $rolePermissions)) checked @endif
-                                                name="permission[]" value="{{ $value->name }}" class="name">
-                                            {{ $value->name }}
-                                        </label>
-                                    </div>
-                                @endif
+                            @php
+                                $permissionTypes = ['user', 'role', 'project', 'product', 'customer', 'team'];
+                            @endphp
+
+                            @foreach ($permissionTypes as $type)
+                                <div class="col-md-2">
+                                    @foreach ($permission as $value)
+                                        @if (strpos($value->name, $type) !== false)
+                                            <label>
+                                                <input type="checkbox" @if (in_array($value->id, $rolePermissions)) checked @endif
+                                                    name="permission[]" value="{{ $value->name }}" class="name">
+                                                {{ $value->name }}</label>
+                                            </label><br />
+                                        @endif
+                                    @endforeach
+                                </div>
                             @endforeach
                         </div>
                     </div>

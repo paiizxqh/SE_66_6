@@ -20,7 +20,7 @@ class Inventory extends Model
         'remain',
         'minimum',
     ];
-
+    
     public function category()
     {
         return $this->belongsTo(Category::class);

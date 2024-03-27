@@ -33,8 +33,8 @@
 
             <div class="mb-3">
                 <label for="employee_id" class="form-label">รหัสพนักงาน:</label>
-                <input type="text" id="employee_id" name="employee_id" class="form-control" placeholder="รหัสพนักงาน"
-                    value="{{ $newEmployeeId }}">
+                <input type="text" id="employee_id" name="employee_id" class="form-control"
+                placeholder="รหัสพนักงาน" value="{{ $newEmployeeId }}">         
             </div>
 
             <div class="mb-3">
