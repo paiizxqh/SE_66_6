@@ -30,10 +30,25 @@ class Project extends Model
         'start_date' => 'date',
         'area_date' => 'date',
         /* 'area_date' => 'datetime:Y-m-d', */
-        'status_id' => 'bigint',
+        /* 'status_id' => 'integer', // แก้ไขจาก 'bigint' เป็น 'integer' */
     ];
 
     protected $appends = [
 
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(Customers::class);
+    }
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class, 'id', 'name');
+    }
 }

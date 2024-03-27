@@ -12,16 +12,16 @@
         <div class="container-xl px-4 mt-4">
             <hr class="mt-0 mb-4">
             <div class="row">
-                {{-- @if (count($errors) > 0)
-                <div class="alert alert-danger">
-                    <strong>Whoops!</strong> There were some problems with your input.<br><br>
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endif --}}
+                @if (count($errors) > 0)
+                    <div class="alert alert-danger">
+                        <strong>Whoops!</strong> There were some problems with your input.<br><br>
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
                 <div class="col-lg-6">
                     <div class="card mb-4">
                         <div class="card-header">ข้อมูลโครงการสำหรับลูกค้า</div>
@@ -179,4 +179,5 @@
             @endcan
         </div>
     </body>
+    @include('sweetalert::alert')
 </x-app-layout>

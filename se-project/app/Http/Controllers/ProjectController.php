@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Models\Status;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Pulse\Facades\Pulse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+
 
 class ProjectController extends Controller
 {
@@ -17,20 +22,36 @@ class ProjectController extends Controller
         $this->middleware(['permission:project-delete'], ['only' => ['destroy']]);
     }
 
-    function index(Request $request){
-        $totalProjects = Project::count();
-        $completeStatus = Project::where('status_id','3')->count();
-        $pendingStatus = Project::where('status_id','2')->count();
-        $processStatus = Project::where('status_id','1')->count();
-        $data = DB::table('projects')
-        ->join('project_status', 'status_id', '=', 'project_status.id')
-        ->join('customers', 'customer_id', '=', 'customers.id')
-        ->join('users', 'assistant_id', '=', 'users.id')
-        ->select('projects.*','project_status.status','customers.cus_id','customers.name'/*,'users.name' */)
-        //->orderByRaw('start_date, project_status.status')
-        ->paginate(10);
-        /* ->get(); -- ถ้าจะใช้ paginate(0) ต้องเอาบรรทัดนี้ออกด้วย */
-        return view('projects.index', compact('data','totalProjects','completeStatus','pendingStatus','processStatus'));
+    public function index(Request $request)
+    {
+        $title = 'Delete Project!';
+        $text = "Are you sure you want to delete?";
+        confirmDelete($title, $text);
+
+            // ตรวจสอบว่าผู้ใช้มีสิทธิ์ในการดูโครงการทั้งหมดหรือไม่
+        if (auth()->user()->can('view-all-projects')) {
+            // ดึงข้อมูลโครงการทั้งหมด
+            $project = Project::paginate(5);
+        } elseif (auth()->user()->can('view-assigned-projects')) {
+            // ผู้ใช้มีสิทธิ์ดูเฉพาะโครงการที่เข้าร่วม
+            $project = Auth::user()->projects()->paginate(50);
+        } else {
+            // ผู้ใช้มีสิทธิ์เฉพาะในการดูโครงการที่เสร็จสิ้นเท่านั้น
+            $project = Project::where('status_id', 3)->paginate(50);
+        }
+
+        // คำนวณข้อมูลสถิติอื่น ๆ
+        $totalProject = Project::count();
+        $totalStatus = Status::all();
+
+        // สร้าง array เพื่อเก็บจำนวนโครงการตามสถานะ
+        $projectCounts = [];
+        foreach ($totalStatus as $status) {
+            $projectCounts[$status->name] = $status->project->count();
+        }
+
+        // คืนค่าข้อมูลไปยังหน้าจอ
+        return view('projects.index', compact('project', 'totalProject', 'totalStatus', 'projectCounts'));
     }
 
     /* function search(Request $request){
@@ -65,23 +86,14 @@ class ProjectController extends Controller
         return view('projects.show', compact('data', 'project'));
     } */
 
+    public function show($id){
+        $project = Project::findOrFail($id);
+        return view('projects.detail', compact('project'));
+    }
+
+
     public function create(){
         $project = Project::all();
-            /* dd($project); */
-             /* // ดึง employee_id ที่มีค่ามากที่สุดจากฐานข้อมูล
-        $latestEmployee = User::orderBy('employee_id', 'DESC')->first();
-
-        // ตรวจสอบว่ามี employee_id ในฐานข้อมูลหรือไม่
-        if ($latestEmployee) {
-            // สร้าง employee_id ใหม่โดยเพิ่มค่าขึ้น 1 จาก employee_id ที่มีค่ามากที่สุด
-            $newEmployeeId = 'EMP' . str_pad((intval(substr($latestEmployee->employee_id, 3)) + 1), 3, '0', STR_PAD_LEFT);
-        } else {
-            // ถ้าไม่มี employee_id ในฐานข้อมูล ให้เริ่มต้นด้วย 'EMP001'
-            $newEmployeeId = 'EMP001';
-        }
-
-        // ดึงรายการบทบาททั้งหมดเพื่อใช้ในการสร้างผู้ใช้ใหม่
-        $roles = Role::pluck('name', 'name')->all(); */
         return view('projects.detail', compact('project'));
     }
 
@@ -93,7 +105,6 @@ class ProjectController extends Controller
             'phonenumber' => 'required|string',
             'customers_contact_name' => 'required|string',
             'customers_contact_phone' => 'required|string',
-            /* 'map' => 'required|file', // สำหรับไฟล์แผนที่ */
             'map' => 'required|file|mimes:jpg,jpeg,png,pdf',
 
         ],[

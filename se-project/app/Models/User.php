@@ -44,4 +44,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function project()
+    {
+        return $this->hasMany(Project::class, 'assistant_id'); // ระบุคอลัมน์ที่ใช้ในการเชื่อมโยงระหว่างโมเดล User และ Project
+    }
 }

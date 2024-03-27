@@ -50,5 +50,13 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('DeveloperRole', function ($user) {
             return $user->hasRole('Developer');
         });
+        /* สามารถดูได้ทุกโครงการ */
+        Gate::define('view-all-projects', function ($user) {
+            return $user->hasAnyRole(['Manager', 'Sales', 'Developer']);
+        });
+        /* สามารถดูได้แค่โครงการที่เข้าร่วม */
+        Gate::define('view-assigned-projects', function ($user) {
+            return $user->hasAnyRole(['Assistant', 'Surveyor', 'Academician']);
+        });
     }
 }
