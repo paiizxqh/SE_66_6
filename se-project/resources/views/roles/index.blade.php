@@ -36,10 +36,7 @@
                     <td>
                         <form action="{{ route('roles.destroy', $role->id) }}" method="POST">
                             <a class="btn btn-info" href="{{ route('roles.show', $role->id) }}">รายละเอียด</a>
-                            @can('role-edit')
                                 <a class="btn btn-primary" href="{{ route('roles.edit', $role->id) }}">แก้ไข</a>
-                            @endcan
-
                             @csrf
                             @method('DELETE')
                             <a href="{{ route('roles.destroy', $role->id) }}" class="btn btn-danger" data-confirm-delete="true">ลบ</a>
