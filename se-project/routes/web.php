@@ -7,6 +7,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ProjectMemberController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +40,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('products', ProductController::class);
     Route::resource('customers', CustomerController::class);
     Route::resource('projects', ProjectController::class);
+    Route::get('manage',[ProjectMemberController::class,'index'])->name('manage');
+    Route::get('test',[ProjectMemberController::class,'test'])->name('test');
+    Route::post('/process',[ProjectMemberController::class,'handleFormSubmission'])->name('process');
 });
 
 require __DIR__.'/auth.php';
