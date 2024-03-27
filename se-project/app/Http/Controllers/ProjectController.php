@@ -18,14 +18,6 @@ class ProjectController extends Controller
     }
 
     function index(Request $request){
-        $sort = $request->input('sort', 'start_date');
-
-        // ตรวจสอบว่าค่า sort ที่ถูกส่งมาถูกต้องหรือไม่
-        $validSortOptions = ['start_date'];
-        if (!in_array($sort, $validSortOptions)) {
-            // ในกรณีที่ค่า sort ไม่ถูกต้อง กำหนดให้เรียงตามวันที่เป็นค่าเริ่มต้น
-            $sort = 'start_date';
-        }
         $totalProjects = Project::count();
         $completeStatus = Project::where('status_id','3')->count();
         $pendingStatus = Project::where('status_id','2')->count();
@@ -41,7 +33,7 @@ class ProjectController extends Controller
         return view('projects.index', compact('data','totalProjects','completeStatus','pendingStatus','processStatus'));
     }
 
-    function search(Request $request){
+    /* function search(Request $request){
         $search = $request->input('search');
 
         $data = Project::join('project_status', 'projects.status_id', '=', 'project_status.id')
@@ -58,9 +50,9 @@ class ProjectController extends Controller
 
         // ส่งข้อมูลไปยังหน้า index พร้อมกับค่า search_matched
         return view('projects.index', compact('data', 'search_matched'));
-    }
+    } */
 
-    function show($id){
+    /* function show($id){
         $project = Project::findOrFail($id);
         $data = Project::join('project_status', 'projects.status_id', '=', 'project_status.id')
                         ->join('customers', 'projects.customer_id', '=', 'customers.id')
@@ -71,7 +63,7 @@ class ProjectController extends Controller
                         ->orWhere('project_status.status', 'LIKE', '%' . $search . '%')
                         ->paginate(10);
         return view('projects.show', compact('data', 'project'));
-    }
+    } */
 
     public function create(){
         $project = Project::all();
@@ -135,5 +127,20 @@ class ProjectController extends Controller
         /* dd($request->all()); */
         return redirect()->route('projects.index')
             ->with('success', 'Project created successfully');
+    }
+
+    public function destroy($id){
+        $project = Project::findOrFail($id); // ค้นหาโครงการตาม ID ที่ระบุ
+
+        // ทำการลบไฟล์แผนที่ (ถ้ามี)
+        if (!empty($project->map)) {
+            Storage::delete('maps/' . $project->map);
+        }
+
+        // ทำการลบโครงการ
+        $project->delete();
+
+        return redirect()->route('projects.index')
+            ->with('success', 'Project deleted successfully');
     }
 }
