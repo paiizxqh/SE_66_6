@@ -15,6 +15,7 @@
                         <x-nav-link :href="route('customers.index')" :active="request()->routeIs('users')">ข้อมูลลูกค้า</x-nav-link>
                         <x-nav-link :href="route('detail.index')" :active="request()->routeIs('users')">รายละเอียดโครงการ</x-nav-link>
                         {{-- <x-nav-link :href="route('teams.index')" :active="request()->routeIs('users')">ข้อมูลทีม</x-nav-link> --}}
+                        <x-nav-link :href="route('manage')" :active="request()->routeIs('users')">ข้อมูลทีม</x-nav-link>
                     @endcan
                     <!--Page for Admin-->
                     @can('AdminRole')
