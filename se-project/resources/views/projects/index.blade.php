@@ -3,7 +3,9 @@
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">รายการโครงการ</h2>
         <link rel="stylesheet" href="{{ asset('assets/css/project.css') }}">
-        <script src="{{ mix('js/app.js') }}"></script>
+        <script src="{{ asset('js/app.js') }}"></script>
+        <script src="{{ asset('js/jquery.min.js') }}"></script>
+        <script src="{{ asset('js/app.js') }}"></script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </x-slot>
 
@@ -68,83 +70,77 @@
                             <div class="col-lg-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <div class="table-responsive project-list">
-                                            <div class="row mb-2">
-                                                <div class="col-md-12 text-end">
-                                                    <a href="{{ route('projects.create') }}"
-                                                        class="btn btn-success btn-sm">เพิ่มโครงการ</a>
-                                                </div>
+                                        <div class="row mb-2">
+                                            <div class="col-md-12 text-end">
+                                                <a href="{{ route('projects.create') }}"
+                                                    class="btn btn-success btn-sm">เพิ่มโครงการ</a>
                                             </div>
-                                            <table class="table project-table table-centered table-nowrap">
-                                                <thead>
+                                        </div>
+                                        <table class="table project-table table-centered table-nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col" style="width: 20%">รหัสลูกค้า</th>
+                                                    <th scope="col" style="width: 20%">ชื่อลูกค้า</th>
+                                                    <th scope="col" style="width: 20%">วันที่เริ่มโครงการ</th>
+                                                    <th scope="col" style="width: 20%">สถานะ</th>
+                                                    <th scope="col" style="width: 20%">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @forelse ($project as $projects)
                                                     <tr>
-                                                        <th scope="col" style="width: 20%">รหัสลูกค้า</th>
-                                                        <th scope="col" style="width: 20%">ชื่อลูกค้า</th>
-                                                        <th scope="col" style="width: 20%">วันที่เริ่มโครงการ</th>
-                                                        <th scope="col" style="width: 20%">สถานะ</th>
-                                                        <th scope="col" style="width: 20%">
-                                                            ManagerRole|DeveloperRole|SalesRole
-                                                        </th>
+                                                        <td>{{ $projects->customer->cus_id }}</td>
+                                                        <td>
+                                                            <div class="team">
+                                                                <a href="{{ route('projects.show', $projects->id) }}"
+                                                                    class="team-member" data-toggle="tooltip"
+                                                                    data-placement="top"
+                                                                    title="{{ $projects->customer->name }}">
+                                                                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                                                                        class="rounded-circle avatar-xs"
+                                                                        alt="" />{{ $projects->customer->name }}
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                        <td>{{ $projects->start_date }}</td>
+                                                        <td>
+                                                            @if ($projects->status_id == 1)
+                                                                <span
+                                                                    class="badge btn-warning">ดำเนินการเสร็จสิ้น</span>
+                                                            @elseif ($projects->status_id == 2)
+                                                                <span class="badge btn-danger">ยังไม่ดำเนินการ</span>
+                                                            @elseif ($projects->status_id == 3)
+                                                                <span class="badge btn-success">กำลังดำเนินการ</span>
+                                                            @endif
+                                                        <td>
+                                                            {{-- ถ้าอยู่ในโครงการแล้ว และเป็น ManagerRole, DeveloperRole, หรือ SalesRole --}}
+                                                            @if (auth()->user()->can('ManagerRole') || auth()->user()->can('DeveloperRole') || auth()->user()->can('SalesRole'))
+                                                                <form
+                                                                    action="{{ route('projects.destroy', $projects->id) }}"
+                                                                    method="POST">
+                                                                    @csrf
+                                                                    @method('DELETE')
+                                                                    <button class="btn btn-danger btn-sm"
+                                                                        data-confirm-delete="true">
+                                                                        <i class="fa fa-trash"></i>
+                                                                        ลบ
+                                                                    </button>
+                                                                </form>
+                                                            @endif
+                                                        </td>
                                                     </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @forelse ($project as $projects)
-                                                        <tr>
-                                                            <td>{{ $projects->customer->cus_id }}</td>
-                                                            <td>
-                                                                <div class="team">
-                                                                    <a href="{{ route('projects.show', $projects->id) }}"
-                                                                        class="team-member" data-toggle="tooltip"
-                                                                        data-placement="top"
-                                                                        title="{{ $projects->customer->name }}">
-                                                                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                                                                            class="rounded-circle avatar-xs"
-                                                                            alt="" />{{ $projects->customer->name }}
-                                                                    </a>
-                                                                </div>
-                                                            </td>
-                                                            <td>{{ $projects->start_date }}</td>
-                                                            <td>
-                                                                @if ($projects->status_id == 1)
-                                                                    <span
-                                                                        class="badge btn-warning">ดำเนินการเสร็จสิ้น</span>
-                                                                @elseif ($projects->status_id == 2)
-                                                                    <span
-                                                                        class="badge btn-danger">ยังไม่ดำเนินการ</span>
-                                                                @elseif ($projects->status_id == 3)
-                                                                    <span
-                                                                        class="badge btn-success">กำลังดำเนินการ</span>
-                                                                @endif
-                                                            <td>
-                                                                {{-- ถ้าอยู่ในโครงการแล้ว และเป็น ManagerRole, DeveloperRole, หรือ SalesRole --}}
-                                                                @if (auth()->user()->can('ManagerRole') || auth()->user()->can('DeveloperRole') || auth()->user()->can('SalesRole'))
-                                                                    <form
-                                                                        action="{{ route('projects.destroy', $projects->id) }}"
-                                                                        method="POST">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button class="btn btn-danger btn-sm"
-                                                                            data-confirm-delete="true">
-                                                                            <i class="fa fa-trash"></i>
-                                                                            ลบ
-                                                                        </button>
-                                                                    </form>
-                                                                @endif
-                                                            </td>
-                                                        </tr>
-                                                    @empty
-                                                        <tr>
-                                                            <td colspan="5">ไม่พบข้อมูล</td>
-                                                        </tr>
-                                                    @endforelse
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <div class="pt-3">
-                                            <ul class="pagination justify-content-end mb-0">
-                                                {{ $project->links('pagination::bootstrap-5') }}
-                                            </ul>
-                                        </div>
+                                                @empty
+                                                    <tr>
+                                                        <td colspan="5">ไม่พบข้อมูล</td>
+                                                    </tr>
+                                                @endforelse
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="pt-3">
+                                        <ul class="pagination justify-content-end mb-0">
+                                            {{ $project->links('pagination::bootstrap-5') }}
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
