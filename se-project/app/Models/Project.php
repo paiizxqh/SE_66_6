@@ -15,9 +15,10 @@ class Project extends Model
     protected $table = 'projects';
 
     protected $fillable = [
+        'id',
         'project_id',
         'start_date',
-        'area_date' ,
+        'area_date',
         'map',
         'customers_contact_name',
         'customers_contact_phone',

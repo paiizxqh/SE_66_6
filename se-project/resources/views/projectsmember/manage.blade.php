@@ -1,3 +1,7 @@
+
+@php
+    ($id);
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 
@@ -90,14 +94,13 @@
                         @include('projectsmember.member', ['role' => 'Surveyor'])
                     </div>
 
-                </div>
-                <div class="Submit d-flex justify-content-end px-4 pb-2">
-                    <a href="{{ route('test') }}">
-                        <button type="button" class="btn btn-primary"><span>submit</span>
-                        </button>
-                    </a>
-                </div>
             </div>
+            <div class="Submit d-flex justify-content-end px-4 pb-2">
+                <form action="{{ route('detail.index') }}" method="GET">
+                    <button type="submit" class="btn btn-primary"><span>Submit</span></button>
+                </form>
+            </div>
+             </div>
         </div>
 
     </div>
