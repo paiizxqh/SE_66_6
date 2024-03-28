@@ -1,4 +1,6 @@
+@php
 
+@endphp
 @section('title', 'รายละเอียดโครงการ')
 <x-app-layout>
     <x-slot name="header">
@@ -15,61 +17,64 @@
         <div class="row">
             <div class="col-lg-6">
                 @can('NOAcademicianRole')
-                <div class="card mb-4">
-                    <div class="card-header">ข้อมูลโครงการสำหรับลูกค้า</div>
-                    <div class="card-body">
-                        <form method="POST" action="{{ route('update', ['id' => $project->id]) }}" enctype="multipart/form-data">
-                            @csrf
-                            @method('POST')
-                            <div class="mb-3">
-                                <label class="small mb-1">ชื่อลูกค้า</label>
-                                <input class="form-control" type="text" name="customers_contact_name"
-                                    placeholder="กรอกชื่อลูกค้า" value="{{ $customers->name }}">
-                            </div>
-                            <div class="mb-3">
-                                <label class="small mb-1">ที่อยู่</label>
-                                <input class="form-control" type="text" name="address" placeholder="กรอกที่อยู่"
-                                    value="{{ $customers->address }}">
-                            </div>
-                            <div class="mb-3">
-                                <label class="small mb-1">เบอร์โทรศัพท์</label>
-                                <input class="form-control" type="text" name="phone"
-                                    placeholder="กรอกเบอร์โทรศัพท์"value="{{ $customers->phone }}">
-                            </div>
-                            <div class="mb-3">
-                                <label class="small mb-1">ชื่อผู้ติดต่อ</label>
-                                <input class="form-control" type="text" name="customers_contact_name"
-                                    placeholder="กรอกชื่อผู้ติดต่อ" value={{ $project->customers_contact_name }}>
-                            </div>
-                            <div class="mb-3">
-                                <label class="small mb-1">เบอร์ผู้ติดต่อ</label>
-                                <input class="form-control" type="numberic" name="customers_contact_phone"
-                                    placeholder="กรอกเบอร์ผู้ติดต่อ"value={{ $project->customers_contact_phone }}>
-                            </div>
-                            <div class="col-xs-12 mb-3">
-                                <div class="form-group">
-                                    <strong>แผนที่จุดเก็บ</strong>
-                                    <input type="file" name="map" class="form-control" placeholder="Upload image">
-                                    @if ($project->map)
-                                        <div class="text-center mt-3">
-                                            <img src="{{ asset($project->map) }}" class="rounded" alt="project map">
-                                        </div> 
-                                    @endif
+                    <div class="card mb-4">
+                        <div class="card-header">ข้อมูลโครงการสำหรับลูกค้า</div>
+                        <div class="card-body">
+                            <form method="POST" action="{{ route('update', ['id' => $project->id]) }}"
+                                enctype="multipart/form-data">
+                                @csrf
+                                @method('POST')
+                                <div class="mb-3">
+                                    <label class="small mb-1">ชื่อลูกค้า</label>
+                                    <input class="form-control" type="text" name="customers_contact_name"
+                                        placeholder="กรอกชื่อลูกค้า" value="{{ $customers->name }}">
                                 </div>
-                            </div>
-                            
-                            <button class="btn btn-primary" type="submit">บันทึก</button>
-                        </form>
+                                <div class="mb-3">
+                                    <label class="small mb-1">ที่อยู่</label>
+                                    <input class="form-control" type="text" name="address" placeholder="กรอกที่อยู่"
+                                        value="{{ $customers->address }}">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="small mb-1">เบอร์โทรศัพท์</label>
+                                    <input class="form-control" type="text" name="phone"
+                                        placeholder="กรอกเบอร์โทรศัพท์"value="{{ $customers->phone }}">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="small mb-1">ชื่อผู้ติดต่อ</label>
+                                    <input class="form-control" type="text" name="customers_contact_name"
+                                        placeholder="กรอกชื่อผู้ติดต่อ" value={{ $project->customers_contact_name }}>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="small mb-1">เบอร์ผู้ติดต่อ</label>
+                                    <input class="form-control" type="numberic" name="customers_contact_phone"
+                                        placeholder="กรอกเบอร์ผู้ติดต่อ"value={{ $project->customers_contact_phone }}>
+                                </div>
+                                <div class="col-xs-12 mb-3">
+                                    <div class="form-group">
+                                        <strong>แผนที่จุดเก็บ</strong>
+                                        <input type="file" name="map" class="form-control"
+                                            placeholder="Upload image">
+                                        @if ($project->map)
+                                            <div class="text-center mt-3">
+                                                <img src="{{ asset($project->map) }}" class="rounded" alt="project map">
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <button class="btn btn-primary" type="submit">บันทึก</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
                 @endcan
             </div>
-            
+
             <div class="col-lg-6">
                 <div class="card mb-4">
                     <div class="card-header">ข้อมูลโครงการสำหรับบริษัท</div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('update2', ['id' => $project->id]) }}" enctype="multipart/form-data"> 
+                        <form method="POST" action="{{ route('update2', ['id' => $project->id]) }}"
+                            enctype="multipart/form-data">
                             @csrf
                             @method('POST')
                             <div class="mb-3">
@@ -80,18 +85,18 @@
                             <div class="mb-3">
                                 <label class="small mb-1">รหัสลูกค้า</label>
                                 <input class="form-control" type="bigint"
-                                    placeholder="กรอกรหัสลูกค้า"value={{ $project->customer_id}} name="customer_id">
+                                    placeholder="กรอกรหัสลูกค้า"value={{ $project->customer_id }} name="customer_id">
                             </div>
                             <div class="mb-3">
                                 <label class="small mb-1">วันที่เริ่มโครงการ</label>
                                 <input class="form-control" type="date"
-                                    placeholder="กรอกวันที่เริ่มโครงการ"value={{ $project->start_date}}
+                                    placeholder="กรอกวันที่เริ่มโครงการ"value={{ $project->start_date }}
                                     name="start_date">
                             </div>
                             <div class="mb-3">
                                 <label class="small mb-1">วันนัดตรวจ</label>
                                 <input class="form-control" type="date"
-                                    placeholder="กรอกวันนัดตรวจ"value={{ $project->area_date}} name="area_date">
+                                    placeholder="กรอกวันนัดตรวจ"value={{ $project->area_date }} name="area_date">
                             </div>
                             <div class="mb-3">
                                 <div class="card">
@@ -118,15 +123,20 @@
                                                 </div>
                                             </li>
                                         </ul>
-                                    </div>   
+                                    </div>
                                 </div>
                             </div>
                             <button class="btn btn-primary mb-2" type="submit">บันทึก</button>
                         </form>
+<<<<<<< Updated upstream
                         <form method="POST" action="{{route('manage')}}" enctype="multipart/form-data">
                             <input type="hidden" name="id" value="{{ $project->id }}">
                             @csrf
                             @method('POST')
+=======
+                        <form method="GET" action="{{ route('manage', ['id' => $project->id]) }}"
+                            enctype="multipart/form-data">
+>>>>>>> Stashed changes
                             <button class="btn btn-primary mb-1" type="submit">เลือกทีม</button>
                         </form>
                     </div>
@@ -137,38 +147,118 @@
             <div class="card-header">ตารางแสดงรายละเอียด</div>
             <div class="card-body p-0">
                 <div class="table-responsive table-billing-history">
-                    <form method="POST" action="{{route('createCheckpoint',['id' => $project->id]) }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route('createCheckpoint', ['id' => $project->id]) }}"
+                        enctype="multipart/form-data">
                         @csrf
                         <table class="table mb-0" name="ff">
-                        <thead>
-                            <tr>
-                                <th class="border-gray-200" scope="col">รหัสตัวอย่าง</th>
-                                <th class="border-gray-200" scope="col">จุดเก็บ</th>
-                                <th class="border-gray-200" scope="col">พารามิเตอร์</th>
-                                <th class="border-gray-200" scope="col">วันที่/เวลาเก็บตัวอย่าง</th>
-                                <th class="border-gray-200" scope="col">ค่าพารามิเตอร์</th>
-                                <th class="border-gray-200" scope="col">ชื่อผู้เก็บตัวอย่าง</th>
-                                <th class="border-gray-200" scope="col">ชื่อผู้ทดลอง</th>
-                                <th class="border-gray-200" scope="col">หมายเหตุ</th>
-                                <th><button class="btn btn-primary btn-add-row" type="button"
-                                        name="add">add</button></th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                            <thead>
+                                <tr>
+                                    <th class="border-gray-200" scope="col">รหัสตัวอย่าง</th>
+                                    <th class="border-gray-200" scope="col">จุดเก็บ</th>
+                                    <th class="border-gray-200" scope="col">พารามิเตอร์</th>
+                                    <th class="border-gray-200" scope="col">วันที่/เวลาเก็บตัวอย่าง</th>
+                                    <th class="border-gray-200" scope="col">ค่าพารามิเตอร์</th>
+                                    <th class="border-gray-200" scope="col">ชื่อผู้เก็บตัวอย่าง</th>
+                                    <th class="border-gray-200" scope="col">ชื่อผู้ทดลอง</th>
+                                    <th class="border-gray-200" scope="col">หมายเหตุ</th>
+                                    <th class="border-gray-200" scope="col">ลบ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($parameterInCheckpoints as $pic)
+                                    <tr>
+                                        <td>
+                                            <input class="form-control" type="text" placeholder="รหัสตัวอย่าง"
+                                                name="sample_id[]" value="{{ $pic->sample_id }}">
+                                        </td>
+                                        <td>
+                                            <input class="form-control" type="text" placeholder="จุดเก็บ"
+                                                name="number[]"
+                                                value="{{ $checkpoints->where('id', $pic->checkpoint_id)->first()->number }}">
+                                        </td>
+                                        <td>
+                                            <input class="form-control" type="text" placeholder="พารามิเตอร์"
+                                                name="parameter[]"
+                                                value="{{ $parameters->where('id', $pic->parameter_id)->first()->parameter_shortname }}">
+                                        </td>
+                                        <td>
+                                            <input class="form-control" type="text"
+                                                placeholder="วันที่/เวลาเก็บตัวอย่าง" name="sample_date_time[]"
+                                                value="{{ $pic->sample_date_time }}">
+                                        </td>
+                                        <td>
+                                            <input class="form-control" type="text" placeholder="ค่าพารามิเตอร์"
+                                                name="sample_value[]" value="{{ $pic->sample_value }}">
+                                        </td>
+                                        <td>
+                                            <input class="form-control" type="text"
+                                                placeholder="ชื่อผู้เก็บตัวอย่าง" name="surveyor_id[]"
+                                                value="{{ $pic->surveyor_id }}">
+                                        </td>
+                                        <td>
+                                            <input class="form-control" type="text" placeholder="ชื่อผู้ทดลอง"
+                                                name="academician_id[]" value="{{ $pic->academician_id }}">
+                                        </td>
+                                        <td>
+                                            <input class="form-control" type="text" placeholder="หมายเหตุ"
+                                                name="remark[]" value="{{ $pic->remark }}">
+                                        </td>
+                                        <td>
+                                            <form action="{{ route('detail.destroy', ['id' => $pic->id, 'checkpoint_id' => $checkpoints->where('id', $pic->checkpoint_id)->first()->id]) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?')">ลบ</button>
+                                            </form>
+                                            
+                                        </td>
+                                    </tr>
+                                @endforeach
+
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">ตารางแสดงรายละเอียด</div>
+            <div class="card-body p-0">
+                <div class="table-responsive table-billing-history">
+                    <form method="POST" action="{{ route('createCheckpoint', ['id' => $project->id]) }}"
+                        enctype="multipart/form-data">
+                        @csrf
+                        <table class="table mb-0" name="ff">
+                            <thead>
+                                <tr>
+                                    <th class="border-gray-200" scope="col">รหัสตัวอย่าง</th>
+                                    <th class="border-gray-200" scope="col">จุดเก็บ</th>
+                                    <th class="border-gray-200" scope="col">พารามิเตอร์</th>
+                                    <th class="border-gray-200" scope="col">วันที่/เวลาเก็บตัวอย่าง</th>
+                                    <th class="border-gray-200" scope="col">ค่าพารามิเตอร์</th>
+                                    <th class="border-gray-200" scope="col">ชื่อผู้เก็บตัวอย่าง</th>
+                                    <th class="border-gray-200" scope="col">ชื่อผู้ทดลอง</th>
+                                    <th class="border-gray-200" scope="col">หมายเหตุ</th>
+                                    <th><button class="btn btn-primary btn-add-row" type="button"
+                                            name="add">add</button></th>
+                                </tr>
+                            </thead>
+                            <tbody>
                                 <td>
                                     <input class="form-control " type="name" placeholder="กรอกรหัสตัวอย่าง"
-                                        name="sample_id[]" value={{$newSampleId}} >
+                                        name="sample_id[]" value={{ $newSampleId }}>
                                 </td>
                                 <td>
                                     <input class="form-control" type="int" placeholder="กรอกจุดเก็บ"
                                         name="number[]" value=1>
                                 </td>
                                 <td>
-                                    <select class="form-control" aria-label="Default select example" name="parameter_id[]">
+                                    <select class="form-control" aria-label="Default select example"
+                                        name="parameter_id[]">
                                         <option selected>select parameter</option>
                                         @foreach ($parameters as $parameter)
-                                            <option value="{{$parameter->id}}">
-                                                {{$parameter->parameter_shortname}}</option>
+                                            <option value="{{ $parameter->id }}">
+                                                {{ $parameter->parameter_shortname }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -192,10 +282,12 @@
                                     <input class="form-control" type="name"
                                         placeholder="กรอกหมายเหตุ"name="remark[]">
                                 </td>
-                        </tbody>
-                    </table>
-                    <button class="btn btn-primary mb-1" type="submit">บันทึก</button>
+                            </tbody>
+                        </table>
+                        <button class="btn btn-primary mb-1" type="submit">บันทึก</button>
                     </form>
+
+                    <a class="btn btn-primary mb-2" href="#">รายการอุปกรณ์</a>
                 </div>
             </div>
         </div>
@@ -218,8 +310,8 @@
                                 <select class="form-control" aria-label="Default select example" name="parameter_id[]">
                                         <option selected>select parameter</option>
                                         @foreach ($parameters as $parameter)
-                                            <option value="{{$parameter->id}}">
-                                                {{$parameter->parameter_shortname}}</option>
+                                            <option value="{{ $parameter->id }}">
+                                                {{ $parameter->parameter_shortname }}</option>
                                         @endforeach
                                 </select>
                             </td>
@@ -243,13 +335,20 @@
                             </td>
                         </tr>`
                     );
-                    
+
                 });
             });
 
-            $(document).on('click','.remove-row', function() { 
+            $(document).on('click', '.remove-row', function() {
                 $(this).parents('tr').remove();
                 --i;
+            });
+
+            $(document).ready(function() {
+                // ให้ลบแถวที่ปุ่ม "ลบ" อยู่หน้าตาราง
+                $(document).on('click', '.remove-row', function() {
+                    $(this).closest('tr').remove();
+                });
             });
         </script>
     </div>

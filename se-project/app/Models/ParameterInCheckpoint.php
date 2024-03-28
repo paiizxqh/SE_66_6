@@ -25,4 +25,8 @@ class ParameterInCheckpoint extends Model
     {
         return $this->hasMany(Checkpoint::class);
     }
+    public function fine($checkpoint_id)
+    {
+        return static::where('checkpoint_id',$checkpoint_id)->first();
+    }
 }

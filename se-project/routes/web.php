@@ -50,6 +50,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/update/{id}', [DetailController::class, 'update'])->name('update');
     Route::post('/update2/{id}', [DetailController::class, 'update2'])->name('update2');
     Route::post('/createCheckpoint/{id}',[DetailController::class, 'createCheckpoint'])->name('createCheckpoint');
+    Route::delete('/detail/{id}/{checkpoint_id}', [DetailController::class,'destroy'])->name('detail.destroy');
 
     Route::post('manage',[ProjectMemberController::class,'index'])->name('manage');
     Route::post('/process',[ProjectMemberController::class,'handleFormSubmission'])->name('process');

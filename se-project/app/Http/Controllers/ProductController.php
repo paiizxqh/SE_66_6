@@ -100,6 +100,23 @@ class ProductController extends Controller
         return view('products.show', compact('product', 'categories'));
     }
 
+    /* public function add(Request $request, $id)
+    {
+        $this->validate($request,[
+            'add' => 'nullable',
+        ]);
+
+        $inventory = Inventory::findOrFail($id);
+        if ($request->hasAny('add')) {
+            $inventory->remain += $request->add;
+        }
+
+        $inventory->save();
+        
+        return redirect()->route('products.index')
+        ->with('success', 'Product add successfully');
+    }*/
+
     /**
      * Show the form for editing the specified resource.
      *

@@ -15,30 +15,33 @@ class DetailController extends Controller
 
     public function index(Request $request)
     {
-        $projectId = 1; // Change this to the appropriate project ID
+        $projectId = 1;
         $parameters = Parameter::all();
         $project = Project::findOrFail($projectId);
 
         // Retrieve customers
         $customers = Customer::where('id', $project->customer_id)->firstOrFail();
 
-
         // Fetch checkpoints and parameters associated with each checkpoint
         $checkpoints = Checkpoint::where('projects_id', $projectId)->get();
-        $parametersInCheckpoint = [];
- 
-        #$parametersInCheckpoint = ParameterInCheckpoint::where('checkpoint_id',$checkpoint->id)->get();
+       
+        $checkpointsIds = [];// กำหนดให้ $a เป็นอาร์เรย์เปล่าๆ
+        foreach ($checkpoints as $checkpoint) {
+            $checkpointsIds[$checkpoint->id] = $checkpoint->id; // กำหนดค่าของอาร์เรย์ $a โดยใช้ checkpoint->id เป็นคีย์และค่า
+        }
+        $parameterInCheckpoints = ParameterInCheckpoint::whereIn('checkpoint_id', $checkpointsIds)->get();
 
-
+        // $parametersInCheckpoints = // กำหนดให้ $parametersInCheckpoints เป็นอาร์เรย์เพื่อเก็บข้อมูล ParameterInCheckpoint ของแต่ละ checkpoint
         // Get the latest sample ID
         $latestSample = ParameterInCheckpoint::orderBy('sample_id', 'DESC')->first();
+
         if ($latestSample) {
             $newSampleId = 'SMP' . str_pad((intval(substr($latestSample->sample_id, 3)) + 1), 3, '0', STR_PAD_LEFT);
         } else {
             $newSampleId = 'SMP001';
         }
 
-        return view('detail.detail', compact('customers', 'project', 'parameters', 'newSampleId', 'checkpoints', 'parametersInCheckpoint'));
+        return view('detail.detail', compact('customers', 'project', 'parameters', 'newSampleId', 'checkpoints','parameterInCheckpoints'));
     }
 
     public function update(Request $request, $id)
@@ -123,5 +126,15 @@ class DetailController extends Controller
             $parameterInCheckpoint->save();
         }
         return redirect()->route('detail.index');
+    }
+
+
+    public function destroy($id,$checkpoint_id)
+    {
+        ParameterInCheckpoint::find($id)->delete();
+        Checkpoint::find($checkpoint_id)->delete();
+
+        return redirect()->route('detail.index')
+            ->with('success', 'checkpoint deleted successfully');
     }
 }
