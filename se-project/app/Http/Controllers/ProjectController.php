@@ -47,8 +47,9 @@ class ProjectController extends Controller
         // สร้าง array เพื่อเก็บจำนวนโครงการตามสถานะ
         $projectCounts = [];
         foreach ($totalStatus as $status) {
-            $projectCounts[$status->name] = $status->project->count();
+            $projectCounts[$status->name] = Project::where('status_id', $status->id)->count();
         }
+        
 
         // คืนค่าข้อมูลไปยังหน้าจอ
         return view('projects.index', compact('project', 'totalProject', 'totalStatus', 'projectCounts'));
