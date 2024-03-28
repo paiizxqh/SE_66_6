@@ -18,4 +18,9 @@ class Customers extends Model
         'phone',
         'regis_date',
     ];
+
+    public static function find($cus_id)
+    {
+        return static::where('cus_id', $cus_id)->first();
+    }
 }
