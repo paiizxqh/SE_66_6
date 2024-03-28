@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Models\Checkpoint;
 
 
 class ProjectController extends Controller
@@ -70,35 +71,34 @@ class ProjectController extends Controller
         }
 
         // ดึงโครงการล่าสุด
-        $latestProject = Project::orderBy('project_id', 'DESC')->first();
-
+        $latestProject = Project::orderBy('id', 'DESC')->first();
+        // echo $latestProject;
         // ตรวจสอบว่ามีโครงการล่าสุดหรือไม่
-        $latestProjectId = $latestProject ? $latestProject->project_id : null;
-
-        if ($latestProject) {
-        // สร้างรหัสโครงการใหม่โดยเพิ่มค่าจากโครงการล่าสุด
-            $newProjectId = 'PJ' . str_pad((intval(substr($latestProject->project_id, 2)) + 1), 3, '0', STR_PAD_LEFT);
-        } else {
-            $newProjectId = 'PJ001';
-        }
+        // $latestProjectId = $latestProject ? $latestProject->id : null;
+        $PJ = 'PJ' . strval($latestProject->id + 1);
+        // if ($latestProject) {
+        // // สร้างรหัสโครงการใหม่โดยเพิ่มค่าจากโครงการล่าสุด
+        //     $newProjectId = 'PJ' . str_pad((intval(substr($latestProject->id, 2)) + 1), 3, '0', STR_PAD_LEFT);
+        // } else {
+        //     $newProjectId = 'PJ001';
+        // }
 
         // ดึงข้อมูลลูกค้าจากตาราง Customer
         $customers = Customer::all();
-
-        return view('projects.create', compact('newSampleId', 'newProjectId', 'customers', 'parameters'));
+        // echo $newProjectId;
+        return view('projects.create', compact('newSampleId', 'customers', 'parameters', 'latestProject','PJ'));
     }
 
-    public function store(Request $request){
+    public function store(Request $request ){
         // ตรวจสอบความถูกต้องของข้อมูลที่ส่งมาจากแบบฟอร์ม
-        dd($request);
+        // dd($request);
         $request->validate([
-            'project_id' => 'required|string',
             'customers_contact_name' => 'required|string',
             'customers_contact_phone' => 'required|string',
-            'map' => 'nullable|image|mimes:jpg,jpeg,png,pdf',
+            'map' => 'required|image|mimes:jpg,jpeg,png,pdf',
             'customer_id' => 'required',
             'start_date' => 'required|date',
-            'area_date ' => 'required|date',
+            'area_date' => 'required|date',
         ], [
             'start_date.required' => 'The start date field is required.',
             'start_date.date' => 'The start date must be a valid date format.',
@@ -109,45 +109,60 @@ class ProjectController extends Controller
         ]);
 
         $project = new Project();
-        $project->project_id = $request->project_id;
+        $last = Project::orderBy('id', 'DESC')->first();
+        echo $last->id;
+        // $lastID = $last->id;
+        $project->project_id = 'PJ' . strval($last->id + 1);
+        // echo $project->project_id;
         $project->customers_contact_name = $request->customers_contact_name;
         $project->customers_contact_phone = $request->customers_contact_phone;
         $project->customer_id = $request->customer_id;
         $project->start_date = $request->start_date;
         $project->area_date = $request->area_date;
+        $project->status_id = 2; // กำหนดสถานะโครงการเป็น "ยังไม่ดำเนินการ"
         if ($request->has('map')) {
             $image = $request->file('map');
             $extension = $image->getClientOriginalExtension();
             $filename = time() . '.' . $extension;
             $path = 'images/maps/';
             $image->move($path, $filename);
-            $inventory->map =  $path . $filename;
+            $project->map =  $path . $filename;
         }
 
-        $projects->save();
+        $project->save();
 
-/*         // สร้างโครงการใหม่และบันทึกข้อมูลลงในฐานข้อมูล
-        $project = Project::create([
-            'project_id' => $request->input('project_id'),
-            'customer_name' => $request->input('customer_name'),
-            'address' => $request->input('address'),
-            'phonenumber' => $request->input('phonenumber'),
-            'customers_contact_name' => $request->input('customers_contact_name'),
-            'customers_contact_phone' => $request->input('customers_contact_phone'),
-            'status_id' => 2, // กำหนดสถานะโครงการเป็น "ยังไม่ดำเนินการ"
-            'customer_id' => $request->input('customer_id'),
-            'start_date' => $request->input('start_date'), // เพิ่มบรรทัดนี้
-            'area_date' => $request->input('area_date'), // เพิ่มบรรทัดนี้
+        $this->validate($request, [
+            'sample_id' => 'required|array',
+            // 'sample_id.' => 'required',
+            'number' => 'required|array',
+            // 'number.' => 'required',
+            'parameter_id' => 'required|array',
+            'parameter_id.*' => 'required',
+            'sample_date_time',
+            'sample_value',
+            'surveyor_id',
+            'academician_id',
+            'remark'
         ]);
+        foreach ($request->sample_id as $index => $sample_id) {
+            $checkpoint = new Checkpoint();
+            $checkpoint->number = $request->number[$index];
+            $checkpoint->projects_id = $project->id;
+            $checkpoint->save();
 
-        // บันทึกไฟล์แผนที่
-        if ($request->hasFile('map')) {
-            $fileName = time() . '_' . $request->file('map')->getClientOriginalName();
-            $request->file('map')->storeAs('maps', $fileName);
-            $project->map = $fileName;
-            $project->save();
+            $parameterInCheckpoint = new ParameterInCheckpoint();
+            $parameterInCheckpoint->sample_id = $sample_id;
+            $parameterInCheckpoint->checkpoint_id = $checkpoint->id; // ใช้ primary key ของ Checkpoint ที่บันทึกไว้ในตาราง Checkpoints
+            $parameterInCheckpoint->parameter_id = $request->parameter_id[$index];
+            // $parameterInCheckpoint->sample_value = $request->sample_value[$index];
+            // $parameterInCheckpoint->sample_date_time = $request->sample_date_time[$index];
+            // $parameterInCheckpoint->surveyor_id =  $request->surveyor_id[$index];
+            // $parameterInCheckpoint->academician_id = $request->academician_id[$index];
+            // $parameterInCheckpoint->remark = $request->remark[$index];
+            $parameterInCheckpoint->save();
         }
-        dd($request); */
+
+
         return redirect()->route('projects.index')
             ->with('success', 'Project created successfully');
     }

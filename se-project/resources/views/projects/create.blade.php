@@ -1,6 +1,7 @@
 @section('title', 'เพิ่มโครงการ')
 <x-app-layout>
     <x-slot name="header">
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
         <script src="{{ asset('js/app.js') }}" defer></script>
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">เพิ่มโครงการ</h2>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -51,7 +52,6 @@
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-
                                 <div class="mb-3">
                                     <label class="small mb-1" for="customers-contact-name">ชื่อผู้ติดต่อ</label>
                                     <input class="form-control" name="customers_contact_name"
@@ -89,7 +89,7 @@
                             <div class="mb-3">
                                 <label class="small mb-1" for="project_id">รหัสโครงการ</label>
                                 <input class="form-control" id="project_id" name="project_id" type="text"
-                                    value="{{ $newProjectId }}" placeholder="กรอกรหัสโครงการ" disabled>
+                                    value="{{ $PJ }}" placeholder="กรอกรหัสโครงการ" disabled>
                             </div>
                             <div class="mb-3">
                                 <label class="small mb-1" for="customer_id">รหัสลูกค้า</label>
@@ -110,7 +110,7 @@
                                 <input class="form-control" id="area_date" name="area_date" type="date"
                                     placeholder="กรอกวันนัดตรวจ">
                             </div>
-                            <div class="mb-3">
+                            {{-- <div class="mb-3">
                                 <div class="card">
                                     <div class="d-flex card-header justify-content-between">
                                         <h5 class="me-3 mb-0">รายชื่อผู้รับผิดชอบโครงการ</h5>
@@ -135,13 +135,77 @@
                                         </ul>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="card mb-4">
+                <div class="card-header">ตารางแสดงรายละเอียด</div>
+                <div class="card-body p-0">
+                    <div class="table-responsive table-billing-history">
+                        <table class="table mb-0">
+                            <thead>
+                                <tr>
+                                    <th class="border-gray-200" scope="col">รหัสตัวอย่าง</th>
+                                    <th class="border-gray-200" scope="col">จุดเก็บ</th>
+                                    <th class="border-gray-200" scope="col">พารามิเตอร์</th>
+                                    <th class="border-gray-200" scope="col">วันที่/เวลาเก็บตัวอย่าง</th>
+                                    {{-- <th class="border-gray-200" scope="col">เวลาที่เก็บตัวอย่าง</th> --}}
+                                    <th class="border-gray-200" scope="col">ค่าพารามิเตอร์</th>
+                                    <th class="border-gray-200" scope="col">ชื่อผู้เก็บตัวอย่าง</th>
+                                    <th class="border-gray-200" scope="col">ชื่อผู้ทดลอง</th>
+                                    <th class="border-gray-200" scope="col">หมายเหตุ</th>
+                                    <th><button class="btn btn-primary btn-add-row" type="button"
+                                            name="add">add</button></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <td>
+                                    <input class="form-control " type="name" placeholder="กรอกรหัสตัวอย่าง"
+                                        name="sample_id[]" value={{ $newSampleId }}>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="int" placeholder="กรอกจุดเก็บ"
+                                        name="number[]" value=1>
+                                </td>
+                                <td>
+                                    <select class="form-control" aria-label="Default select example"
+                                        name="parameter_id[]">
+                                        <option selected>select parameter</option>
+                                        @foreach ($parameters as $parameter)
+                                            <option value="{{ $parameter->id }}">
+                                                {{ $parameter->parameter_shortname }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="datetime-local" disabled
+                                        placeholder="เลือกวันที่/เวลาเก็บตัวอย่าง" name="sample_date_time[]">
+                                </td>
+                                <td>
+                                    <input class="form-control" type="name" placeholder="กรอกค่าพารามิเตอร์"
+                                        disabled name="sample_value[]">
+                                </td>
+                                <td>
+                                    <input class="form-control" type="name" disabled
+                                        placeholder="กรอกชื่อผู้เก็บตัวอย่าง"name="surveyor_id[]">
+                                </td>
+                                <td>
+                                    <input class="form-control" type="name" disabled
+                                        placeholder="กรอกชื่อผู้ทดลอง"name="academician_id[]">
+                                </td>
+                                <td>
+                                    <input class="form-control" type="name" disabled
+                                        placeholder="กรอกหมายเหตุ"name="remark[]">
+                                </td>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
             <div class="col-xs-12 mb-5 pull-right">
-                <a href="{{ url('projects.indedx') }}" class="btn btn-primary" type="button">ย้อนกลับ</a>
+                <a href="{{ route('projects.index') }}" class="btn btn-primary" type="button">ย้อนกลับ</a>
                 <button href="{{ url('projects.store') }}" class="btn btn-primary" type="submit">บันทึก</button>
             </div>
             </form>
@@ -149,3 +213,55 @@
     </body>
     @include('sweetalert::alert')
 </x-app-layout>
+<script>
+    var i = 1;
+    $(document).ready(function() {
+        $('button[name="add"]').click(function() {
+            var newSampleId = '{{ $newSampleId }}';
+            newSampleId = 'SMP' + ('000' + (parseInt(newSampleId.substring(3)) + i)).slice(-3);
+            ++i;
+            $('table  tbody').append(
+                `<tr>
+                    <td>
+                        <input class="form-control" type="name" placeholder="กรอกรหัสตัวอย่าง" value='${newSampleId}'  name="sample_id[]">
+                    </td>
+                    <td>
+                        <input class="form-control" type="int" placeholder="กรอกจุดเก็บ" value='${i}' name="number[]">
+                    </td>
+                    <td>
+                        <select class="form-control" aria-label="Default select example" name="parameter_id[]">
+                                <option selected>select parameter</option>
+                                @foreach ($parameters as $parameter)
+                                    <option value="{{ $parameter->id }}">
+                                        {{ $parameter->parameter_shortname }}</option>
+                                @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <input class="form-control" type="datetime-local" placeholder="เลือกวันที่/เวลาเก็บตัวอย่าง"name="sample_date_time[]">
+                    </td>
+                    <td>
+                        <input class="form-control" type="name" placeholder="กรอกค่าพารามิเตอร์"name="sample_value[]">
+                    </td>
+                    <td>
+                        <input class="form-control" type="name" placeholder="กรอกชื่อผู้เก็บตัวอย่าง" name="surveyor_id[]">
+                    </td>
+                    <td>
+                        <input class="form-control" type="name" placeholder="กรอกชื่อผู้ทดลอง"name="academician_id[]">
+                    </td>
+                    <td>
+                        <input class="form-control" type="name" placeholder="กรอกหมายเหตุ"placeholder="กรอกหมายเหตุ"name="remark[]">
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger remove-row">Remove</button>
+                    </td>
+                </tr>`
+            );
+
+        });
+    });
+    $(document).on('click', '.remove-row', function() {
+        $(this).parents('tr').remove();
+        --i;
+    });
+</script>
