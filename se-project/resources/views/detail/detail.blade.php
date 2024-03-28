@@ -128,15 +128,11 @@
                             </div>
                             <button class="btn btn-primary mb-2" type="submit">บันทึก</button>
                         </form>
-<<<<<<< Updated upstream
+                        
                         <form method="POST" action="{{route('manage')}}" enctype="multipart/form-data">
                             <input type="hidden" name="id" value="{{ $project->id }}">
                             @csrf
                             @method('POST')
-=======
-                        <form method="GET" action="{{ route('manage', ['id' => $project->id]) }}"
-                            enctype="multipart/form-data">
->>>>>>> Stashed changes
                             <button class="btn btn-primary mb-1" type="submit">เลือกทีม</button>
                         </form>
                     </div>
@@ -209,7 +205,6 @@
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?')">ลบ</button>
                                             </form>
-                                            
                                         </td>
                                     </tr>
                                 @endforeach
