@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DetailController;
 use App\Http\Controllers\ProjectMemberController;
 
 
@@ -40,6 +41,15 @@ Route::middleware('auth')->group(function () {
     Route::resource('products', ProductController::class);
     Route::resource('customers', CustomerController::class);
     Route::resource('projects', ProjectController::class);
+    Route::resource('detail',DetailController::class);
+
+    Route::get('/projects/search', [ProjectController::class, 'search'])->name('projects.search');
+    Route::get('/projects/{id}', [ProjectController::class, 'show'])->name('projects.show');
+    
+    Route::post('/update/{id}', [DetailController::class, 'update'])->name('update');
+    Route::post('/update2/{id}', [DetailController::class, 'update2'])->name('update2');
+    Route::post('/detail', [DetailController::class, 'index'])->name('detail.index');
+    Route::post('/createCheckpoint/{id}',[DetailController::class, 'createCheckpoint'])->name('createCheckpoint');
     Route::get('manage',[ProjectMemberController::class,'index'])->name('manage');
     Route::get('test',[ProjectMemberController::class,'test'])->name('test');
     Route::post('/process',[ProjectMemberController::class,'handleFormSubmission'])->name('process');
