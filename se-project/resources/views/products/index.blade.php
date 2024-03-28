@@ -60,16 +60,11 @@
                         <td>{{ $product->category->name }}</td>
                         <td>
                             <form action="{{ route('products.destroy', $product->id) }}" method="POST">
-                                @can('product-edit')
                                     <a class="btn btn-primary" href="{{ route('products.edit', $product->id) }}">แก้ไข</a>
-                                @endcan
-
                                 @csrf
                                 @method('DELETE')
-                                @can('product-delete')
                                     <a href="{{ route('products.destroy', $product->id) }}" class="btn btn-danger"
                                         data-confirm-delete="true">ลบ</a>
-                                @endcan
                             </form>
                         </td>
                     </tr>
