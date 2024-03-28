@@ -32,7 +32,7 @@ class ProjectMemberController extends Controller
     return view('projectsmember.manage',compact('project_members','depart_em','projectId'));
     }
     public function handleFormSubmission(Request $request) {
-        
+
         $selectedEmployees = $request->input('selectedEmployees');
         $projectId=$request->input('projectId');
         $employeeIds = [];
@@ -46,30 +46,22 @@ class ProjectMemberController extends Controller
         ->where('project_members.project_id', $projectId)
         ->orderBy('users.id', 'ASC')
         ->get();
-        
-        foreach ($selectedEmployees as $employee) {  
+
+        foreach ($selectedEmployees as $employee) {
             $employeeIds[] = $employee['employeeId'];
             $departmentNames[] = $employee['departmentName'];
-            }  
-            
+            }
+
             foreach ($project_members as $projectMember) {
                 if($projectMember->role!=$departmentNames[0]){
                     $notinem[]= $projectMember->user_id;
                 }
             }
-        
-            
-        
 
-       
-       
-        
-        
-        
         projectMember::where('project_id', $projectId)->whereNotIn('user_id', $employeeIds)
         ->delete();
-        
-        
+
+
         foreach($employeeIds as $employee){
             projectMember::updateOrInsert(
             ['project_id' => $projectId, 'user_id' =>  $employee]);
@@ -78,7 +70,7 @@ class ProjectMemberController extends Controller
             projectMember::updateOrInsert(
                 ['project_id' => $projectId, 'user_id' =>  $employee]);
         }
-      
+
     }
     public function test(){
         $projectId = DB::table('projects')->get();
@@ -95,7 +87,7 @@ class ProjectMemberController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    
+
 
     /**
      * Display the specified resource.
