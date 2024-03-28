@@ -12,7 +12,7 @@
                     <h2>เพิ่มรายการอุปกรณ์</h2>
                 </div>
                 <div class="float-end">
-                    <a class="btn btn-primary" href="{{ route('products.index') }}"> Back</a>
+                    <a class="btn btn-primary" href="{{ route('products.index') }}"> ย้อนกลับ </a>
                 </div>
             </div>
         </div>

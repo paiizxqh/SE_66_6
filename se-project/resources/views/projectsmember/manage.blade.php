@@ -27,6 +27,10 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav"> <span
                     class="navbar-toggler-icon"></span>
             </button>
+
+            <div class="float-end">
+                <a class="btn btn-primary" href="{{ route('detail.index') }}"> ย้อนกลับ </a>
+            </div>
             {{-- <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
     <li class="nav-item">
