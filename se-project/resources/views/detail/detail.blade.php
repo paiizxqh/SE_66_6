@@ -118,10 +118,13 @@
                                                 </div>
                                             </li>
                                         </ul>
-                                    </div>
+                                    </div>   
                                 </div>
                             </div>
-                            <button class="btn btn-primary" type="submit">บันทึก</button>
+                            <button class="btn btn-primary mb-2" type="submit">บันทึก</button>
+                        </form>
+                        <form method="GET" action="{{route('manage',['id' => $project->id])}}" enctype="multipart/form-data">
+                            <button class="btn btn-primary mb-1" type="submit">เลือกทีม</button>
                         </form>
                     </div>
                 </div>

@@ -49,7 +49,7 @@
       </div>
       
       <div class="sub-but">
-        <a href="{{ route('manage', ['projectId' => $projectId]) }}">
+        <a href="{{ route('manage', ['id' => $id]) }}">
         <button type="button" class="btn btn-primary"><span>submit</span>
         </button>
       </a>
@@ -161,7 +161,7 @@ else if(role=='Sales'){
    );
 }
 function submitForm(departments_name, sendfrom) {
-  var projectId = "{{ $projectId }}";
+  var id = "{{$id}}";
   var form = document.getElementById(sendfrom);
   var checkboxes = form.querySelectorAll('input[name="selectedEmployees[]"]:checked');
   var selectedEmp = [];
@@ -180,7 +180,7 @@ function submitForm(departments_name, sendfrom) {
       'Content-Type': 'application/json',
       'X-CSRF-TOKEN': '{{ csrf_token() }}'
     },
-    body: JSON.stringify({ selectedEmployees: selectedEmp,projectId: projectId })
+    body: JSON.stringify({ selectedEmployees: selectedEmp,id: id })
   })
   .then(response => {
     // ทำสิ่งที่คุณต้องการหลังจากได้รับการตอบกลับจากเซิร์ฟเวอร์

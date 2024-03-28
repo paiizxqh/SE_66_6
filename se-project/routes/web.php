@@ -46,12 +46,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/projects/search', [ProjectController::class, 'search'])->name('projects.search');
     Route::get('/projects/{id}', [ProjectController::class, 'show'])->name('projects.show');
     
+    Route::post('/detail', [DetailController::class, 'index'])->name('detail.index');
     Route::post('/update/{id}', [DetailController::class, 'update'])->name('update');
     Route::post('/update2/{id}', [DetailController::class, 'update2'])->name('update2');
-    Route::post('/detail', [DetailController::class, 'index'])->name('detail.index');
     Route::post('/createCheckpoint/{id}',[DetailController::class, 'createCheckpoint'])->name('createCheckpoint');
-    Route::get('manage',[ProjectMemberController::class,'index'])->name('manage');
-    Route::get('test',[ProjectMemberController::class,'test'])->name('test');
+    
+    Route::get('manage/{id}',[ProjectMemberController::class,'index'])->name('manage');
     Route::post('/process',[ProjectMemberController::class,'handleFormSubmission'])->name('process');
 });
 
