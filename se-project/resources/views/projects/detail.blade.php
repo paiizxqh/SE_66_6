@@ -6,8 +6,6 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
         <link href="{{ asset('assets/css/detail.css') }}" rel="stylesheet">
-        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </x-slot>
 
     <body>
@@ -135,7 +133,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="card mb-4">
                     <div class="card-header">ตารางแสดงรายละเอียด</div>
                     <div class="card-body p-0">
@@ -152,115 +149,35 @@
                                         <th class="border-gray-200" scope="col">ชื่อผู้เก็บตัวอย่าง</th>
                                         <th class="border-gray-200" scope="col">ชื่อผู้ทดลอง</th>
                                         <th class="border-gray-200" scope="col">หมายเหตุ</th>
-                                        <th><button class="btn btn-primary btn-add-row" type="button"
-                                            name="add">add</button></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <td>
-                                        <input class="form-control " type="name" placeholder="กรอกรหัสตัวอย่าง"
-                                            name="sample_id[]" value={{ $newSampleId }}>
-                                    </td>
-                                    <td>
-                                        <input class="form-control" type="int" placeholder="กรอกจุดเก็บ"
-                                            name="number[]" value=1>
-                                    </td>
-                                    <td>
-                                        <select class="form-control" aria-label="Default select example"
-                                            name="parameter_id[]">
-                                            <option selected>select parameter</option>
-                                            @foreach ($parameters as $parameter)
-                                                <option value="{{ $parameter->id }}">
-                                                    {{ $parameter->parameter_shortname }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input class="form-control" type="datetime-local"
-                                            placeholder="เลือกวันที่/เวลาเก็บตัวอย่าง" name="sample_date_time[]">
-                                    </td>
-                                    <td>
-                                        <input class="form-control" type="name" placeholder="กรอกค่าพารามิเตอร์"
-                                            name="sample_value[]">
-                                    </td>
-                                    <td>
-                                        <input class="form-control" type="name"
-                                            placeholder="กรอกชื่อผู้เก็บตัวอย่าง"name="surveyor_id[]">
-                                    </td>
-                                    <td>
-                                        <input class="form-control" type="name"
-                                            placeholder="กรอกชื่อผู้ทดลอง"name="academician_id[]">
-                                    </td>
-                                    <td>
-                                        <input class="form-control" type="name"
-                                            placeholder="กรอกหมายเหตุ"name="remark[]">
-                                    </td>
+                                    @can('project-create')
+                                        {{-- @foreach ($project as $projects) --}}
+                                        <tr>
+                                            <td>test</td>
+                                            <td>test</td>
+                                            <td>test</td>
+                                            <td>test</td>
+                                            <td>test</td>
+                                            <td>test</td>
+                                            <td>test</td>
+                                            <td><span class="badge bg-light text-dark">Pending</span></td>
+                                            {{-- <td><span class="badge bg-success">Paid</span></td> --}}
+                                        </tr>
+                                        {{-- @endforeach --}}
+                                    @endcan
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                
                 <div class="col-xs-12 mb-5 pull-right">
                     <a href="{{ url('projects') }}" class="btn btn-primary" type="button">ย้อนกลับ</a>
                     <button class="btn btn-primary">ยืนยัน</button>
                 </div>
             @endcan
         </div>
-        <script>
-            var i = 1;
-            $(document).ready(function() {
-                $('button[name="add"]').click(function() {
-                    var newSampleId = '{{ $newSampleId }}';
-                    newSampleId = 'SMP' + ('000' + (parseInt(newSampleId.substring(3)) + i)).slice(-3);
-                    ++i;
-                    $('table  tbody').append(
-                        `<tr>
-                            <td>
-                                <input class="form-control" type="name" placeholder="กรอกรหัสตัวอย่าง" value='${newSampleId}'  name="sample_id[]">
-                            </td>
-                            <td>
-                                <input class="form-control" type="int" placeholder="กรอกจุดเก็บ" value='${i}' name="number[]">
-                            </td>
-                            <td>
-                                <select class="form-control" aria-label="Default select example" name="parameter_id[]">
-                                        <option selected>select parameter</option>
-                                        @foreach ($parameters as $parameter)
-                                            <option value="{{ $parameter->id }}">
-                                                {{ $parameter->parameter_shortname }}</option>
-                                        @endforeach
-                                </select>
-                            </td>
-                            <td>
-                                <input class="form-control" type="datetime-local" placeholder="เลือกวันที่/เวลาเก็บตัวอย่าง"name="sample_date_time[]">
-                            </td>
-                            <td>
-                                <input class="form-control" type="name" placeholder="กรอกค่าพารามิเตอร์"name="sample_value[]">
-                            </td>
-                            <td>
-                                <input class="form-control" type="name" placeholder="กรอกชื่อผู้เก็บตัวอย่าง" name="surveyor_id[]">
-                            </td>
-                            <td>
-                                <input class="form-control" type="name" placeholder="กรอกชื่อผู้ทดลอง"name="academician_id[]">
-                            </td>
-                            <td>
-                                <input class="form-control" type="name" placeholder="กรอกหมายเหตุ"placeholder="กรอกหมายเหตุ"name="remark[]">
-                            </td>
-                            <td>
-                                <button type="button" class="btn btn-danger remove-row">Remove</button>
-                            </td>
-                        </tr>`
-                    );
-
-                });
-            });
-
-            $(document).on('click', '.remove-row', function() {
-                $(this).parents('tr').remove();
-                --i;
-            });
-
-        </script>
     </body>
     @include('sweetalert::alert')
 </x-app-layout>
