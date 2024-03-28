@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
-use App\Models\Role;
+
 use App\Models\ProjectMember;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,9 +12,9 @@ class ProjectMemberController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request ,$id)
+    public function index(Request $request)
     {
-
+        $id = $request->input('id');
         $project_members = DB::table('users')
             ->join('model_has_roles', 'model_has_roles.model_id', '=', 'users.id')
             ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
@@ -37,7 +36,7 @@ class ProjectMemberController extends Controller
     {
 
         $selectedEmployees = $request->input('selectedEmployees');
-        $id = $request->input('projectId');
+        $id = $request->input('id');
         $employeeIds = [];
         $departmentNames = [];
         $notinem = [];
@@ -46,18 +45,11 @@ class ProjectMemberController extends Controller
     ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
     ->join('project_members', 'project_members.user_id', '=', 'users.id')
     ->select('user_id','employee_id', 'roles.name as role', 'users.name as username','project_id')
-        ->where('project_members.project_id', $projectId)
+        ->where('project_members.project_id', $id)
         ->orderBy('users.id', 'ASC')
         ->get();
 
-        foreach ($selectedEmployees as $employee) {
-            ->join('model_has_roles', 'model_has_roles.model_id', '=', 'users.id')
-            ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
-            ->join('project_members', 'project_members.user_id', '=', 'users.id')
-            ->select('user_id', 'employee_id', 'roles.name as role', 'users.name as username', 'project_id')
-            ->where('project_members.project_id', $id)
-            ->orderBy('users.id', 'ASC')
-            ->get();
+        
 
         foreach ($selectedEmployees as $employee) {
             $employeeIds[] = $employee['employeeId'];
@@ -94,11 +86,7 @@ class ProjectMemberController extends Controller
         }
 
     }
-    public function test()
-    {
-        $id = DB::table('projects')->get();
-        return view('projectsmember.test', compact('projectId'));
-    }
+   
     /**
      * Show the form for creating a new resource.
      */

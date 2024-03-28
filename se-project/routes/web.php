@@ -51,7 +51,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/update2/{id}', [DetailController::class, 'update2'])->name('update2');
     Route::post('/createCheckpoint/{id}',[DetailController::class, 'createCheckpoint'])->name('createCheckpoint');
 
-    Route::get('manage/{id}',[ProjectMemberController::class,'index'])->name('manage');
+    Route::post('manage',[ProjectMemberController::class,'index'])->name('manage');
     Route::post('/process',[ProjectMemberController::class,'handleFormSubmission'])->name('process');
 });
 

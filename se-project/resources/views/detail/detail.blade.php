@@ -123,7 +123,10 @@
                             </div>
                             <button class="btn btn-primary mb-2" type="submit">บันทึก</button>
                         </form>
-                        <form method="GET" action="{{route('manage',['id' => $project->id])}}" enctype="multipart/form-data">
+                        <form method="POST" action="{{route('manage')}}" enctype="multipart/form-data">
+                            <input type="hidden" name="id" value="{{ $project->id }}">
+                            @csrf
+                            @method('POST')
                             <button class="btn btn-primary mb-1" type="submit">เลือกทีม</button>
                         </form>
                     </div>

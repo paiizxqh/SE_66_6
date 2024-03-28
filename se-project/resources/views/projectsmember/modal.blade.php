@@ -51,10 +51,9 @@
       </div>
 
       <div class="sub-but">
-        <a href="{{ route('manage', ['id' => $id]) }}">
+
         <button type="button" class="btn btn-primary"><span>submit</span>
         </button>
-      </a>
     </div>
     </div>
         </form>
@@ -105,6 +104,7 @@
             }
             // ส่งคำขอหาก Checkbox ครบ
             submitForm('Surveyor', "SurveyorForm");
+            location.reload(true);
         });
     } else if (role == 'Academician') {
         $('#Academician-manage').on('shown.bs.modal', function() {
@@ -123,6 +123,7 @@
             }
             // ส่งคำขอหาก Checkbox ครบ
             submitForm('Academician', "AcademicianForm");
+            location.reload(true);
         });
     } else if (role == 'Assistant') {
         $('#Assistant-manage').on('shown.bs.modal', function() {
@@ -140,7 +141,8 @@ $('#Assistant-manage .btn-primary').on('click', function() {
      return false; // ไม่ส่งคำขอถ้า Checkbox ไม่ครบ
  }
  // ส่งคำขอหาก Checkbox ครบ
- submitForm('Assistant',"AssistantForm");}
+ submitForm('Assistant',"AssistantForm");
+ location.reload(true);}
  );
 }
 else if(role=='Sales'){
@@ -159,7 +161,8 @@ else if(role=='Sales'){
        return false; // ไม่ส่งคำขอถ้า Checkbox ไม่ครบ
    }
    // ส่งคำขอหาก Checkbox ครบ
-   submitForm('Sales',"SalesForm");}
+   submitForm('Sales',"SalesForm");
+   location.reload(true);}
    );
 }
 function submitForm(departments_name, sendfrom) {
