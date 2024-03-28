@@ -105,28 +105,30 @@
                                                         <td>{{ $projects->start_date }}</td>
                                                         <td>
                                                             @if ($projects->status_id == 1)
-                                                                <span
-                                                                    class="badge btn-warning">ดำเนินการเสร็จสิ้น</span>
+                                                                <span class="badge btn-warning">กำลังดำเนินการ</span>
                                                             @elseif ($projects->status_id == 2)
                                                                 <span class="badge btn-danger">ยังไม่ดำเนินการ</span>
                                                             @elseif ($projects->status_id == 3)
-                                                                <span class="badge btn-success">กำลังดำเนินการ</span>
+                                                                <span
+                                                                    class="badge btn-success">ดำเนินการเสร็จสิ้น</span>
                                                             @endif
                                                         <td>
-                                                            {{-- ถ้าอยู่ในโครงการแล้ว และเป็น ManagerRole, DeveloperRole, หรือ SalesRole --}}
-                                                            @if (auth()->user()->can('ManagerRole') || auth()->user()->can('DeveloperRole') || auth()->user()->can('SalesRole'))
-                                                                <form
-                                                                    action="{{ route('projects.destroy', $projects->id) }}"
-                                                                    method="POST">
-                                                                    @csrf
-                                                                    @method('DELETE')
-                                                                    <button class="btn btn-danger btn-sm"
-                                                                        data-confirm-delete="true">
-                                                                        <i class="fa fa-trash"></i>
-                                                                        ลบ
-                                                                    </button>
-                                                                </form>
-                                                            @endif
+                                                            <form
+                                                                action="{{ route('projects.destroy', $projects->id) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                @method('DELETE')
+                                                                <button class="btn btn-danger btn-sm"
+                                                                    data-confirm-delete="true">
+                                                                    <i class="fa fa-trash"></i> ลบ
+                                                                </button>
+                                                                <a href="{{ route('projects.show', $projects->id) }}"
+                                                                    class="btn btn-primary btn-sm">
+                                                                    <i class="fa fa-file-text" aria-hidden="true"></i>
+                                                                    รายละเอียด
+                                                                    </svg>
+                                                                </a>
+                                                            </form>
                                                         </td>
                                                     </tr>
                                                 @empty

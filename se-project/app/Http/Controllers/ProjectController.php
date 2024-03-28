@@ -29,14 +29,11 @@ class ProjectController extends Controller
         confirmDelete($title, $text);
 
             // ตรวจสอบว่าผู้ใช้มีสิทธิ์ในการดูโครงการทั้งหมดหรือไม่
-        if (auth()->user()->can('view-all-projects')) {
+        if (auth()->user()->can('DevelopeRole') || auth()->user()->can('ManagerRole') || auth()->user()->can('SalesRole')) {
             // ดึงข้อมูลโครงการทั้งหมด
             $project = Project::paginate(5);
-        } elseif (auth()->user()->can('view-assigned-projects')) {
-            // ผู้ใช้มีสิทธิ์ดูเฉพาะโครงการที่เข้าร่วม
-            $project = Auth::user()->projects()->paginate(50);
         } else {
-            // ผู้ใช้มีสิทธิ์เฉพาะในการดูโครงการที่เสร็จสิ้นเท่านั้น
+            // ผู้ใช้ทั่วไปเห็นเฉพาะโครงการที่มีสถานะดำเนินการเสร็จสิ้น
             $project = Project::where('status_id', 3)->paginate(50);
         }
 
@@ -49,43 +46,10 @@ class ProjectController extends Controller
         foreach ($totalStatus as $status) {
             $projectCounts[$status->name] = Project::where('status_id', $status->id)->count();
         }
-        
 
         // คืนค่าข้อมูลไปยังหน้าจอ
         return view('projects.index', compact('project', 'totalProject', 'totalStatus', 'projectCounts'));
     }
-
-    /* function search(Request $request){
-        $search = $request->input('search');
-
-        $data = Project::join('project_status', 'projects.status_id', '=', 'project_status.id')
-                        ->join('customers', 'projects.customer_id', '=', 'customers.id')
-                        ->select('projects.*', 'project_status.status', 'customers.cus_id', 'customers.name')
-                        ->where('customers.cus_id', 'LIKE', '%' . $search . '%')
-                        ->orWhere('customers.name', 'LIKE', '%' . $search . '%')
-                        ->orWhere('projects.start_date', 'LIKE', '%' . $search . '%')
-                        ->orWhere('project_status.status', 'LIKE', '%' . $search . '%')
-                        ->paginate(10);
-
-        // ตรวจสอบว่ามีข้อมูลที่ตรงกับการค้นหาหรือไม่
-        $search_matched = $data->count() > 0;
-
-        // ส่งข้อมูลไปยังหน้า index พร้อมกับค่า search_matched
-        return view('projects.index', compact('data', 'search_matched'));
-    } */
-
-    /* function show($id){
-        $project = Project::findOrFail($id);
-        $data = Project::join('project_status', 'projects.status_id', '=', 'project_status.id')
-                        ->join('customers', 'projects.customer_id', '=', 'customers.id')
-                        ->select('projects.*', 'project_status.status', 'customers.cus_id', 'customers.name')
-                        ->where('customers.cus_id', 'LIKE', '%' . $search . '%')
-                        ->orWhere('customers.name', 'LIKE', '%' . $search . '%')
-                        ->orWhere('projects.start_date', 'LIKE', '%' . $search . '%')
-                        ->orWhere('project_status.status', 'LIKE', '%' . $search . '%')
-                        ->paginate(10);
-        return view('projects.show', compact('data', 'project'));
-    } */
 
     public function show($id){
         $project = Project::findOrFail($id);
