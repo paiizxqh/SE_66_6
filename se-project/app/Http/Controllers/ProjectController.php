@@ -186,151 +186,6 @@ class ProjectController extends Controller
         }
     }
 
-    /* public function store(Request $request){
-    // ตรวจสอบความถูกต้องของข้อมูลที่ส่งมาจากแบบฟอร์ม
-    $request->validate([
-        'customers_contact_name' => 'required|string',
-        'customers_contact_phone' => 'required|string',
-        'map' => 'required|image|mimes:jpg,jpeg,png,pdf',
-        'customer_id' => 'required',
-        'start_date' => 'required|date',
-        'area_date' => 'required|date',
-    ], [
-        'start_date.required' => 'The start date field is required.',
-        'start_date.date' => 'The start date must be a valid date format.',
-        'area_date.required' => 'The area date field is required.',
-        'area_date.date' => 'The area date must be a valid date format.',
-        'customers_contact_name.required' => 'The customers contact name field is required.',
-        'customers_contact_phone.required' => 'The customers contact phone field is required.',
-    ]);
-
-    try {
-        DB::beginTransaction();
-
-        // บันทึกข้อมูลโครงการ
-        $project = new Project();
-        $last = Project::orderBy('id', 'DESC')->first();
-        $project->project_id = 'PJ' . strval($last->id + 1); // ระบุค่า project_id ก่อนทำการบันทึก
-        $project->customers_contact_name = $request->customers_contact_name;
-        $project->customers_contact_phone = $request->customers_contact_phone;
-        $project->customer_id = $request->customer_id;
-        $project->start_date = $request->start_date;
-        $project->area_date = $request->area_date;
-        $project->status_id = 2; // กำหนดสถานะโครงการเป็น "ยังไม่ดำเนินการ"
-
-        // ตรวจสอบว่ามีไฟล์แนบหรือไม่ก่อนทำการบันทึก
-        if ($request->has('map')) {
-            $image = $request->file('map');
-            $extension = $image->getClientOriginalExtension();
-            $filename = time() . '.' . $extension;
-            $path = 'images/maps/';
-            $image->move($path, $filename);
-            $project->map =  $path . $filename;
-        }
-        $project->save();
-
-        // บันทึกข้อมูลตัวอย่าง
-        foreach ($request->sample_id as $index => $sample_id) {
-            $checkpoint = new Checkpoint();
-            $checkpoint->number = $request->number[$index];
-            $checkpoint->projects_id = $project->id;
-            $checkpoint->save();
-
-            $parameterInCheckpoint = new ParameterInCheckpoint();
-            $parameterInCheckpoint->sample_id = $sample_id;
-            $parameterInCheckpoint->checkpoint_id = $checkpoint->id;
-            $parameterInCheckpoint->parameter_id = $request->parameter_id[$index];
-            $parameterInCheckpoint->save();
-        }
-
-            DB::commit();
-
-            return redirect()->route('projects.index')->with('success', 'Project created successfully');
-            } catch (\Exception $e) {
-            DB::rollback();
-            return redirect()->back()->withInput()->withErrors(['error' => $e->getMessage()]);
-        }
-    } */
-
-    /* public function store(Request $request ){
-        // ตรวจสอบความถูกต้องของข้อมูลที่ส่งมาจากแบบฟอร์ม
-        // dd($request);
-        $request->validate([
-            'customers_contact_name' => 'required|string',
-            'customers_contact_phone' => 'required|string',
-            'map' => 'required|file|mimes:jpg,jpeg,png,pdf',
-
-        ], [
-            'project_id.required' => 'The project ID field is required.',
-            'map' => 'required|image|mimes:jpg,jpeg,png,pdf',
-            'customer_id' => 'required',
-            'start_date' => 'required|date',
-            'area_date' => 'required|date',
-        ], [
-            'start_date.required' => 'The start date field is required.',
-            'start_date.date' => 'The start date must be a valid date format.',
-            'area_date.required' => 'The area date field is required.',
-            'area_date.date' => 'The area date must be a valid date format.',
-            'customers_contact_name.required' => 'The customers contact name field is required.',
-            'customers_contact_phone.required' => 'The customers contact phone field is required.',
-        ]);
-
-        $project = new Project();
-        $last = Project::orderBy('id', 'DESC')->first();
-        echo $last->id;
-        // $lastID = $last->id;
-        $project->project_id = 'PJ' . strval($last->id + 1);
-        // echo $project->project_id;
-        $project->customers_contact_name = $request->customers_contact_name;
-        $project->customers_contact_phone = $request->customers_contact_phone;
-        $project->customer_id = $request->customer_id;
-        $project->start_date = $request->start_date;
-        $project->area_date = $request->area_date;
-        $project->status_id = 2; // กำหนดสถานะโครงการเป็น "ยังไม่ดำเนินการ"
-        if ($request->has('map')) {
-            $image = $request->file('map');
-            $extension = $image->getClientOriginalExtension();
-            $filename = time() . '.' . $extension;
-            $path = 'images/maps/';
-            $image->move($path, $filename);
-            $project->map =  $path . $filename;
-        }
-
-        $project->save();
-
-        $this->validate($request, [
-            'sample_id' => 'required|array',
-            // 'sample_id.' => 'required',
-            'number' => 'required|array',
-            // 'number.' => 'required',
-            'parameter_id' => 'required|array',
-            'parameter_id.*' => 'required',
-            'sample_date_time',
-            'sample_value',
-            'surveyor_id',
-            'academician_id',
-            'remark'
-        ]);
-        foreach ($request->sample_id as $index => $sample_id) {
-            $checkpoint = new Checkpoint();
-            $checkpoint->number = $request->number[$index];
-            $checkpoint->projects_id = $project->id;
-            $checkpoint->save();
-
-            $parameterInCheckpoint = new ParameterInCheckpoint();
-            $parameterInCheckpoint->sample_id = $sample_id;
-            $parameterInCheckpoint->checkpoint_id = $checkpoint->id; // ใช้ primary key ของ Checkpoint ที่บันทึกไว้ในตาราง Checkpoints
-            $parameterInCheckpoint->parameter_id = $request->parameter_id[$index];
-            // $parameterInCheckpoint->sample_value = $request->sample_value[$index];
-            // $parameterInCheckpoint->sample_date_time = $request->sample_date_time[$index];
-            // $parameterInCheckpoint->surveyor_id =  $request->surveyor_id[$index];
-            // $parameterInCheckpoint->academician_id = $request->academician_id[$index];
-            // $parameterInCheckpoint->remark = $request->remark[$index];
-            $parameterInCheckpoint->save();
-        }
-        return redirect()->route('projects.index')
-            ->with('success', 'Project created successfully');
-    } */
 
 
     public function destroy($id){
@@ -376,23 +231,7 @@ class ProjectController extends Controller
             'remark'
         ]);
 
-        foreach ($request->sample_id as $index => $sample_id) {
-            $checkpoint = new Checkpoint();
-            $checkpoint->number = $request->number[$index];
-            $checkpoint->projects_id = $id;
-            $checkpoint->save();
-
-            $parameterInCheckpoint = new ParameterInCheckpoint();
-            $parameterInCheckpoint->sample_id = $sample_id;
-            $parameterInCheckpoint->checkpoint_id = $checkpoint->id; // ใช้ primary key ของ Checkpoint ที่บันทึกไว้ในตาราง Checkpoints
-            $parameterInCheckpoint->parameter_id = $request->parameter_id[$index];
-            $parameterInCheckpoint->sample_value = $request->sample_value[$index];
-            $parameterInCheckpoint->sample_date_time = $request->sample_date_time[$index];
-            $parameterInCheckpoint->surveyor_id =  $request->surveyor_id[$index];
-            $parameterInCheckpoint->academician_id = $request->academician_id[$index];
-            $parameterInCheckpoint->remark = $request->remark[$index];
-            $parameterInCheckpoint->save();
-        }
+      
         return redirect()->route('detail.index');
     }
 
@@ -443,4 +282,23 @@ class ProjectController extends Controller
         $item->update($data);
         return redirect()->route('projects.show',compact('id'));
     }
+
+    public function update3(Request $request, $id)
+    {
+        $data = $request->only([
+            'id',
+            'sample_date_time',
+            'sample_value',
+            'surveyor_id',
+            'academician_id',
+            'remark'
+        ]);
+    
+        $item = ParameterInCheckpoint::findOrFail($request->id);
+        $item->update($data);
+    
+        return redirect()->route('projects.show', compact('id'));
+    }
+    
+    
 }

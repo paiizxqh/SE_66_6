@@ -31,29 +31,28 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    // ประกาศเส้นทางที่ต้องมีการยืนยันตัวตนก่อน
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // Our resource routes
+    // ประกาศเส้นทาง Resourceful สำหรับการจัดการข้อมูล
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
     Route::resource('products', ProductController::class);
     Route::resource('customers', CustomerController::class);
     Route::resource('projects', ProjectController::class);
-    Route::resource('detail',DetailController::class);
 
-    Route::post('/detail/{id}', [DetailController::class, 'index'])->name('detail.index');
+    // ประกาศเส้นทางอื่น ๆ ที่ไม่ใช่ Resourceful
     Route::get('/projects/search', [ProjectController::class, 'search'])->name('projects.search');
     Route::get('/projects/{id}', [ProjectController::class, 'show'])->name('projects.show');
     Route::post('/projects/{id}',[ProjectController::class, 'destroyPIC'])->name('projects.destroyPIC');
-   
     Route::post('/update1/{id}', [ProjectController::class, 'update1'])->name('update1');
     Route::post('/update2/{id}', [ProjectController::class, 'update2'])->name('update2');
-    Route::post('/createCheckpoint/{id}',[DetailController::class, 'createCheckpoint'])->name('createCheckpoint');
-
+    Route::post('/update3/{id}', [ProjectController::class, 'update3'])->name('update3');
     Route::get('manage/{id}',[ProjectMemberController::class,'index'])->name('manage');
     Route::post('/process',[ProjectMemberController::class,'handleFormSubmission'])->name('process');
 });
 
+// รวมเส้นทางการยืนยันตัวตน
 require __DIR__.'/auth.php';

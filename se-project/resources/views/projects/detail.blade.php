@@ -123,7 +123,7 @@
             <div class="card-header">ตารางแสดงรายละเอียด</div>
             <div class="card-body p-0">
                 <div class="table-responsive table-billing-history">
-                    <form method="POST" action="{{ route('createCheckpoint', ['id' => $project->id]) }}"
+                    <form method="POST"  action="{{ route('update3', ['id' => $project->id]) }}"
                         enctype="multipart/form-data">
                         @csrf
                         <table class="table mb-0" name="ff">
@@ -137,7 +137,7 @@
                                     <th class="border-gray-200" scope="col">ชื่อผู้เก็บตัวอย่าง</th>
                                     <th class="border-gray-200" scope="col">ชื่อผู้ทดลอง</th>
                                     <th class="border-gray-200" scope="col">หมายเหตุ</th>
-                                    <th class="border-gray-200" scope="col">ลบ</th>
+                                    <th class="border-gray-200" scope="col">บันทึก</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -146,42 +146,47 @@
                                         <tr>
                                             <td>
                                                 <input class="form-control" type="text" placeholder="รหัสตัวอย่าง"
-                                                    name="sample_id[]" value="{{ $pic->sample_id }}" disabled>
+                                                    name="id"value="{{ $pic->id }}" readonly>
                                             </td>
                                             <td>
                                                 <input class="form-control" type="text" placeholder="จุดเก็บ"
-                                                    name="number[]"
+                                                    name="number"
                                                     value="{{ $checkpoints->where('id', $pic->checkpoint_id)->first()->number }}"
                                                     disabled>
                                             </td>
                                             <td>
                                                 <input class="form-control" type="text" placeholder="พารามิเตอร์"
-                                                    name="parameter[]"
+                                                    name="parameter"
                                                     value="{{ $parameters->where('id', $pic->parameter_id)->first()->parameter_shortname }}"disabled>
                                             </td>
                                             <td>
-                                                <input class="form-control" type="text"
-                                                    placeholder="วันที่/เวลาเก็บตัวอย่าง" name="sample_date_time[]"
+                                                <input class="form-control" type="datetime-local"
+                                                    placeholder="วันที่/เวลาเก็บตัวอย่าง" name="sample_date_time"
                                                     value="{{ $pic->sample_date_time }}" >
                                             </td>
                                             <td>
                                                 <input class="form-control" type="text" placeholder="ค่าพารามิเตอร์"
-                                                    name="sample_value[]" value="{{ $pic->sample_value }}" disabled>
+                                                    name="sample_value" value="{{ $pic->sample_value }}" >
                                             </td>
                                             <td>
                                                 <input class="form-control" type="text"
-                                                    placeholder="ชื่อผู้เก็บตัวอย่าง" name="surveyor_id[]"
-                                                    value="{{ $pic->surveyor_id }}" disabled>
+                                                    placeholder="ชื่อผู้เก็บตัวอย่าง" name="surveyor_id"
+                                                    value="{{ $pic->surveyor_id }}" >
                                             </td>
                                             <td>
                                                 <input class="form-control" type="text" placeholder="ชื่อผู้ทดลอง"
-                                                    name="academician_id[]" value="{{ $pic->academician_id }}" disabled>
+                                                    name="academician_id" value="{{ $pic->academician_id }}">
                                             </td>
                                             <td>
                                                 <input class="form-control" type="text" placeholder="หมายเหตุ"
-                                                    name="remark[]" value="{{ $pic->remark }}" disabled>
+                                                    name="remark" value="{{ $pic->remark }}" >
                                             </td>
                                             <td>
+                                                <button class="btn btn-primary mb-2" type="submit">บันทึก</button>
+                                            </td>
+                                               
+                                            
+                                            {{-- <td>
                                                 <form
                                                     action="{{ route('projects.destroyPIC', ['id' => $pic->id, 'checkpoint_id' => $checkpoints->where('id', $pic->checkpoint_id)->first()->id]) }}"
                                                     method="POST">
@@ -189,7 +194,7 @@
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger"
                                                         onclick="return confirm('Are you sure you want to delete this item?')">ลบ</button>
-                                                </form>
+                                                </form> --}}
                                             </td>
                                         </tr>
                                     @endcan
@@ -214,7 +219,7 @@
                                             <td>
                                                 <input class="form-control" type="text"
                                                     placeholder="วันที่/เวลาเก็บตัวอย่าง" name="sample_date_time[]"
-                                                    value="{{ $pic->sample_date_time }}" disabled>
+                                                    value="{{ $pic->sample_date_time }}">
                                             </td>
                                             <td>
                                                 <input class="form-control" type="text" placeholder="ค่าพารามิเตอร์"
@@ -223,7 +228,7 @@
                                             <td>
                                                 <input class="form-control" type="text"
                                                     placeholder="ชื่อผู้เก็บตัวอย่าง" name="surveyor_id[]"
-                                                    value="{{ $pic->surveyor_id }}" disabled>
+                                                    value="{{ $pic->surveyor_id }}">
                                             </td>
                                             <td>
                                                 <input class="form-control" type="text" placeholder="ชื่อผู้ทดลอง"
@@ -231,24 +236,19 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" type="text" placeholder="หมายเหตุ"
-                                                    name="remark[]" value="{{ $pic->remark }}" disabled>
+                                                    name="remark[]" value="{{ $pic->remark }}" >
                                             </td>
                                             <td>
-                                                <form
-                                                    action="{{ route('projects.destroyPIC', ['id' => $pic->id, 'checkpoint_id' => $checkpoints->where('id', $pic->checkpoint_id)->first()->id]) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger"
-                                                        onclick="return confirm('Are you sure you want to delete this item?')">ลบ</button>
-                                                </form>
+                                                <button class="btn btn-primary mb-2" type="submit">บันทึก</button>
                                             </td>
+                                            
                                         </tr>
                                     @endcan
                                 @endforeach
 
                             </tbody>
                         </table>
+                        
                     </form>
                 </div>
             </div>
