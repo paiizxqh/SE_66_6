@@ -108,7 +108,7 @@
 
                             </div>
                         </div>
-                        <form method="POST" action="{{ route('manage', ['id' => $project->id]) }}"
+                        <form method="GET" action="{{ route('manage', ['id' => $project->id]) }}"
                             enctype="multipart/form-data">
                             <input type="hidden" name="id" value="{{ $project->id }}">
                             @csrf
@@ -162,7 +162,7 @@
                                             <td>
                                                 <input class="form-control" type="text"
                                                     placeholder="วันที่/เวลาเก็บตัวอย่าง" name="sample_date_time[]"
-                                                    value="{{ $pic->sample_date_time }}" disabled>
+                                                    value="{{ $pic->sample_date_time }}" >
                                             </td>
                                             <td>
                                                 <input class="form-control" type="text" placeholder="ค่าพารามิเตอร์"

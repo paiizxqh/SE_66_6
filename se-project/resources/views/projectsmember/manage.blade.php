@@ -29,7 +29,7 @@
             </button>
 
             <div class="float-end">
-                <a class="btn btn-primary" href="{{ route('detail.index') }}"> ย้อนกลับ </a>
+                <a class="btn btn-primary" href="{{ route('projects.show', ['id' => $id]) }}"> ย้อนกลับ </a>
             </div>
             {{-- <div class="collapse navbar-collapse" id="navbarNav">
     <ul class="navbar-nav">
@@ -100,7 +100,7 @@
 
             </div>
             <div class="Submit d-flex justify-content-end px-4 pb-2">
-                <form action="{{ route('detail.index') }}" method="GET">
+                <form action="{{ route('projects.show', ['id' => $id]) }}" method="GET">
                     <button type="submit" class="btn btn-primary"><span>Submit</span></button>
                 </form>
             </div>

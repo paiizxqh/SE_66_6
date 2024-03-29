@@ -116,6 +116,8 @@
                                                             <form
                                                                 action="{{ route('projects.destroy', $projects->id) }}"
                                                                 method="POST">
+
+                                                            @can('ManagerRole')
                                                                 @csrf
                                                                 @method('DELETE')
                                                                 <a href="{{ route('projects.destroy', $projects->id) }}"
@@ -123,6 +125,7 @@
                                                                     data-confirm-delete="true">
                                                                     <i class="fa fa-trash"></i> ลบ
                                                                 </a>
+                                                            @endcan
                                                                 <a href="{{ route('projects.show', $projects->id) }}"
                                                                     class="btn btn-primary btn-sm">
                                                                     <i class="fa fa-file-text" aria-hidden="true"></i>
