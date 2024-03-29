@@ -1,5 +1,5 @@
 @php
-
+  
 @endphp
 @section('title', 'รายละเอียดโครงการ')
 <x-app-layout>
@@ -123,7 +123,7 @@
             <div class="card-header">ตารางแสดงรายละเอียด</div>
             <div class="card-body p-0">
                 <div class="table-responsive table-billing-history">
-                    <form method="POST"  action="{{ route('update3', ['id' => $project->id]) }}"
+                    <form method="POST" action="{{ route('update3', ['id' => $project->id]) }}"
                         enctype="multipart/form-data">
                         @csrf
                         <table class="table mb-0" name="ff">
@@ -162,30 +162,41 @@
                                             <td>
                                                 <input class="form-control" type="datetime-local"
                                                     placeholder="วันที่/เวลาเก็บตัวอย่าง" name="sample_date_time"
-                                                    value="{{ $pic->sample_date_time }}" >
+                                                    value="{{ $pic->sample_date_time }}">
                                             </td>
                                             <td>
                                                 <input class="form-control" type="text" placeholder="ค่าพารามิเตอร์"
-                                                    name="sample_value" value="{{ $pic->sample_value }}" >
+                                                    name="sample_value" value="{{ $pic->sample_value }}">
                                             </td>
                                             <td>
-                                                <input class="form-control" type="text"
-                                                    placeholder="ชื่อผู้เก็บตัวอย่าง" name="surveyor_id"
-                                                    value="{{ $pic->surveyor_id }}" >
+                                                <select class="form-control" aria-label="Default select example"
+                                                    name="surveyor_id">
+                                                    <option selected>select surveyor</option>
+                                                    @foreach ($surveyor as $member)
+                                                        <option value="{{ $member->user_id }}">
+                                                            {{ $member->employee_id }}</option>
+                                                    @endforeach
+                                                </select>
                                             </td>
                                             <td>
-                                                <input class="form-control" type="text" placeholder="ชื่อผู้ทดลอง"
-                                                    name="academician_id" value="{{ $pic->academician_id }}">
+                                                <select class="form-control" aria-label="Default select example"
+                                                    name="academician_id">
+                                                    <option selected>select academician</option>
+                                                    @foreach ($academician as $member)
+                                                        <option value="{{ $member->user_id }}">
+                                                            {{ $member->employee_id }}</option>
+                                                    @endforeach
+                                                </select>
                                             </td>
                                             <td>
                                                 <input class="form-control" type="text" placeholder="หมายเหตุ"
-                                                    name="remark" value="{{ $pic->remark }}" >
+                                                    name="remark" value="{{ $pic->remark }}">
                                             </td>
                                             <td>
                                                 <button class="btn btn-primary mb-2" type="submit">บันทึก</button>
                                             </td>
-                                               
-                                            
+
+
                                             {{-- <td>
                                                 <form
                                                     action="{{ route('projects.destroyPIC', ['id' => $pic->id, 'checkpoint_id' => $checkpoints->where('id', $pic->checkpoint_id)->first()->id]) }}"
@@ -223,7 +234,7 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" type="text" placeholder="ค่าพารามิเตอร์"
-                                                    name="sample_value[]" value="{{ $pic->sample_value }}" >
+                                                    name="sample_value[]" value="{{ $pic->sample_value }}">
                                             </td>
                                             <td>
                                                 <input class="form-control" type="text"
@@ -232,23 +243,23 @@
                                             </td>
                                             <td>
                                                 <input class="form-control" type="text" placeholder="ชื่อผู้ทดลอง"
-                                                    name="academician_id[]" value="{{ $pic->academician_id }}" >
+                                                    name="academician_id[]" value="{{ $pic->academician_id }}">
                                             </td>
                                             <td>
                                                 <input class="form-control" type="text" placeholder="หมายเหตุ"
-                                                    name="remark[]" value="{{ $pic->remark }}" >
+                                                    name="remark[]" value="{{ $pic->remark }}">
                                             </td>
                                             <td>
                                                 <button class="btn btn-primary mb-2" type="submit">บันทึก</button>
                                             </td>
-                                            
+
                                         </tr>
                                     @endcan
                                 @endforeach
 
                             </tbody>
                         </table>
-                        
+
                     </form>
                 </div>
             </div>

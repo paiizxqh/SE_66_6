@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Project::class, 'assistant_id'); // ระบุคอลัมน์ที่ใช้ในการเชื่อมโยงระหว่างโมเดล User และ Project
     }
+
+    public function projectMembers()
+    {
+        return $this->hasMany(ProjectMember::class);
+    }
 }

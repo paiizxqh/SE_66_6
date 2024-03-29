@@ -8,6 +8,7 @@ use App\Models\ParameterInCheckpoint;
 use App\Models\Checkpoint;
 use App\Models\Parameter;
 use App\Models\Customer;
+use App\Models\projectMember;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Pulse\Facades\Pulse;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +29,8 @@ class ProjectController extends Controller
         $this->middleware(['permission:project-delete'], ['only' => ['destroy']]);
     }
 
-    public function index(Request $request){
+    public function index(Request $request)
+    {
         $title = 'Delete Project!';
         $text = "Are you sure you want to delete?";
         confirmDelete($title, $text);
@@ -36,51 +38,72 @@ class ProjectController extends Controller
         // ตรวจสอบว่าผู้ใช้มีสิทธิ์ในการดูโครงการทั้งหมดหรือไม่
         if (auth()->user()->can('view-all-projects')) {
             // ตรวจสอบว่าผู้ใช้มีสิทธิ์ในการดูโครงการทั้งหมดหรือไม่
-        if (auth()->user()->can('DeveloperRole') || auth()->user()->can('ManagerRole') || auth()->user()->can('SalesRole')) {
-            // ดึงข้อมูลโครงการทั้งหมด
-            $project = Project::paginate(5);
-        } elseif (auth()->user()->can('view-assigned-projects')) {
-            // ผู้ใช้มีสิทธิ์ดูเฉพาะโครงการที่เข้าร่วม
-            $project = Auth::user()->project()->paginate(50);
-        } else {
-            // ผู้ใช้มีสิทธิ์เฉพาะในการดูโครงการที่เสร็จสิ้นเท่านั้น
-            $project = Project::where('status_id', 3)->paginate(50);
+            if (auth()->user()->can('DeveloperRole') || auth()->user()->can('ManagerRole') || auth()->user()->can('SalesRole')) {
+                // ดึงข้อมูลโครงการทั้งหมด
+                $project = Project::paginate(5);
+            } elseif (auth()->user()->can('view-assigned-projects')) {
+                // ผู้ใช้มีสิทธิ์ดูเฉพาะโครงการที่เข้าร่วม
+                $project = Auth::user()->project()->paginate(50);
+            } else {
+                // ผู้ใช้มีสิทธิ์เฉพาะในการดูโครงการที่เสร็จสิ้นเท่านั้น
+                $project = Project::where('status_id', 3)->paginate(50);
+            }
+
+            // คำนวณข้อมูลสถิติอื่น ๆ
+            $totalProject = Project::count();
+            $totalStatus = Status::all();
+
+            // สร้าง array เพื่อเก็บจำนวนโครงการตามสถานะ
+            $projectCounts = [];
+            foreach ($totalStatus as $status) {
+                $projectCounts[$status->name] = Project::where('status_id', $status->id)->count();
+            }
+
+
+
+
+            // คืนค่าข้อมูลไปยังหน้าจอ
+            return view('projects.index', compact('project', 'totalProject', 'totalStatus', 'projectCounts'));
         }
-
-        // คำนวณข้อมูลสถิติอื่น ๆ
-        $totalProject = Project::count();
-        $totalStatus = Status::all();
-
-        // สร้าง array เพื่อเก็บจำนวนโครงการตามสถานะ
-        $projectCounts = [];
-        foreach ($totalStatus as $status) {
-            $projectCounts[$status->name] = Project::where('status_id', $status->id)->count();
-        }
-
-
-
-
-        // คืนค่าข้อมูลไปยังหน้าจอ
-        return view('projects.index', compact('project', 'totalProject', 'totalStatus', 'projectCounts'));
     }
-}
-    public function show($id){
+    public function show($id)
+    {
         $parameters = Parameter::all();
         $project = Project::findOrFail($id);
         $customers = Customer::where('id', $project->customer_id)->firstOrFail();
 
         $checkpoints = Checkpoint::where('projects_id', $id)->get();
 
-        $checkpointsIds = [];// กำหนดให้ $a เป็นอาร์เรย์เปล่าๆ
+        $checkpointsIds = []; // กำหนดให้ $a เป็นอาร์เรย์เปล่าๆ
         foreach ($checkpoints as $checkpoint) {
             $checkpointsIds[$checkpoint->id] = $checkpoint->id; // กำหนดค่าของอาร์เรย์ $a โดยใช้ checkpoint->id เป็นคีย์และค่า
         }
         $parameterInCheckpoints = ParameterInCheckpoint::whereIn('checkpoint_id', $checkpointsIds)->get();
 
-        return view('projects.detail', compact('project','customers','parameterInCheckpoints','checkpoints','parameters'));
+        $academician= ProjectMember::select('project_members.project_id', 'project_members.user_id', 't1.employee_id', 't1.roles')
+        ->join(DB::raw('(SELECT u.id as id, u.employee_id as employee_id, r.name as roles FROM model_has_roles as mhr 
+            INNER JOIN users as u ON u.id = mhr.model_id 
+            INNER JOIN roles as r ON r.id = mhr.role_id) as t1'), 'project_members.user_id', '=', 't1.id')
+        ->where('project_members.project_id', $id)
+        ->where('t1.roles', 'Academician')
+        ->get();
+
+        $surveyor= ProjectMember::select('project_members.project_id', 'project_members.user_id', 't1.employee_id', 't1.roles')
+        ->join(DB::raw('(SELECT u.id as id, u.employee_id as employee_id, r.name as roles FROM model_has_roles as mhr 
+            INNER JOIN users as u ON u.id = mhr.model_id 
+            INNER JOIN roles as r ON r.id = mhr.role_id) as t1'), 'project_members.user_id', '=', 't1.id')
+        ->where('project_members.project_id', $id)
+        ->where('t1.roles', 'Surveyor')
+        ->get();
+        
+
+
+
+        return view('projects.detail', compact('project', 'customers', 'parameterInCheckpoints', 'checkpoints', 'parameters', 'academician','surveyor'));
     }
 
-        public function create(){
+    public function create()
+    {
         $parameters = Parameter::all();
         // ดึง SMP ตัวล่าสุด
         $latestSample = ParameterInCheckpoint::orderBy('sample_id', 'DESC')->first();
@@ -107,77 +130,78 @@ class ProjectController extends Controller
         // ดึงข้อมูลลูกค้าจากตาราง Customer
         $customers = Customer::all();
         // echo $newProjectId;
-        return view('projects.create', compact('newSampleId', 'customers', 'parameters', 'latestProject','PJ'))
-        ->with('success', 'Project created successfully');
+        return view('projects.create', compact('newSampleId', 'customers', 'parameters', 'latestProject', 'PJ'))
+            ->with('success', 'Project created successfully');
     }
 
-    public function store(Request $request){
-    // ตรวจสอบความถูกต้องของข้อมูลที่ส่งมาจากแบบฟอร์ม
-    $request->validate([
-        'customers_contact_name' => 'required|string',
-        'customers_contact_phone' => 'required|string',
-        'map' => 'required|image|mimes:jpg,jpeg,png,pdf',
-        'customer_id' => 'required',
-        'start_date' => 'required|date',
-        'area_date' => 'required|date',
-        'sample_id' => 'required|array',
-        'number' => 'required|array',
-        'parameter_id' => 'required|array',
-        'sample_id.*' => 'required',
-        'number.*' => 'required',
-        'parameter_id.*' => 'required',
-    ], [
-        'start_date.required' => 'The start date field is required.',
-        'start_date.date' => 'The start date must be a valid date format.',
-        'area_date.required' => 'The area date field is required.',
-        'area_date.date' => 'The area date must be a valid date format.',
-        'customers_contact_name.required' => 'The customers contact name field is required.',
-        'customers_contact_phone.required' => 'The customers contact phone field is required.',
-        'sample_id.required' => 'The sample id field is required.',
-        'number.required' => 'The number field is required.',
-        'parameter_id.required' => 'The parameter id field is required.',
-    ]);
+    public function store(Request $request)
+    {
+        // ตรวจสอบความถูกต้องของข้อมูลที่ส่งมาจากแบบฟอร์ม
+        $request->validate([
+            'customers_contact_name' => 'required|string',
+            'customers_contact_phone' => 'required|string',
+            'map' => 'required|image|mimes:jpg,jpeg,png,pdf',
+            'customer_id' => 'required',
+            'start_date' => 'required|date',
+            'area_date' => 'required|date',
+            'sample_id' => 'required|array',
+            'number' => 'required|array',
+            'parameter_id' => 'required|array',
+            'sample_id.*' => 'required',
+            'number.*' => 'required',
+            'parameter_id.*' => 'required',
+        ], [
+            'start_date.required' => 'The start date field is required.',
+            'start_date.date' => 'The start date must be a valid date format.',
+            'area_date.required' => 'The area date field is required.',
+            'area_date.date' => 'The area date must be a valid date format.',
+            'customers_contact_name.required' => 'The customers contact name field is required.',
+            'customers_contact_phone.required' => 'The customers contact phone field is required.',
+            'sample_id.required' => 'The sample id field is required.',
+            'number.required' => 'The number field is required.',
+            'parameter_id.required' => 'The parameter id field is required.',
+        ]);
 
-    try {
-        DB::beginTransaction();
+        try {
+            DB::beginTransaction();
 
-        // บันทึกข้อมูลโครงการ
-        $project = new Project();
-        $lastProject = Project::orderBy('id', 'DESC')->first();
-        $project->project_id = 'PJ' . strval($lastProject->id + 1);
-        $project->customers_contact_name = $request->customers_contact_name;
-        $project->customers_contact_phone = $request->customers_contact_phone;
-        $project->customer_id = $request->customer_id;
-        $project->start_date = $request->start_date;
-        $project->area_date = $request->area_date;
-        $project->status_id = 2; // กำหนดสถานะโครงการเป็น "ยังไม่ดำเนินการ"
+            // บันทึกข้อมูลโครงการ
+            $project = new Project();
+            $lastProject = Project::orderBy('id', 'DESC')->first();
+            $project->project_id = 'PJ' . strval($lastProject->id + 1);
+            $project->customers_contact_name = $request->customers_contact_name;
+            $project->customers_contact_phone = $request->customers_contact_phone;
+            $project->customer_id = $request->customer_id;
+            $project->start_date = $request->start_date;
+            $project->area_date = $request->area_date;
+            $project->status_id = 2; // กำหนดสถานะโครงการเป็น "ยังไม่ดำเนินการ"
 
-        // ตรวจสอบว่ามีไฟล์แนบหรือไม่ก่อนทำการบันทึก
-        if ($request->hasFile('map')) {
-            $image = $request->file('map');
-            $filename = time() . '.' . $image->getClientOriginalExtension();
-            $path = 'images/maps/';
-            $image->move($path, $filename);
-            $project->map = $path . $filename;
-        }
+            // ตรวจสอบว่ามีไฟล์แนบหรือไม่ก่อนทำการบันทึก
+            if ($request->hasFile('map')) {
+                $image = $request->file('map');
+                $filename = time() . '.' . $image->getClientOriginalExtension();
+                $path = 'images/maps/';
+                $image->move($path, $filename);
+                $project->map = $path . $filename;
+            }
 
-        $project->save();
+            $project->save();
 
-        // บันทึกข้อมูลตัวอย่าง
-        foreach ($request->sample_id as $index => $sample_id) {
-            $checkpoint = new Checkpoint();
-            $checkpoint->number = $request->number[$index];
-            $checkpoint->projects_id = $project->id;
-            $checkpoint->save();
+            // บันทึกข้อมูลตัวอย่าง
+            foreach ($request->sample_id as $index => $sample_id) {
+                $checkpoint = new Checkpoint();
+                $checkpoint->number = $request->number[$index];
+                $checkpoint->projects_id = $project->id;
+                $checkpoint->save();
 
-            $parameterInCheckpoint = new ParameterInCheckpoint();
-            $parameterInCheckpoint->sample_id = $sample_id;
-            $parameterInCheckpoint->checkpoint_id = $checkpoint->id;
-            $parameterInCheckpoint->parameter_id = $request->parameter_id[$index];
-            $parameterInCheckpoint->save();
-        }
+                $parameterInCheckpoint = new ParameterInCheckpoint();
+                $parameterInCheckpoint->sample_id = $sample_id;
+                $parameterInCheckpoint->checkpoint_id = $checkpoint->id;
+                $parameterInCheckpoint->parameter_id = $request->parameter_id[$index];
+                $parameterInCheckpoint->save();
+            }
 
-        DB::commit();
+            DB::commit();
 
             return redirect()->route('projects.index')->with('success', 'Project created successfully');
         } catch (\Exception $e) {
@@ -188,7 +212,8 @@ class ProjectController extends Controller
 
 
 
-    public function destroy($id){
+    public function destroy($id)
+    {
         $title = 'Delete Project!';
         $text = "Are you sure you want to delete?";
         confirmDelete($title, $text);
@@ -207,7 +232,7 @@ class ProjectController extends Controller
             ->with('success', 'Project deleted successfully');
     }
 
-    public function destroyPIC($id,$checkpoint_id)
+    public function destroyPIC($id, $checkpoint_id)
     {
         ParameterInCheckpoint::find($id)->delete();
         Checkpoint::find($checkpoint_id)->delete();
@@ -230,8 +255,6 @@ class ProjectController extends Controller
             'academician_id',
             'remark'
         ]);
-
-      
         return redirect()->route('detail.index');
     }
 
@@ -266,7 +289,7 @@ class ProjectController extends Controller
             }
         }
         $projects->save();
-        return redirect()->route('projects.show',compact('id'));
+        return redirect()->route('projects.show', compact('id'));
     }
 
     public function update2(Request $request, $id)
@@ -280,11 +303,12 @@ class ProjectController extends Controller
 
         $item = Project::findOrFail($id);
         $item->update($data);
-        return redirect()->route('projects.show',compact('id'));
+        return redirect()->route('projects.show', compact('id'));
     }
 
     public function update3(Request $request, $id)
     {
+     
         $data = $request->only([
             'id',
             'sample_date_time',
@@ -293,12 +317,10 @@ class ProjectController extends Controller
             'academician_id',
             'remark'
         ]);
-    
+
         $item = ParameterInCheckpoint::findOrFail($request->id);
         $item->update($data);
-    
+
         return redirect()->route('projects.show', compact('id'));
     }
-    
-    
 }

@@ -14,4 +14,9 @@ class projectMember extends Model
         'project_id',
         'user_id',
     ];
+
+    public function user()
+    {
+        return  $this->hasMany(User::class);
+    }
 }
