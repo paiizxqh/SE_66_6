@@ -27,7 +27,8 @@
                     <div class="card mb-4">
                         <div class="card-header">ข้อมูลโครงการสำหรับลูกค้า</div>
                         <div class="card-body">
-                            <form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data"
+                                id="projectForm">
                                 @csrf
                                 <div class="mb-3">
                                     <label class="small mb-1" for="customer_name">ชื่อลูกค้า</label>
@@ -206,22 +207,20 @@
             </div>
             <div class="col-xs-12 mb-5 pull-right">
                 <a href="{{ route('projects.index') }}" class="btn btn-primary" type="button">ย้อนกลับ</a>
-                <button href="{{ url('projects.store') }}" class="btn btn-primary" type="submit">บันทึก</button>
+                <button id="submitForm" class="btn btn-primary" type="button">บันทึก</button>
             </div>
             </form>
         </div>
     </body>
-    @include('sweetalert::alert')
-</x-app-layout>
-<script>
-    var i = 1;
-    $(document).ready(function() {
-        $('button[name="add"]').click(function() {
-            var newSampleId = '{{ $newSampleId }}';
-            newSampleId = 'SMP' + ('000' + (parseInt(newSampleId.substring(3)) + i)).slice(-3);
-            ++i;
-            $('table  tbody').append(
-                `<tr>
+    <script>
+        var i = 1;
+        $(document).ready(function() {
+            // สร้างแถวใหม่เมื่อคลิกที่ปุ่ม Add
+            $('button[name="add"]').click(function() {
+                var newSampleId = '{{ $newSampleId }}';
+                newSampleId = 'SMP' + ('000' + (parseInt(newSampleId.substring(3)) + i)).slice(-3);
+                ++i;
+                var newRow = `<tr>
                     <td>
                         <input class="form-control" type="name" placeholder="กรอกรหัสตัวอย่าง" value='${newSampleId}'  name="sample_id[]">
                     </td>
@@ -238,30 +237,77 @@
                         </select>
                     </td>
                     <td>
-                        <input class="form-control" type="datetime-local" placeholder="เลือกวันที่/เวลาเก็บตัวอย่าง"name="sample_date_time[]">
+                        <input class="form-control" type="datetime-local" placeholder="เลือกวันที่/เวลาเก็บตัวอย่าง" name="sample_date_time[]" disabled>
                     </td>
                     <td>
-                        <input class="form-control" type="name" placeholder="กรอกค่าพารามิเตอร์"name="sample_value[]">
+                        <input class="form-control" type="name" placeholder="กรอกค่าพารามิเตอร์" name="sample_value[]" disabled>
                     </td>
                     <td>
-                        <input class="form-control" type="name" placeholder="กรอกชื่อผู้เก็บตัวอย่าง" name="surveyor_id[]">
+                        <input class="form-control" type="name" placeholder="กรอกชื่อผู้เก็บตัวอย่าง" name="surveyor_id[]" disabled>
                     </td>
                     <td>
-                        <input class="form-control" type="name" placeholder="กรอกชื่อผู้ทดลอง"name="academician_id[]">
+                        <input class="form-control" type="name" placeholder="กรอกชื่อผู้ทดลอง" name="academician_id[]" disabled>
                     </td>
                     <td>
-                        <input class="form-control" type="name" placeholder="กรอกหมายเหตุ"placeholder="กรอกหมายเหตุ"name="remark[]">
+                        <input class="form-control" type="name" placeholder="กรอกหมายเหตุ" name="remark[]" disabled>
                     </td>
                     <td>
                         <button type="button" class="btn btn-danger remove-row">Remove</button>
                     </td>
-                </tr>`
-            );
+                </tr>`;
+                $('table tbody').append(newRow);
+                disableFieldsInLastRowExceptFirstThree
+                    (); // เรียกใช้ฟังก์ชันเพื่อปิดการใช้งานฟิลด์ในแถวล่าสุด
+                // ส่งข้อมูลในแถวใหม่ไปยังเซิร์ฟเวอร์เพื่อบันทึกลงในฐานข้อมูล
+                var rowData = {
+                    sample_id: newSampleId,
+                    number: i,
+                    parameter_id: $('select[name="parameter_id[]"]').last()
+                        .val() // หาค่า parameter_id ของแถวใหม่ที่เพิ่งเพิ่ม
+                    // เพิ่มฟิลด์อื่น ๆ ตามต้องการ...
+                };
 
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ url('projects.store') }}",
+                    data: rowData,
+                    success: function(response) {
+                        // ถ้าสำเร็จในการบันทึกข้อมูล
+                        alert('บันทึกข้อมูลสำเร็จ');
+                        // เพิ่มโค้ดเพื่อรีโหลดหน้าหลังจากการเพิ่มโครงการอัพเดทล่าสุด
+                        window.location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        // ถ้าเกิดข้อผิดพลาดในการบันทึกข้อมูล
+                        alert('เกิดข้อผิดพลาดในการบันทึกข้อมูล');
+                    }
+                });
+
+            });
+
+            // ลบแถวเมื่อคลิกที่ปุ่ม Remove
+            $(document).on('click', '.remove-row', function() {
+                $(this).closest('tr').remove();
+                disableFieldsInLastRowExceptFirstThree();
+                --i;
+            });
+
+            // ส่งข้อมูลเมื่อคลิกที่ปุ่ม Submit
+            $('#submitForm').click(function() {
+                $('#projectForm').submit();
+
+            });
+
+            // ฟังก์ชันเพื่อปิดการใช้งานฟิลด์ในแถวล่าสุด
+            function disableFieldsInLastRowExceptFirstThree() {
+                var lastRow = $('table tbody tr:last');
+                lastRow.find('input, select').prop('disabled', true);
+                lastRow.find(
+                        'input[name="sample_id[]"], input[name="number[]"], select[name="parameter_id[]"]'
+                    )
+                    .prop('disabled', false);
+            }
         });
-    });
-    $(document).on('click', '.remove-row', function() {
-        $(this).parents('tr').remove();
-        --i;
-    });
-</script>
+    </script>
+    @include('sweetalert::alert')
+</x-app-layout>
