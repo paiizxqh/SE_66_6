@@ -118,10 +118,11 @@
                                                                 method="POST">
                                                                 @csrf
                                                                 @method('DELETE')
-                                                                <button class="btn btn-danger btn-sm"
+                                                                <a href="{{ route('projects.destroy', $projects->id) }}"
+                                                                    class="btn btn-danger btn-sm"
                                                                     data-confirm-delete="true">
                                                                     <i class="fa fa-trash"></i> ลบ
-                                                                </button>
+                                                                </a>
                                                                 <a href="{{ route('projects.show', $projects->id) }}"
                                                                     class="btn btn-primary btn-sm">
                                                                     <i class="fa fa-file-text" aria-hidden="true"></i>
