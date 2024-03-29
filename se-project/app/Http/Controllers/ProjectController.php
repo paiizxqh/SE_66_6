@@ -70,7 +70,7 @@ class ProjectController extends Controller
         $customers = Customer::where('id', $project->customer_id)->firstOrFail();
 
         $checkpoints = Checkpoint::where('projects_id', $id)->get();
-       
+
         $checkpointsIds = [];// กำหนดให้ $a เป็นอาร์เรย์เปล่าๆ
         foreach ($checkpoints as $checkpoint) {
             $checkpointsIds[$checkpoint->id] = $checkpoint->id; // กำหนดค่าของอาร์เรย์ $a โดยใช้ checkpoint->id เป็นคีย์และค่า
