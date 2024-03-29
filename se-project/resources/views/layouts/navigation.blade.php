@@ -13,7 +13,7 @@
                         <x-nav-link :href="route('projects.index')" :active="request()->routeIs('users')">รายการโครงการ</x-nav-link>
                         <x-nav-link :href="route('products.index')" :active="request()->routeIs('users')">คลังอุปกรณ์</x-nav-link>
                         <x-nav-link :href="route('customers.index')" :active="request()->routeIs('users')">ข้อมูลลูกค้า</x-nav-link>
-                        <x-nav-link :href="route('detail.index')" :active="request()->routeIs('users')">รายละเอียดโครงการ</x-nav-link>
+                        {{--<x-nav-link :href="route('detail.index')" :active="request()->routeIs('users')">รายละเอียดโครงการ</x-nav-link>--}}
                         {{-- <x-nav-link :href="route('teams.index')" :active="request()->routeIs('users')">ข้อมูลทีม</x-nav-link> --}}
                     @endcan
                     <!--Page for Admin-->
@@ -24,13 +24,13 @@
                     <!--Page for Manager | Project : RU ; TeamProject : CRUD -->
                     @can('ManagerRole')
                         <x-nav-link :href="route('projects.index')" :active="request()->routeIs('users')">รายการโครงการ</x-nav-link>
-                        <x-nav-link :href="route('detail.index')" :active="request()->routeIs('users')">รายละเอียดโครงการ</x-nav-link>
+                        {{--<x-nav-link :href="route('detail.index')" :active="request()->routeIs('users')">รายละเอียดโครงการ</x-nav-link>--}}
                     @endcan
                     <!--Page for Sales | Project : CRUD ; Customer : CRUD -->
                     @can('SalesRole')
                         <x-nav-link :href="route('projects.index')" :active="request()->routeIs('users')">รายการโครงการ</x-nav-link>
                         <x-nav-link :href="route('customers.index')" :active="request()->routeIs('users')">ข้อมูลลูกค้า</x-nav-link>
-                        <x-nav-link :href="route('detail.index')" :active="request()->routeIs('users')">รายละเอียดโครงการ</x-nav-link>
+                        {{--<x-nav-link :href="route('detail.index')" :active="request()->routeIs('users')">รายละเอียดโครงการ</x-nav-link>--}}
                     @endcan
                     <!--Page for Assistant | Proejct : R ; Inventory : CRUD -->
                     @can('AssistantRole')
@@ -41,7 +41,7 @@
                     <!--Page for Academician | Project : RU -->
                     @can('AcademicianRole')
                         <x-nav-link :href="route('projects.index')" :active="request()->routeIs('users')">รายการโครงการ</x-nav-link>
-                        <x-nav-link :href="route('detail.index')" :active="request()->routeIs('users')">รายละเอียดโครงการ</x-nav-link>
+                        {{--<x-nav-link :href="route('detail.index')" :active="request()->routeIs('users')">รายละเอียดโครงการ</x-nav-link>--}}
                         @endcan
                     <!--Page for Surveyor | Project : RU -->
                     @can('SurveyorRole')

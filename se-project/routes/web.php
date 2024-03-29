@@ -43,16 +43,16 @@ Route::middleware('auth')->group(function () {
     Route::resource('projects', ProjectController::class);
     Route::resource('detail',DetailController::class);
 
+    Route::post('/detail/{id}', [DetailController::class, 'index'])->name('detail.index');
     Route::get('/projects/search', [ProjectController::class, 'search'])->name('projects.search');
     Route::get('/projects/{id}', [ProjectController::class, 'show'])->name('projects.show');
-
-    Route::post('/detail', [DetailController::class, 'index'])->name('detail.index');
-    Route::post('/update/{id}', [DetailController::class, 'update'])->name('update');
-    Route::post('/update2/{id}', [DetailController::class, 'update2'])->name('update2');
+    Route::post('/projects/{id}',[ProjectController::class, 'destroyPIC'])->name('projects.destroyPIC');
+   
+    Route::post('/update1/{id}', [ProjectController::class, 'update1'])->name('update1');
+    Route::post('/update2/{id}', [ProjectController::class, 'update2'])->name('update2');
     Route::post('/createCheckpoint/{id}',[DetailController::class, 'createCheckpoint'])->name('createCheckpoint');
-    Route::delete('/detail/{id}/{checkpoint_id}', [DetailController::class,'destroy'])->name('detail.destroy');
 
-    Route::post('manage',[ProjectMemberController::class,'index'])->name('manage');
+    Route::get('manage/{id}',[ProjectMemberController::class,'index'])->name('manage');
     Route::post('/process',[ProjectMemberController::class,'handleFormSubmission'])->name('process');
 });
 
